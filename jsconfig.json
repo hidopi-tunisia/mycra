@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./",
+    "target": "es6",
+    "paths": {
+      "@screens/*": [
+        "./src/screens/*"
+      ],
+      "@navigators/*": [
+        "./src/navigators/*"
+      ],
+      "@components/*": [
+        "./src/components/*"
+      ],
+      "@assets/*": [
+        "./src/assets/*"
+      ]
+    }
+  },
+  "exclude": [
+    "node_modules"
+  ]
+}
