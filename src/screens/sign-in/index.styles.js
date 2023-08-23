@@ -1,5 +1,6 @@
 import { StyleSheet } from 'react-native';
 import { DefaultTheme } from '@react-navigation/native';
+import Colors from '@utils/colors';
 
 const styles = StyleSheet.create({
   root: {
@@ -10,38 +11,38 @@ const styles = StyleSheet.create({
   },
   textTitle: {
     fontSize: 32,
-    fontWeight: "900",
-    color: 'white',
+    fontWeight: '900',
+    color: Colors.WHITE,
   },
   textSubtitle: {
     fontSize: 14,
-    fontWeight: "700",
-    color: 'white',
+    fontWeight: '700',
+    color: Colors.WHITE,
   },
   labelEmail: {
     fontSize: 16,
-    fontWeight: 600,
+    fontWeight: '600',
   },
   inputEmail: {},
   containerForgotPasswordText: {
     alignItems: 'flex-end',
   },
   textForgotPassword: {
-    color: '#757575',
+    color: Colors.GRAY_SECONDARY_TEXT,
     fontSize: 14,
   },
-  buttonSignIn:{
+  buttonSignIn: {
     height: 48,
-    borderRadius: 24
+    borderRadius: 24,
   },
   containerError: {
-    backgroundColor: '#D32F2F11',
+    backgroundColor: `${Colors.RED_DARK_PRIMARY}11`,
     padding: 8,
     justifyContent: 'center',
     alignItems: 'center',
   },
   textError: {
-    color: '#D32F2F',
+    color: Colors.RED_DARK_PRIMARY,
   },
 });
 

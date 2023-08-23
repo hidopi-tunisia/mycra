@@ -1,3 +1,4 @@
+import Colors from '@utils/colors';
 import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
@@ -14,14 +15,14 @@ const styles = StyleSheet.create({
     padding: 8,
   },
   textButtonSmall: {
-    color: '#333333',
+    color: Colors.GRAY_SECONDARY_TEXT,
   },
   buttonSubmit: {
     borderRadius: 24,
   },
   textSelectedDays: {
     padding: 8,
-    color: '#666666',
+    color: Colors.GRAY_SECONDARY_TEXT,
     fontSize: 12
   },
 });
