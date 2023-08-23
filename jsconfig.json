@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "baseUrl": "src",
+    "target": "ES2017",
+    "module": "CommonJS",
+    "paths": {
+      "@navigators/*": ["./navigators/*"],
+      "@screens/*": ["./screens/*"],
+      "@components/*": ["./components/*"],
+      "@state/*": ["./state/*"],
+      "@domain/*": ["./domain/*"],
+      "@utils/*": ["./utils/*"],
+      "@constants": ["./constants/*"],
+      "@styles/*": ["./styles/*"],
+      "@theme/*": ["./theme/*"],
+      "@assets/*": ["../assets/*"]
+    }
+  },
+  "exclude": ["node_modules"]
+}
