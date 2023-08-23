@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
   },
   textSubtitle:{
     fontSize: 12,
-    fontWeight: 400
+    fontWeight: "400"
   },
   containerHeaderIcon: {
     justifyContent: 'center',

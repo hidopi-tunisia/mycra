@@ -1,6 +1,6 @@
 import { View, Image, Linking, ScrollView } from 'react-native';
 import { SettingsItem, M } from '@components';
-import { Divider, Text } from '@ui-kitten/components';
+import { Divider, Text, Spinner } from '@ui-kitten/components';
 import {
   TERMS_AND_CONDITIONS_URL,
   PRIVACY_POLICY_URL,
@@ -9,8 +9,28 @@ import {
   APP_VERSION,
 } from '@utils/constants';
 import styles from './index.styles';
+import { useEffect, useState } from 'react';
+import { getProfile } from '@domain/profile';
+import { getStatusBackground } from './index.helpers';
 
 const SettingsScreen = ({ onSignOut }) => {
+  const [profile, setProfile] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  useEffect(() => {
+    const fn = async () => {
+      try {
+        setLoading(true);
+        const { data } = await getProfile();
+        setProfile(data.consultant);
+        setLoading(false);
+      } catch (error) {
+        setLoading(false);
+        setError('Error happened');
+      }
+    };
+    fn();
+  }, []);
   const handleTerms = () => {
     const fn = async () => {
       await Linking.openURL(TERMS_AND_CONDITIONS_URL);
@@ -32,7 +52,7 @@ const SettingsScreen = ({ onSignOut }) => {
   const handleReport = () => {
     const fn = async () => {
       await Linking.openURL(
-        `mailto:${SUPPORT_EMAIL}?subject=Reporting issue in version (${APP_VERSION}) &body=Hello, I would like to report an issue in the application.`
+        `mailto:${SUPPORT_EMAIL}?subject=Reporting issue in version (${APP_VERSION}) &body=Hello, I would like to report an issue in the application.`,
       );
     };
     fn();
@@ -40,57 +60,75 @@ const SettingsScreen = ({ onSignOut }) => {
   return (
     <View style={styles.root}>
       <View style={styles.containerTop}>
-        <View style={styles.containerImage}>
-          <Image
-            style={styles.avatar}
-            source={{
-              uri: 'https://randomuser.me/api/portraits/men/40.jpg',
-            }}
-          />
-        </View>
-        <M v1 />
-        <Text style={styles.textName}>John Doe</Text>
-        <Text style={styles.textCompany}>ACME Group</Text>
+        {!loading && profile && (
+          <>
+            <View style={styles.containerImage}>
+              <Image
+                style={styles.avatar}
+                source={{
+                  uri: 'https://randomuser.me/api/portraits/men/40.jpg',
+                }}
+              />
+              <View
+                style={{
+                  ...styles.status,
+                  backgroundColor: getStatusBackground(profile.statutCompte),
+                }}
+              />
+            </View>
+            <M v1 />
+            <Text style={styles.textName}>
+              {profile.prenom} {profile.nom}
+            </Text>
+            <Text style={styles.textCompany}>{profile.poste}</Text>
+          </>
+        )}
+        {loading && !error && <Spinner status="basic" size="small" />}
+        {!loading && (!profile || error) && (
+          <View style={styles.containerError}>
+            {error && <Text style={styles.textError}>{error}</Text>}
+          </View>
+        )}
       </View>
       <ScrollView showsVerticalScrollIndicator={false}>
         <SettingsItem
           title="Reset password"
           description="Start a reset password challange"
-          icon="bell"
+          icon="lock-outline"
           onPress={handleTerms}
         />
         <SettingsItem
           title="Terms and conditions"
           description="View the terms and conditions on our website"
-          icon="bell"
+          icon="checkmark-circle-2-outline"
           onPress={handleTerms}
         />
         <Divider />
         <SettingsItem
           title="Privacy policy"
           description="View our privacy and policy on our website"
-          icon="bell"
+          icon="eye-off-outline"
           onPress={handlePrivacy}
         />
         <Divider />
         <SettingsItem
           title="Help"
           description="View our help on our website"
-          icon="bell"
+          icon="question-mark-circle-outline"
           onPress={handleHelp}
         />
         <Divider />
         <SettingsItem
           title="Report issue"
           description="Send us an email about an issue in the application"
-          icon="bell"
+          icon="alert-triangle-outline"
           onPress={handleReport}
         />
         <Divider />
         <SettingsItem
           title="Sign out"
           description="Sign out from this session and navigate back to the sign in screen"
-          icon="bell"
+          icon="log-out-outline"
           onPress={onSignOut}
         />
         <M v4 />
