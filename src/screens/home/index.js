@@ -114,8 +114,8 @@ const HomeScreen = () => {
         });
         const datesNonTravaillees = arr.filter(e => e !== undefined);
         const payload = { datesNonTravaillees };
-        console.log(JSON.stringify(payload, null, 2));
         // const { data } = await postCRA(payload);
+        console.log(JSON.stringify(data, null, 2));
       } catch (error) {
         console.log('ERROR');
         console.log(error);
