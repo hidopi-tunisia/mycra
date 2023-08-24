@@ -10,8 +10,8 @@ const styles = StyleSheet.create({
     padding: 8,
   },
   textDescription: {
-    fontWeight: "700",
-    color: Colors.BLUE_PRIMARY
+    fontWeight: '700',
+    color: Colors.BLUE_PRIMARY,
   },
   containerButtons: {
     justifyContent: 'space-between',
@@ -29,8 +29,29 @@ const styles = StyleSheet.create({
   },
   textSelectedDays: {
     padding: 8,
-    color: Colors.GREEN_DARK_PRIMARY,
+    color: Colors.BLUE_DARK_PRIMARY,
     fontSize: 12,
+    fontWeight: "800"
+  },
+  calendarDayWeekend: {
+    container: {
+      backgroundColor: Colors.WHITE,
+      borderWidth: 2,
+      borderColor: Colors.GREEN_PRIMARY,
+      justifyContent: 'center',
+    },
+    text: {
+      color: 'black',
+    },
+  },
+  calendarDayHoliday: {
+    container: {
+      backgroundColor: Colors.GREEN_PRIMARY,
+      justifyContent: 'center',
+    },
+    text: {
+      color: Colors.WHITE,
+    }
   },
 });
 

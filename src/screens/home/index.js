@@ -7,22 +7,16 @@ import styles from './index.styles';
 import { postCRA } from '@domain/cra';
 import Modal from '@components/modals';
 import { getHolidays } from '@domain/days';
-import Colors from '@utils/colors';
-
-const DOT_HOLIDAY = {
-  key: 'holiday',
-  color: Colors.GREEN_PRIMARY,
-  selectedDotColor: 'green',
-};
-
 const HomeScreen = () => {
   const [markedDates, setMarkedDates] = useState({});
   const [selectedCount, setSelectedCount] = useState(null);
   const [holiday, setHoliday] = useState(null);
+  const [weekend, setWeekend] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
   const [modalDeselectAllVisible, setModalDeselectAllVisible] = useState(false);
   const [modalSelectAllVisible, setModalSelectAllVisible] = useState(false);
   const [modalHolidayVisible, setModalHolidayVisible] = useState(false);
+  const [modalWeekendVisible, setModalWeekendVisible] = useState(false);
   useEffect(() => {
     const fn = async () => {
       try {
@@ -36,7 +30,18 @@ const HomeScreen = () => {
         const marked = {};
         setSelectedCount(days.length);
         for (let i = 0; i < days.length; i++) {
-          marked[days[i]] = { selected: true };
+          const today = new Date(days[i]).getDay();
+          if (today === 6 || today === 0) {
+            marked[days[i]] = {
+              weekend: true,
+              selected: false,
+              customStyles: styles.calendarDayWeekend,
+            };
+          } else {
+            marked[days[i]] = {
+              selected: true,
+            };
+          }
         }
         for (let i = 0; i < holidaysDays.length; i++) {
           for (let j = 0; j < Object.keys(marked).length; j++) {
@@ -44,8 +49,8 @@ const HomeScreen = () => {
               marked[Object.keys(marked)[j]] = {
                 ...marked[Object.keys(marked)[j]],
                 holiday: holidaysDays[i].nom_jour_ferie,
-                selectedColor: Colors.GREEN_PRIMARY,
-                dots: [DOT_HOLIDAY],
+                selected: false,
+                customStyles: styles.calendarDayHoliday,
               };
             }
           }
@@ -72,6 +77,11 @@ const HomeScreen = () => {
         name: markedDates[day.dateString].holiday,
       });
       setModalHolidayVisible(true);
+    } else if (markedDates[day.dateString].weekend) {
+      setWeekend({
+        date: day.dateString,
+      });
+      setModalWeekendVisible(true);
     } else {
       if (markedDates[day.dateString] && markedDates[day.dateString].selected) {
         setMarkedDates({
@@ -91,7 +101,11 @@ const HomeScreen = () => {
       try {
         setModalVisible(false);
         const arr = Object.keys(markedDates).map(k => {
-          if (markedDates[k].selected === false) {
+          if (
+            markedDates[k].selected === false &&
+            !markedDates[k].weekend &&
+            !markedDates[k].holiday
+          ) {
             return {
               date: k,
               raison: 'CP',
@@ -120,27 +134,27 @@ const HomeScreen = () => {
     setModalSelectAllVisible(false);
   };
   const handlePressSelectAllPositive = () => {
-    setModalSelectAllVisible(false);
-    const month = getToday().substring(0, 7);
-    const days = getDaysInMonth(month);
-    const marked = {};
-    for (let i = 0; i < days.length; i++) {
-      marked[days[i]] = { selected: true };
-    }
+    let marked = {};
+    Object.keys(markedDates).forEach(d => {
+      if (markedDates[d].holiday || markedDates[d].weekend) {
+        marked[d] = { ...markedDates[d], selected: false };
+      } else {
+        marked[d] = { ...markedDates[d], selected: true };
+      }
+    });
     setMarkedDates(marked);
+    setModalSelectAllVisible(false);
   };
   const handlePressDeselectAllNegative = () => {
     setModalDeselectAllVisible(false);
   };
   const handlePressDeselectAllPositive = () => {
-    setModalDeselectAllVisible(false);
-    const month = getToday().substring(0, 7);
-    const days = getDaysInMonth(month);
-    const marked = {};
-    for (let i = 0; i < days.length; i++) {
-      marked[days[i]] = { selected: false };
-    }
+    let marked = {};
+    Object.keys(markedDates).forEach(d => {
+      marked[d] = { ...markedDates[d], selected: false };
+    });
     setMarkedDates(marked);
+    setModalDeselectAllVisible(false);
   };
   const handleSelectAll = () => {
     setModalSelectAllVisible(true);
@@ -151,6 +165,10 @@ const HomeScreen = () => {
   const handlePressHolidayPositive = () => {
     setHoliday(null);
     setModalHolidayVisible(false);
+  };
+  const handlePressWeekendPositive = () => {
+    setWeekend(null);
+    setModalWeekendVisible(false);
   };
   return (
     <Layout style={styles.root}>
@@ -221,6 +239,13 @@ const HomeScreen = () => {
             {holiday.date} is a holiday called "{holiday.name}".
           </Text>
         )}
+      </Modal>
+      <Modal
+        title="Weekend"
+        type="info"
+        visible={modalWeekendVisible}
+        onPressPositive={handlePressWeekendPositive}>
+        {weekend && <Text>{weekend.date} is a weekend.</Text>}
       </Modal>
     </Layout>
   );
