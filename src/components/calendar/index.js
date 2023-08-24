@@ -7,6 +7,7 @@ const Calendar = ({ markedDates, onSelect }) => (
     hideExtraDays
     onDayPress={onSelect}
     markedDates={markedDates}
+    markingType={'multi-dot'}
   />
 );
 export default Calendar;
