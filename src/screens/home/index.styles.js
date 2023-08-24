@@ -6,6 +6,13 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'space-around',
   },
+  containerDescription: {
+    padding: 8,
+  },
+  textDescription: {
+    fontWeight: "700",
+    color: Colors.BLUE_PRIMARY
+  },
   containerButtons: {
     justifyContent: 'space-between',
     flexDirection: 'row',
@@ -22,7 +29,7 @@ const styles = StyleSheet.create({
   },
   textSelectedDays: {
     padding: 8,
-    color: Colors.GRAY_SECONDARY_TEXT,
+    color: Colors.GREEN_DARK_PRIMARY,
     fontSize: 12,
   },
 });
