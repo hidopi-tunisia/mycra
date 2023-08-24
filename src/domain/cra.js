@@ -1,3 +1,6 @@
+import axios from 'axios';
+import { ENDPOINT } from '@utils/constants';
+
 const { getAuthorization } = require('./auth');
 
 const getCRAHistory = async () => {
@@ -7,7 +10,7 @@ const getCRAHistory = async () => {
 
 const getCRAHistory2 = async () => {
   const { uid } = await getAuthorization();
-  return axios.get(`${ENDPOINT}/getall-cra`);
+  return axios.get(`${ENDPOINT}/cra/getall-cra`);
 };
 const getCRAHistory_ = getCRAHistory2;
 export { getCRAHistory, getCRAHistory_ };

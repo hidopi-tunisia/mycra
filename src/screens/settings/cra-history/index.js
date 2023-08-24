@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
-import { ScrollView, View } from 'react-native';
-import { M } from '@components';
+import { View, FlatList } from 'react-native';
 import styles from './index.styles';
 import { Divider, Text, Spinner } from '@ui-kitten/components';
 import { getCRAHistory, getCRAHistory_ } from '@domain/cra';
 import CRAHistoryItem from '@components/notifications-item';
 import Bullet from '@components/bullet';
 import Colors from '@utils/colors';
+import { getStatusType } from './index.helpers';
 
 const CRAHistoryScreen = () => {
   const [history, setHistory] = useState(null);
@@ -17,35 +17,78 @@ const CRAHistoryScreen = () => {
       try {
         setLoading(true);
         const { data } = await getCRAHistory_();
-        setHistory(data[0]);
-        console.log(data[0]);
+        setHistory(data);
         setLoading(false);
       } catch (error) {
-        setLoading(false);
+        setLoading(true);
         setError('Error happened');
       }
     };
     fn();
   }, []);
+  const handlePress = id => {
+    alert('Pressed ' + id);
+  };
   return (
-    <ScrollView style={styles.container}>
-      <M v3 />
-      <CRAHistoryItem
-        title="Juillet 2023 (5 semaines)"
-        subtitle="Confirmé"
-        type={'success'}>
-        <Bullet text="4 travaillés" color={Colors.GREEN_PRIMARY} />
-        <Bullet text="8 non travaillés" color={Colors.RED_PRIMARY} />
-        <Bullet text="3 télétravail" color={Colors.BLUE_PRIMARY} />
-        <Bullet text="1 fériés" />
-      </CRAHistoryItem>
-      {loading && !error && <Spinner status="basic" size="small" />}
+    <>
+      {!loading && history && history.length > 0 && (
+        <FlatList
+          ItemSeparatorComponent={<Divider />}
+          data={history}
+          renderItem={({ item }) => (
+            <CRAHistoryItem
+              key={item._id}
+              title={`${item.mois ? item.mois : ' - '} ${
+                !isNaN(item.annee) ? item.annee : ' - '
+              } ${
+                !isNaN(item.nbSemaines)
+                  ? '(' + item.nbSemaines + ' semaines)'
+                  : ''
+              }`}
+              subtitle={item.status}
+              type={getStatusType(item.status)}
+              onPress={() => handlePress(item._id)}>
+              {!isNaN(item.nbJoursTravailles) && (
+                <Bullet
+                  text={`${item.nbJoursTravailles} travaillés`}
+                  color={Colors.GREEN_PRIMARY}
+                />
+              )}
+              {!isNaN(item.nbJoursNonTravailles) && (
+                <Bullet
+                  text={`${item.nbJoursNonTravailles} non travaillés`}
+                  color={Colors.RED_PRIMARY}
+                />
+              )}
+              {!isNaN(item.nb_tt_du_mois) && (
+                <Bullet
+                  text={`${item.nb_tt_du_mois} télétravail`}
+                  color={Colors.BLUE_PRIMARY}
+                />
+              )}
+              {!isNaN(item.nbJoursFeries) && (
+                <Bullet text={`${item.nbJoursFeries} fériés`} />
+              )}
+            </CRAHistoryItem>
+          )}
+        />
+      )}
+      {!loading && history && history.length === 0 && (
+        <View style={styles.containerFull}>
+          <Text>No past history</Text>
+        </View>
+      )}
+      {loading && !error && (
+        <View style={styles.containerFull}>
+          <Spinner status="basic" size="small" />
+        </View>
+      )}
       {!loading && (!history || error) && (
         <View style={styles.containerError}>
           {error && <Text style={styles.textError}>{error}</Text>}
         </View>
       )}
-    </ScrollView>
+    </>
   );
 };
 

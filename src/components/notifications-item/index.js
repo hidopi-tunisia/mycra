@@ -8,27 +8,19 @@ const renderIcon = type => {
   switch (type) {
     case 'success':
       return 'checkmark-circle-2-outline';
-    case 'info':
-      return 'info-outline';
-    case 'warning':
-      return 'alert-triangle-outline';
     case 'danger':
       return 'close-circle-outline';
     case 'default':
-      return 'message-square-outline';
+      return 'clock-outline';
     default:
-      return 'message-square-outline';
+      return 'clock-outline';
   }
 };
 
-const renderBackgroundColor = type => {
+const renderColor = type => {
   switch (type) {
     case 'success':
       return '#4CAF50cc';
-    case 'info':
-      return '#2196F3cc';
-    case 'warning':
-      return '#FF9800cc';
     case 'danger':
       return '#F44336cc';
     case 'default':
@@ -42,7 +34,9 @@ const Header = ({ title, subtitle, type }) => (
   <View style={styles.containerHeader}>
     <View style={styles.containerHeaderTitles}>
       <Text category="h6">{title}</Text>
-      <Text category="s1" style={styles.textSubtitle}>
+      <Text
+        category="s1"
+        style={{ ...styles.textSubtitle, color: renderColor(type) }}>
         {subtitle}
       </Text>
     </View>
@@ -50,18 +44,19 @@ const Header = ({ title, subtitle, type }) => (
       <View
         style={{
           ...styles.containerHeaderIconHolder,
-          backgroundColor: renderBackgroundColor(type),
+          backgroundColor: renderColor(type),
         }}>
         <Icon width={20} height={20} name={renderIcon(type)} fill="white" />
       </View>
     </View>
   </View>
 );
-const CRAHistoryItem = ({ title, subtitle, type, children }) => (
+const CRAHistoryItem = ({ title, subtitle, type, onPress, children }) => (
   <>
     <Card
       style={styles.card}
-      header={() => <Header title={title} subtitle={subtitle} type={type} />}>
+      header={() => <Header title={title} subtitle={subtitle} type={type} />}
+      onPress={onPress}>
       <View style={styles.content}>{children}</View>
     </Card>
     <M v1 />

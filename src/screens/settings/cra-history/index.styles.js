@@ -13,7 +13,12 @@ const styles = StyleSheet.create({
   },
   textError: {
     color: Colors.WHITE,
-  }
+  },
+  containerFull: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
 });
 
 export default styles;

@@ -15,7 +15,6 @@ const SettingsIcon = () => (
 
 const TabNavigators = ({ onSignOut }) => (
   <Tab.Navigator screenOptions={{ headerShown: false }}>
-          <Tab.Screen name="CRA History" component={CRAHistoryScreen} />
     <Tab.Screen
       name="TabHome"
       component={HomeScreen}

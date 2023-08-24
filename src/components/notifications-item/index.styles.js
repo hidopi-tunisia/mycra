@@ -14,8 +14,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   textSubtitle:{
-    fontSize: 12,
-    fontWeight: "400"
+    fontSize: 14,
+    fontWeight: "800"
   },
   containerHeaderIcon: {
     justifyContent: 'center',
