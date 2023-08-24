@@ -7,7 +7,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
   },
   containerButtons: {
-    flex: 1,
     justifyContent: 'space-between',
     flexDirection: 'row',
   },
@@ -16,6 +15,7 @@ const styles = StyleSheet.create({
   },
   textButtonSmall: {
     color: Colors.GRAY_SECONDARY_TEXT,
+    fontSize: 14,
   },
   buttonSubmit: {
     borderRadius: 24,
@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
   textSelectedDays: {
     padding: 8,
     color: Colors.GRAY_SECONDARY_TEXT,
-    fontSize: 12
+    fontSize: 12,
   },
 });
 

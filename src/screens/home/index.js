@@ -4,6 +4,7 @@ import { Button, Layout, Text } from '@ui-kitten/components';
 import { Calendar, M } from '@components';
 import { getToday, getDaysInMonth } from '@utils/dates';
 import styles from './index.styles';
+import { postCRA } from '@domain/cra';
 
 const HomeScreen = () => {
   const [markedDates, setMarkedDates] = useState({});
@@ -18,15 +19,45 @@ const HomeScreen = () => {
       setMarkedDates(marked);
     }
   }, []);
-  const handleSelected = (day) => {
+  const handleSelected = day => {
     if (markedDates[day.dateString] && markedDates[day.dateString].selected) {
       setMarkedDates({ ...markedDates, [day.dateString]: { selected: false } });
     } else {
       setMarkedDates({ ...markedDates, [day.dateString]: { selected: true } });
     }
   };
-  const handleSubmit = () => {
-    alert(JSON.stringify(markedDates));
+  const handleSubmit = () => {};
+  const handleSubmit2 = () => {
+    const fn = async () => {
+      try {
+        const payload = {
+          datesNonTravaillees: [
+            {
+              date: '2023-08-03',
+              raison: 'CP',
+            },
+            {
+              date: '2023-08-05',
+              raison: 'CP',
+            },
+            {
+              date: '2023-08-10',
+              raison: 'CP',
+            },
+          ],
+        };
+
+        const { data } = await postCRA(payload);
+        console.log('DATAAAA');
+        console.log(data);
+        console.log('DATAAAA');
+      } catch (error) {
+        console.log('ERROR');
+        console.log(error);
+        console.log('ERROR');
+      }
+    };
+    fn();
   };
   const handleSelectAll = () => {
     Alert.alert(
@@ -50,7 +81,7 @@ const HomeScreen = () => {
             setMarkedDates(marked);
           },
         },
-      ]
+      ],
     );
   };
   const handleDeselectAll = () => {
@@ -75,7 +106,7 @@ const HomeScreen = () => {
             setMarkedDates(marked);
           },
         },
-      ]
+      ],
     );
   };
   return (
