@@ -39,11 +39,9 @@ const TabNavigators = ({ onSignOut }) => (
       }}>
       {props => (
         <Settings.Navigator>
-          <Settings.Screen
-            name="Settings"
-            options={{ headerShown: false }}
-            component={SettingsScreen}
-          />
+          <Settings.Screen name="Settings" options={{ headerShown: false }}>
+            {p => <SettingsScreen {...p} onSignOut={onSignOut} />}
+          </Settings.Screen>
           <Settings.Screen name="CRA History" component={CRAHistoryScreen} />
         </Settings.Navigator>
       )}
