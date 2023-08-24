@@ -4,23 +4,31 @@ import { M } from '../index';
 
 import styles from './index.styles';
 
-const renderIcon = type => {
+const renderIcon = (type) => {
   switch (type) {
     case 'success':
-      return 'checkmark-circle-2-outline';
+      return 'bell-outline';
+    case 'info':
+      return 'info-outline';
+    case 'warning':
+      return 'alert-triangle-outline';
     case 'danger':
       return 'close-circle-outline';
     case 'default':
-      return 'clock-outline';
+      return 'message-square-outline';
     default:
-      return 'clock-outline';
+      return 'message-square-outline';
   }
 };
 
-const renderColor = type => {
+const renderBackgroundColor = (type) => {
   switch (type) {
     case 'success':
       return '#4CAF50cc';
+    case 'info':
+      return '#2196F3cc';
+    case 'warning':
+      return '#FF9800cc';
     case 'danger':
       return '#F44336cc';
     case 'default':
@@ -34,32 +42,27 @@ const Header = ({ title, subtitle, type }) => (
   <View style={styles.containerHeader}>
     <View style={styles.containerHeaderTitles}>
       <Text category="h6">{title}</Text>
-      <Text
-        category="s1"
-        style={{ ...styles.textSubtitle, color: renderColor(type) }}>
-        {subtitle}
-      </Text>
+      <Text category="s1" style={styles.textSubtitle}>{subtitle}</Text>
     </View>
     <View style={styles.containerHeaderIcon}>
       <View
         style={{
           ...styles.containerHeaderIconHolder,
-          backgroundColor: renderColor(type),
+          backgroundColor: renderBackgroundColor(type),
         }}>
         <Icon width={20} height={20} name={renderIcon(type)} fill="white" />
       </View>
     </View>
   </View>
 );
-const CRAHistoryItem = ({ title, subtitle, type, onPress, children }) => (
+const NotificationsItem = ({ title, subtitle, type, content }) => (
   <>
     <Card
       style={styles.card}
-      header={() => <Header title={title} subtitle={subtitle} type={type} />}
-      onPress={onPress}>
-      <View style={styles.content}>{children}</View>
+      header={() => <Header title={title} subtitle={subtitle} type={type} />}>
+      {content ? <Text>{content}</Text> : <Text>No content</Text>}
     </Card>
     <M v1 />
   </>
 );
-export default CRAHistoryItem;
+export default NotificationsItem;

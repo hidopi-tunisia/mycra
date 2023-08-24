@@ -6,16 +6,12 @@ const styles = StyleSheet.create({
     padding: 8,
     flexDirection: 'row',
   },
-  content: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-  },
   containerHeaderTitles: {
     flex: 1,
   },
   textSubtitle:{
-    fontSize: 14,
-    fontWeight: "800"
+    fontSize: 12,
+    fontWeight: "400"
   },
   containerHeaderIcon: {
     justifyContent: 'center',

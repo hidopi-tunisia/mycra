@@ -2,7 +2,7 @@ import { ScrollView } from 'react-native';
 import { NotificationsItem, M } from '@components';
 import styles from './index.styles';
 
-const SettingsScreen = () => (
+const NotificationsScreen = () => (
   <ScrollView style={styles.container}>
     <M v3 />
     <NotificationsItem
@@ -51,4 +51,4 @@ const SettingsScreen = () => (
   </ScrollView>
 );
 
-export default SettingsScreen;
+export default NotificationsScreen;
