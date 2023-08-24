@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native';
 import { View, Image, Linking, ScrollView } from 'react-native';
 import { SettingsItem, M } from '@components';
 import { Divider, Text, Spinner } from '@ui-kitten/components';
@@ -14,6 +15,7 @@ import { getProfile } from '@domain/profile';
 import { getStatusBackground } from './index.helpers';
 
 const SettingsScreen = ({ onSignOut }) => {
+  const navigation = useNavigation();
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -31,6 +33,9 @@ const SettingsScreen = ({ onSignOut }) => {
     };
     fn();
   }, []);
+  const handleCRAHistory = () => {
+    navigation.navigate('CRA History');
+  };
   const handleTerms = () => {
     const fn = async () => {
       await Linking.openURL(TERMS_AND_CONDITIONS_URL);
@@ -91,6 +96,12 @@ const SettingsScreen = ({ onSignOut }) => {
         )}
       </View>
       <ScrollView showsVerticalScrollIndicator={false}>
+        <SettingsItem
+          title="CRA History"
+          description="View your past CRAs"
+          icon="clock-outline"
+          onPress={handleCRAHistory}
+        />
         <SettingsItem
           title="Reset password"
           description="Start a reset password challange"

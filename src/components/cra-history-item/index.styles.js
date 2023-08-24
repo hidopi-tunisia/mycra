@@ -6,10 +6,6 @@ const styles = StyleSheet.create({
     padding: 8,
     flexDirection: 'row',
   },
-  content: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-  },
   containerHeaderTitles: {
     flex: 1,
   },

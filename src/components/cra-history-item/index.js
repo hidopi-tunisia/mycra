@@ -4,10 +4,10 @@ import { M } from '../index';
 
 import styles from './index.styles';
 
-const renderIcon = type => {
+const renderIcon = (type) => {
   switch (type) {
     case 'success':
-      return 'checkmark-circle-2-outline';
+      return 'bell-outline';
     case 'info':
       return 'info-outline';
     case 'warning':
@@ -21,7 +21,7 @@ const renderIcon = type => {
   }
 };
 
-const renderBackgroundColor = type => {
+const renderBackgroundColor = (type) => {
   switch (type) {
     case 'success':
       return '#4CAF50cc';
@@ -42,9 +42,7 @@ const Header = ({ title, subtitle, type }) => (
   <View style={styles.containerHeader}>
     <View style={styles.containerHeaderTitles}>
       <Text category="h6">{title}</Text>
-      <Text category="s1" style={styles.textSubtitle}>
-        {subtitle}
-      </Text>
+      <Text category="s1" style={styles.textSubtitle}>{subtitle}</Text>
     </View>
     <View style={styles.containerHeaderIcon}>
       <View
@@ -57,14 +55,14 @@ const Header = ({ title, subtitle, type }) => (
     </View>
   </View>
 );
-const CRAHistoryItem = ({ title, subtitle, type, children }) => (
+const NotificationsItem = ({ title, subtitle, type, content }) => (
   <>
     <Card
       style={styles.card}
       header={() => <Header title={title} subtitle={subtitle} type={type} />}>
-      <View style={styles.content}>{children}</View>
+      {content ? <Text>{content}</Text> : <Text>No content</Text>}
     </Card>
     <M v1 />
   </>
 );
-export default CRAHistoryItem;
+export default NotificationsItem;

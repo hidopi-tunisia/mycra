@@ -1,8 +1,11 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createStackNavigator } from '@react-navigation/stack';
 import { HomeScreen, NotificationsScreen, SettingsScreen } from '@screens';
+import CRAHistoryScreen from '@screens/settings/cra-history';
 import { Icon } from '@ui-kitten/components';
 
 const Tab = createBottomTabNavigator();
+const Settings = createStackNavigator();
 
 const HomeIcon = () => <Icon width={20} height={20} name="home" />;
 const NotificationsIcon = () => <Icon width={20} height={20} name="bell" />;
@@ -12,8 +15,9 @@ const SettingsIcon = () => (
 
 const TabNavigators = ({ onSignOut }) => (
   <Tab.Navigator screenOptions={{ headerShown: false }}>
+          <Tab.Screen name="CRA History" component={CRAHistoryScreen} />
     <Tab.Screen
-      name="Home"
+      name="TabHome"
       component={HomeScreen}
       options={{
         tabBarLabel: 'Home',
@@ -21,7 +25,7 @@ const TabNavigators = ({ onSignOut }) => (
       }}
     />
     <Tab.Screen
-      name="Notifications"
+      name="TabNotifications"
       component={NotificationsScreen}
       options={{
         tabBarLabel: 'Notificaitons',
@@ -29,12 +33,21 @@ const TabNavigators = ({ onSignOut }) => (
       }}
     />
     <Tab.Screen
-      name="Settings"
+      name="TabSettings"
       options={{
         tabBarLabel: 'Settings',
         tabBarIcon: SettingsIcon,
       }}>
-      {props => <SettingsScreen {...props} onSignOut={onSignOut} />}
+      {props => (
+        <Settings.Navigator>
+          <Settings.Screen
+            name="Settings"
+            options={{ headerShown: false }}
+            component={SettingsScreen}
+          />
+          <Settings.Screen name="CRA History" component={CRAHistoryScreen} />
+        </Settings.Navigator>
+      )}
     </Tab.Screen>
   </Tab.Navigator>
 );
