@@ -8,7 +8,7 @@ import {
   HELP_URL,
   SUPPORT_EMAIL,
   APP_VERSION,
-} from '@utils/constants';
+} from '@constants';
 import styles from './index.styles';
 import { useEffect, useState } from 'react';
 import { getProfile } from '@domain/profile';

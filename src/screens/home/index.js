@@ -1,12 +1,14 @@
 import { useEffect, useState, useCallback } from 'react';
 import { View, TouchableOpacity, Alert } from 'react-native';
 import { Button, Layout, Text } from '@ui-kitten/components';
-import { Calendar, M } from '@components';
+import { Calendar, ButtomSheet, WorkdaysCollection, M } from '@components';
+import { WORKDAYS_ITEMS } from '@constants';
 import { getToday, getDaysInMonth } from '@utils/dates';
 import styles from './index.styles';
 import { postCRA } from '@domain/cra';
 import Modal from '@components/modals';
 import { getHolidays } from '@domain/days';
+import Colors from '@utils/colors';
 const HomeScreen = () => {
   const [markedDates, setMarkedDates] = useState({});
   const [selectedCount, setSelectedCount] = useState(null);
@@ -40,6 +42,7 @@ const HomeScreen = () => {
           } else {
             marked[days[i]] = {
               selected: true,
+              selectedColor: Colors.BLUE_PRIMARY,
             };
           }
         }
@@ -86,15 +89,27 @@ const HomeScreen = () => {
       if (markedDates[day.dateString] && markedDates[day.dateString].selected) {
         setMarkedDates({
           ...markedDates,
-          [day.dateString]: { selected: false },
+          [day.dateString]: {
+            selected: false,
+            customStyles: styles.calendarDayOff,
+            reason: 'CP',
+          },
         });
       } else {
         setMarkedDates({
           ...markedDates,
-          [day.dateString]: { selected: true },
+          [day.dateString]: {
+            selected: true,
+            selectedColor: Colors.BLUE_PRIMARY,
+          },
         });
       }
     }
+  };
+  const [workday, setWorkday] = useState(null);
+  const handleLongPress = day => {
+    setWorkday(day);
+    refBottomSheet.open();
   };
   const handlePressPositive = () => {
     const fn = async () => {
@@ -139,7 +154,11 @@ const HomeScreen = () => {
       if (markedDates[d].holiday || markedDates[d].weekend) {
         marked[d] = { ...markedDates[d], selected: false };
       } else {
-        marked[d] = { ...markedDates[d], selected: true };
+        marked[d] = {
+          ...markedDates[d],
+          selected: true,
+          selectedColor: Colors.BLUE_PRIMARY,
+        };
       }
     });
     setMarkedDates(marked);
@@ -151,7 +170,13 @@ const HomeScreen = () => {
   const handlePressDeselectAllPositive = () => {
     let marked = {};
     Object.keys(markedDates).forEach(d => {
-      marked[d] = { ...markedDates[d], selected: false };
+      if (!markedDates[d].holiday && !markedDates[d].weekend) {
+        marked[d] = {
+          ...markedDates[d],
+          selected: false,
+          customStyles: styles.calendarDayOff,
+        };
+      }
     });
     setMarkedDates(marked);
     setModalDeselectAllVisible(false);
@@ -170,6 +195,51 @@ const HomeScreen = () => {
     setWeekend(null);
     setModalWeekendVisible(false);
   };
+  const [refBottomSheet, setRefBottomSheet] = useState(null);
+  const handleRefBottomSheet = ref => {
+    setRefBottomSheet(ref);
+  };
+  const handlePressWorkdaysItem = item => {
+    console.log(workday);
+    console.log(item);
+    if (item.type === 'worked') {
+      setMarkedDates({
+        ...markedDates,
+        [workday.dateString]: {
+          selected: true,
+          selectedColor: Colors.BLUE_PRIMARY,
+        },
+      });
+    } else if (item.type === 'half') {
+      setMarkedDates({
+        ...markedDates,
+        [workday.dateString]: {
+          selected: true,
+          customStyles: styles.calendarHalfDay,
+        },
+      });
+    } else if (item.type === 'remote') {
+      setMarkedDates({
+        ...markedDates,
+        [workday.dateString]: {
+          selected: true,
+          customStyles: styles.calendarDayRemote,
+          reason: 'CP',
+        },
+      });
+    } else if (item.type === 'off') {
+      setMarkedDates({
+        ...markedDates,
+        [workday.dateString]: {
+          selected: false,
+          customStyles: styles.calendarDayOff,
+          reason: item. value,
+        },
+      });
+    }
+    setWorkday(null);
+    refBottomSheet.close();
+  };
   return (
     <Layout style={styles.root}>
       <View style={styles.containerDescription}>
@@ -179,7 +249,11 @@ const HomeScreen = () => {
         </Text>
       </View>
       <View>
-        <Calendar onSelect={handleSelected} markedDates={markedDates} />
+        <Calendar
+          markedDates={markedDates}
+          onDayPress={handleSelected}
+          onDayLongPress={handleLongPress}
+        />
         <M v4 />
         <View style={styles.containerButtons}>
           <TouchableOpacity
@@ -247,6 +321,13 @@ const HomeScreen = () => {
         onPressPositive={handlePressWeekendPositive}>
         {weekend && <Text>{weekend.date} is a weekend.</Text>}
       </Modal>
+      <ButtomSheet onCallbackRef={handleRefBottomSheet}>
+         {workday && <WorkdaysCollection
+          items={WORKDAYS_ITEMS}
+          workday={workday}
+          onPress={handlePressWorkdaysItem}
+        />}
+      </ButtomSheet>
     </Layout>
   );
 };

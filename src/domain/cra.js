@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { ENDPOINT } from '@utils/constants';
+import { ENDPOINT } from '@constants';
 import { getAuthorization } from './auth';
 
 const postCRA = async (payload) => {

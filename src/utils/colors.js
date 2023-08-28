@@ -11,5 +11,7 @@ const Colors = {
   GREEN_DARK_PRIMARY: '#388E3C',
   BLUE_PRIMARY: '#2196f3',
   BLUE_DARK_PRIMARY: '#2196f3',
+  PURPLE_PRIMARY: '#9C27B0',
+  PURPLE_DARK_PRIMARY: '#7B1FA2',
 };
 export default Colors;

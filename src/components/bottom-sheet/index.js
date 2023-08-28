@@ -1,21 +1,16 @@
 import React, { useCallback } from 'react';
 import RBSheet from 'react-native-raw-bottom-sheet';
+import styles from './index.styles';
 
-const ButtomSheet = ({ onCallbackRef, children }) => {
+const ButtomSheet = ({ height = 300, onCallbackRef, children }) => {
   const ref = useCallback(onCallbackRef, []);
   return (
     <RBSheet
       ref={ref}
+      height={height}
       closeOnDragDown={true}
-      closeOnPressMask={false}
-      customStyles={{
-        wrapper: {
-          backgroundColor: 'transparent',
-        },
-        draggableIcon: {
-          backgroundColor: '#000',
-        },
-      }}>
+      closeOnPressMask={true}
+      customStyles={styles}>
       {children}
     </RBSheet>
   );

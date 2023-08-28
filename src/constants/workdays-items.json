@@ -1,0 +1,70 @@
+{
+  "worked": [
+    {
+      "text": "Travaillé",
+      "value": "worked",
+      "type": "worked",
+      "backgroundColor": "#2196f3",
+      "borderColor": "#2196f3",
+      "color": "white"
+    },
+    {
+      "text": "Demi-journée",
+      "value": "half",
+      "type": "half",
+      "backgroundColor": "white",
+      "borderColor": "#2196f3",
+      "color": "#2196f3"
+    },
+    {
+      "text": "Télétravail",
+      "value": "remote",
+      "type": "remote",
+      "backgroundColor": "#9C27B0",
+      "borderColor": "#9C27B0",
+      "color": "white"
+    }
+  ],
+  "off": [
+    {
+      "text": "gatta3t",
+      "value": "Value 4",
+      "type": "off",
+      "backgroundColor": "transparent",
+      "borderColor": "#F44336",
+      "color": "#F44336"
+    },
+    {
+      "text": "mridh",
+      "value": "Value 5",
+      "type": "off",
+      "backgroundColor": "transparent",
+      "borderColor": "#F44336",
+      "color": "#F44336"
+    },
+    {
+      "text": "ne7chi fih",
+      "value": "Value 6",
+      "type": "off",
+      "backgroundColor": "transparent",
+      "borderColor": "#F44336",
+      "color": "#F44336"
+    },
+    {
+      "text": "nekdheb",
+      "value": "Value 7",
+      "type": "off",
+      "backgroundColor": "transparent",
+      "borderColor": "#F44336",
+      "color": "#F44336"
+    },
+    {
+      "text": "dhareb certificat",
+      "value": "Value 8",
+      "type": "off",
+      "backgroundColor": "transparent",
+      "borderColor": "#F44336",
+      "color": "#F44336"
+    }
+  ]
+}

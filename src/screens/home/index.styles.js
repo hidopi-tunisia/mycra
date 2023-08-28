@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
     padding: 8,
     color: Colors.BLUE_DARK_PRIMARY,
     fontSize: 12,
-    fontWeight: "800"
+    fontWeight: '800',
   },
   calendarDayWeekend: {
     container: {
@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
     },
     text: {
-      color: 'black',
+      color: Colors.GREEN_PRIMARY,
     },
   },
   calendarDayHoliday: {
@@ -51,7 +51,38 @@ const styles = StyleSheet.create({
     },
     text: {
       color: Colors.WHITE,
-    }
+    },
+  },
+  calendarHalfDay: {
+    container: {
+      backgroundColor: Colors.WHITE,
+      borderWidth: 2,
+      borderColor: Colors.BLUE_PRIMARY,
+      justifyContent: 'center',
+    },
+    text: {
+      color: Colors.BLUE_PRIMARY,
+    },
+  },
+  calendarDayRemote: {
+    container: {
+      backgroundColor: Colors.PURPLE_PRIMARY,
+      justifyContent: 'center',
+    },
+    text: {
+      color: Colors.WHITE,
+    },
+  },
+  calendarDayOff: {
+    container: {
+      backgroundColor: Colors.WHITE,
+      justifyContent: 'center',
+      borderWidth: 2,
+      borderColor: Colors.RED_PRIMARY
+    },
+    text: {
+      color: Colors.RED_PRIMARY,
+    },
   },
 });
 

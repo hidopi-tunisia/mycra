@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { getAuthorization } from './auth';
-import { ENDPOINT } from '@utils/constants';
+import { ENDPOINT } from '@constants';
 
 const getProfile = async () => {
   const { uid } = await getAuthorization();
