@@ -51,13 +51,19 @@ const Header = ({ title, subtitle, type }) => (
     </View>
   </View>
 );
-const CRAHistoryItem = ({ title, subtitle, type, onPress, children }) => (
+const CRAHistoryItem = ({
+  title,
+  subtitle,
+  type,
+  content= "No content",
+  onPress,
+}) => (
   <>
     <Card
       style={styles.card}
       header={() => <Header title={title} subtitle={subtitle} type={type} />}
       onPress={onPress}>
-      <View style={styles.content}>{children}</View>
+      {content && <Text style={styles.content}>{content}</Text>}
     </Card>
     <M v1 />
   </>

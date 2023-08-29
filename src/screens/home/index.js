@@ -3,7 +3,7 @@ import { View, TouchableOpacity } from 'react-native';
 import { Button, Icon, Layout, Text } from '@ui-kitten/components';
 import {
   Calendar,
-  ButtomSheet,
+  BottomSheet,
   WorkdaysCollection,
   WorkdaysTypes,
   M,
@@ -193,7 +193,7 @@ const HomeScreen = () => {
     setWorkday(null);
     refBottomSheet.open();
   };
-  const handlePressButtomSheetClose = () => {
+  const handlePressBottomSheetClose = () => {
     refBottomSheet.close();
   };
   const handlePressHolidayPositive = () => {
@@ -484,14 +484,14 @@ const HomeScreen = () => {
           </View>
         </View>
       </Modal>
-      <ButtomSheet height={480} onCallbackRef={handleRefBottomSheet}>
+      <BottomSheet height={480} onCallbackRef={handleRefBottomSheet}>
         <WorkdaysCollection
           items={WORKDAYS_ITEMS}
           workday={workday}
           onPress={handlePressWorkdaysItem}
-          onPressClose={handlePressButtomSheetClose}
+          onPressClose={handlePressBottomSheetClose}
         />
-      </ButtomSheet>
+      </BottomSheet>
     </Layout>
   );
 };

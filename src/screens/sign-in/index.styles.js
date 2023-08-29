@@ -17,7 +17,6 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   image: {
-    backgroundColor: 'red',
     height: 72,
     width: 72,
   },

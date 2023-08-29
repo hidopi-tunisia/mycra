@@ -96,7 +96,9 @@ const SettingsScreen = ({ onSignOut }) => {
         )}
       </View>
       <View style={{ borderRadius: 24, padding: 8, justifyContent: 'center' }}>
-        <ScrollView showsVerticalScrollIndicator={false}  style={{ backgroundColor: 'white', borderRadius: 24, padding: 8 }}>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          style={{ backgroundColor: 'white', borderRadius: 24, padding: 8 }}>
           <SettingsItem
             title="CRA History"
             description="View your past CRAs"
