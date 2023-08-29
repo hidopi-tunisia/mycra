@@ -1,4 +1,4 @@
-import Colors from "@utils/colors";
+import Colors from "@constants/colors";
 
 export const getStatusBackground = status => {
   if (status === 'active') {

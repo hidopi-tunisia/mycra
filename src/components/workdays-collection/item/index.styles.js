@@ -8,10 +8,9 @@ const styles = StyleSheet.create({
     borderRadius: 24,
     padding: 4,
     paddingHorizontal: 16,
-    margin: 2
-  },
-  text: {
-    color: Colors.WHITE,
+    margin: 4,
+    borderWidth: 2,
+    flexDirection: "row"
   },
 });
 export default styles;

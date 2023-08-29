@@ -1,0 +1,150 @@
+{
+  "worked": [
+    {
+      "text": "Travaillé",
+      "value": "worked",
+      "type": "worked",
+      "backgroundColor": "#2196f3",
+      "borderColor": "#2196f3",
+      "color": "white"
+    },
+    {
+      "text": "Demi-journée",
+      "value": "half",
+      "type": "half",
+      "backgroundColor": "white",
+      "borderColor": "#2196f3",
+      "color": "#2196f3"
+    },
+    {
+      "text": "Télétravail",
+      "value": "remote",
+      "type": "remote",
+      "backgroundColor": "#9C27B0",
+      "borderColor": "#9C27B0",
+      "color": "white"
+    }
+  ],
+  "off": [
+    {
+      "text": "Congé payé",
+      "value": "CP",
+      "type": "off",
+      "backgroundColor": "transparent",
+      "borderColor": "#F44336",
+      "color": "#F44336"
+    },
+    {
+      "text": "Absence",
+      "value": "Absence",
+      "type": "off",
+      "backgroundColor": "transparent",
+      "borderColor": "#F44336",
+      "color": "#F44336"
+    },
+    {
+      "text": "Arrêt maladie",
+      "value": "Arrêt maladie",
+      "type": "off",
+      "backgroundColor": "transparent",
+      "borderColor": "#F44336",
+      "color": "#F44336"
+    },
+    {
+      "text": "Absence autorisée non rémunérée",
+      "value": "Absence autorisée non rémunérée",
+      "type": "off",
+      "backgroundColor": "transparent",
+      "borderColor": "#F44336",
+      "color": "#F44336"
+    },
+    {
+      "text": "Absence non autorisée non rémunérée",
+      "value": "Absence non autorisée non rémunérée",
+      "type": "off",
+      "backgroundColor": "transparent",
+      "borderColor": "#F44336",
+      "color": "#F44336"
+    },
+    {
+      "text": "Déménagement",
+      "value": "Déménagement",
+      "type": "off",
+      "backgroundColor": "transparent",
+      "borderColor": "#F44336",
+      "color": "#F44336"
+    },
+    {
+      "text": "Examen médical prénatal",
+      "value": "Examen médical prénatal",
+      "type": "off",
+      "backgroundColor": "transparent",
+      "borderColor": "#F44336",
+      "color": "#F44336"
+    },
+    {
+      "text": "Mariage enfant",
+      "value": "Mariage enfant",
+      "type": "off",
+      "backgroundColor": "transparent",
+      "borderColor": "#F44336",
+      "color": "#F44336"
+    },
+    {
+      "text": "Mariage-Pacs",
+      "value": "Mariage-Pacs",
+      "type": "off",
+      "backgroundColor": "transparent",
+      "borderColor": "#F44336",
+      "color": "#F44336"
+    },
+    {
+      "text": "Maternité",
+      "value": "Maternité",
+      "type": "off",
+      "backgroundColor": "transparent",
+      "borderColor": "#F44336",
+      "color": "#F44336"
+    },
+    {
+      "text": "Naissance",
+      "value": "Naissance",
+      "type": "off",
+      "backgroundColor": "transparent",
+      "borderColor": "#F44336",
+      "color": "#F44336"
+    },
+    {
+      "text": "Paternité",
+      "value": "Paternité",
+      "type": "off",
+      "backgroundColor": "transparent",
+      "borderColor": "#F44336",
+      "color": "#F44336"
+    },
+    {
+      "text": "Soins enfants",
+      "value": "Soins enfants",
+      "type": "off",
+      "backgroundColor": "transparent",
+      "borderColor": "#F44336",
+      "color": "#F44336"
+    },
+    {
+      "text": "Accident de travail-trajet",
+      "value": "Accident de travail-trajet",
+      "type": "off",
+      "backgroundColor": "transparent",
+      "borderColor": "#F44336",
+      "color": "#F44336"
+    },
+    {
+      "text": "Autre",
+      "value": "Autre",
+      "type": "off",
+      "backgroundColor": "transparent",
+      "borderColor": "#F44336",
+      "color": "#F44336"
+    }
+  ]
+}

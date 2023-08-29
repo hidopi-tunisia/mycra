@@ -1,14 +1,13 @@
 import { StyleSheet } from 'react-native';
-import { DefaultTheme } from '@react-navigation/native';
-import Colors from '@utils/colors';
+import Colors from '@constants/colors';
 
 const styles = StyleSheet.create({
   root: {
     flex: 1,
+    backgroundColor: Colors.BLUE_DARK_PRIMARY,
   },
   containerTop: {
     height: 240,
-    backgroundColor: DefaultTheme.colors.primary,
     justifyContent: 'center',
     alignItems: 'center',
   },

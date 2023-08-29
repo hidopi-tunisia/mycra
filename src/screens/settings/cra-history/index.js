@@ -5,7 +5,7 @@ import { Divider, Text, Spinner } from '@ui-kitten/components';
 import { getCRAHistory, getCRAHistory_ } from '@domain/cra';
 import CRAHistoryItem from '@components/notifications-item';
 import Bullet from '@components/bullet';
-import Colors from '@utils/colors';
+import Colors from '@constants/colors';
 import { getStatusType } from './index.helpers';
 
 const CRAHistoryScreen = () => {
