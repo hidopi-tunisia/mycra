@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { View, TouchableOpacity } from 'react-native';
+import { View, TouchableOpacity, Image } from 'react-native';
 import {
   Button,
   Layout,
@@ -10,6 +10,7 @@ import {
 } from '@ui-kitten/components';
 import { M } from '@components';
 import styles from './index.styles';
+import { APP_VERSION } from '@constants';
 
 const SignInScreen = ({ onSignIn }) => {
   const [email, setEmail] = useState('');
@@ -37,19 +38,29 @@ const SignInScreen = ({ onSignIn }) => {
   };
   return (
     <Layout style={styles.root}>
-      <Text style={styles.textTitle} category="h1">
-        Welcome
-      </Text>
-      <Text style={styles.textSubtitle} category="h2">
-        Please sign in using your account
-      </Text>
-      <M v2 />
-      <Card>
+      <View style={styles.top}>
+        <View style={styles.containerImage}>
+          <Image
+            style={styles.image}
+            source={require('../../../assets/logo.jpg')}
+          />
+        </View>
+        <M v3 />
+        <Text style={styles.textTitle} category="h1">
+          Welcome
+        </Text>
+        <Text style={styles.textSubtitle} category="h2">
+          Please sign in using your account
+        </Text>
+        <M v7 />
+      </View>
+      <Card style={styles.card}>
         <Text style={styles.labelEmail} category="label">
           Email
         </Text>
         <M v1 />
         <Input
+          style={styles.input}
           placeholder="john.doe@company.com"
           value={email}
           onChangeText={nextValue => setEmail(nextValue)}
@@ -60,6 +71,7 @@ const SignInScreen = ({ onSignIn }) => {
         </Text>
         <M v1 />
         <Input
+          style={styles.input}
           secureTextEntry
           placeholder="************"
           value={password}
@@ -86,6 +98,8 @@ const SignInScreen = ({ onSignIn }) => {
           </View>
         )}
       </Card>
+      <M v4 />
+      <Text style={styles.textVersion}>Version: {APP_VERSION}</Text>
     </Layout>
   );
 };

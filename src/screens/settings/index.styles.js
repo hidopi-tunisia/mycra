@@ -5,7 +5,7 @@ import Colors from '@constants/colors';
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    backgroundColor: DefaultTheme.colors.primary,
+    backgroundColor: Colors.BLUE_DARK_PRIMARY,
   },
   containerTop: {
     height: 240,
