@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
     color: Colors.BLUE_PRIMARY,
   },
   containerButtons: {
-    justifyContent: 'space-between',
+    justifyContent: 'flex-end',
     flexDirection: 'row',
   },
   buttonSmall: {
@@ -33,20 +33,11 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: '800',
   },
-  calendarDayWeekend: {
+  calendarDayWorked: {
     container: {
-      backgroundColor: Colors.WHITE,
+      backgroundColor: Colors.BLUE_PRIMARY,
       borderWidth: 2,
-      borderColor: Colors.GREEN_PRIMARY,
-      justifyContent: 'center',
-    },
-    text: {
-      color: Colors.GREEN_PRIMARY,
-    },
-  },
-  calendarDayHoliday: {
-    container: {
-      backgroundColor: Colors.GREEN_PRIMARY,
+      borderColor: Colors.BLUE_PRIMARY,
       justifyContent: 'center',
     },
     text: {
@@ -78,10 +69,30 @@ const styles = StyleSheet.create({
       backgroundColor: Colors.WHITE,
       justifyContent: 'center',
       borderWidth: 2,
-      borderColor: Colors.RED_PRIMARY
+      borderColor: Colors.RED_PRIMARY,
     },
     text: {
       color: Colors.RED_PRIMARY,
+    },
+  },
+  calendarDayWeekend: {
+    container: {
+      backgroundColor: Colors.WHITE,
+      borderWidth: 2,
+      borderColor: Colors.GREEN_PRIMARY,
+      justifyContent: 'center',
+    },
+    text: {
+      color: Colors.GREEN_PRIMARY,
+    },
+  },
+  calendarDayHoliday: {
+    container: {
+      backgroundColor: Colors.GREEN_PRIMARY,
+      justifyContent: 'center',
+    },
+    text: {
+      color: Colors.WHITE,
     },
   },
 });

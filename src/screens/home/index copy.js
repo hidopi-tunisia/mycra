@@ -1,13 +1,7 @@
 import { useEffect, useState, useCallback } from 'react';
 import { View, TouchableOpacity, Alert } from 'react-native';
 import { Button, Layout, Text } from '@ui-kitten/components';
-import {
-  Calendar,
-  ButtomSheet,
-  WorkdaysCollection,
-  WorkdaysTypes,
-  M,
-} from '@components';
+import { Calendar, ButtomSheet, WorkdaysCollection, WorkdaysTypes, M } from '@components';
 import { WORKDAYS_ITEMS } from '@constants';
 import { getToday, getDaysInMonth } from '@utils/dates';
 import styles from './index.styles';
@@ -42,13 +36,15 @@ const HomeScreen = () => {
           const today = new Date(days[i]).getDay();
           if (today === 6 || today === 0) {
             marked[days[i]] = {
-              type: WorkdaysTypes.WEEKEND,
+              weekend: true,
+              selected: false,
               customStyles: styles.calendarDayWeekend,
             };
           } else {
             marked[days[i]] = {
+              selected: true,
               type: WorkdaysTypes.WORKED,
-              customStyles: styles.calendarDayWorked,
+              selectedColor: Colors.BLUE_PRIMARY,
             };
           }
         }
@@ -57,16 +53,13 @@ const HomeScreen = () => {
             if (Object.keys(marked)[j] === holidaysDays[i].date) {
               marked[Object.keys(marked)[j]] = {
                 ...marked[Object.keys(marked)[j]],
-                type: WorkdaysTypes.HOLIDAY,
-                payload: {
-                  value: holidaysDays[i].nom_jour_ferie,
-                },
+                holiday: holidaysDays[i].nom_jour_ferie,
+                selected: false,
                 customStyles: styles.calendarDayHoliday,
               };
             }
           }
         }
-        print(marked);
         setMarkedDates(marked);
       } catch (error) {
         console.log('"ERRRRRR');
@@ -78,43 +71,38 @@ const HomeScreen = () => {
   }, []);
   useEffect(() => {
     const selectedDates = Object.keys(markedDates).filter(
-      d => markedDates[d].type === WorkdaysTypes.WORKED,
+      d => markedDates[d].selected === true,
     );
     setSelectedCount(selectedDates.length);
   }, [markedDates]);
   const handleSelected = day => {
-    if (markedDates[day.dateString].type === WorkdaysTypes.HOLIDAY) {
+    if (markedDates[day.dateString].holiday) {
       setHoliday({
         date: day.dateString,
-        name: markedDates[day.dateString].payload.value,
+        name: markedDates[day.dateString].holiday,
       });
       setModalHolidayVisible(true);
-    } else if (markedDates[day.dateString].type === WorkdaysTypes.WEEKEND) {
+    } else if (markedDates[day.dateString].weekend) {
       setWeekend({
         date: day.dateString,
       });
       setModalWeekendVisible(true);
     } else {
-      if (
-        markedDates[day.dateString] &&
-        markedDates[day.dateString].type === WorkdaysTypes.OFF
-      ) {
+      if (markedDates[day.dateString] && markedDates[day.dateString].selected) {
         setMarkedDates({
           ...markedDates,
           [day.dateString]: {
-            type: WorkdaysTypes.OFF,
-            payload: {
-              value: 'CP',
-            },
+            selected: false,
             customStyles: styles.calendarDayOff,
+            reason: 'CP',
           },
         });
       } else {
         setMarkedDates({
           ...markedDates,
           [day.dateString]: {
-            type: WorkdaysTypes.WORKED,
-            customStyles: styles.calendarDayWorked,
+            selected: true,
+            selectedColor: Colors.BLUE_PRIMARY,
           },
         });
       }
@@ -130,17 +118,21 @@ const HomeScreen = () => {
       try {
         setModalVisible(false);
         const arr = Object.keys(markedDates).map(k => {
-          if (markedDates[k].type === WorkdaysTypes.OFF) {
+          if (
+            markedDates[k].selected === false &&
+            !markedDates[k].weekend &&
+            !markedDates[k].holiday
+          ) {
             return {
               date: k,
-              raison: k.payload.value,
+              raison: 'CP',
             };
           }
         });
         const datesNonTravaillees = arr.filter(e => e !== undefined);
         const payload = { datesNonTravaillees };
         // const { data } = await postCRA(payload);
-        print(payload);
+        console.log(JSON.stringify(data, null, 2));
       } catch (error) {
         console.log('ERROR');
         console.log(error);
@@ -161,11 +153,14 @@ const HomeScreen = () => {
   const handlePressSelectAllPositive = () => {
     let marked = {};
     Object.keys(markedDates).forEach(d => {
-      if (
-        markedDates[d].type !== WorkdaysTypes.HOLIDAY &&
-        markedDates[d].type !== WorkdaysTypes.WEEKEND
-      ) {
-        marked[d] = { ...markedDates[d], type: WorkdaysTypes.WORKED };
+      if (markedDates[d].holiday || markedDates[d].weekend) {
+        marked[d] = { ...markedDates[d], selected: false };
+      } else {
+        marked[d] = {
+          ...markedDates[d],
+          selected: true,
+          selectedColor: Colors.BLUE_PRIMARY,
+        };
       }
     });
     setMarkedDates(marked);
@@ -177,14 +172,11 @@ const HomeScreen = () => {
   const handlePressDeselectAllPositive = () => {
     let marked = {};
     Object.keys(markedDates).forEach(d => {
-      if (
-        markedDates[d].type !== WorkdaysTypes.HOLIDAY &&
-        markedDates[d].type !== WorkdaysTypes.WEEKEND
-      ) {
+      if (!markedDates[d].holiday && !markedDates[d].weekend) {
         marked[d] = {
           ...markedDates[d],
-          type: WorkdaysTypes.OFF,
-          payload: { value: 'CP' },
+          selected: false,
+          customStyles: styles.calendarDayOff,
         };
       }
     });
@@ -192,8 +184,10 @@ const HomeScreen = () => {
     setModalDeselectAllVisible(false);
   };
   const handleSelectAll = () => {
-    setWorkday({ dateString: '584165162' });
-    refBottomSheet.open();
+    setModalSelectAllVisible(true);
+  };
+  const handleDeselectAll = () => {
+    setModalDeselectAllVisible(true);
   };
   const handlePressHolidayPositive = () => {
     setHoliday(null);
@@ -208,92 +202,21 @@ const HomeScreen = () => {
     setRefBottomSheet(ref);
   };
   const handlePressWorkdaysItem = item => {
-    let marked = {};
-    Object.keys(markedDates).forEach(d => {
-      if (
-        markedDates[d].type !== WorkdaysTypes.HOLIDAY &&
-        markedDates[d].type !== WorkdaysTypes.WEEKEND
-      ) {
-        if (item.type === WorkdaysTypes.WORKED) {
-          marked[d] = {
-            type: WorkdaysTypes.WORKED,
-            customStyles: styles.calendarDayWorked,
-          };
-        } else if (item.type === WorkdaysTypes.HALF) {
-          marked[d] = {
-            type: WorkdaysTypes.HALF,
-            customStyles: styles.calendarHalfDay,
-          };
-        } else if (item.type === WorkdaysTypes.REMOTE) {
-          marked[d] = {
-            type: WorkdaysTypes.REMOTE,
-            customStyles: styles.calendarDayRemote,
-          };
-        } else if (item.type === WorkdaysTypes.OFF) {
-          marked[d] = {
-            type: WorkdaysTypes.OFF,
-            payload: { value: item.value },
-            customStyles: styles.calendarDayOff,
-          };
-        }
-      }
-    });
-    setMarkedDates({ ...markedDates, ...marked });
-    /*
-    if (item.type === WorkdaysTypes.WORKED) {
-      setMarkedDates({
-        ...markedDates,
-        [workday.dateString]: {
-          type: WorkdaysTypes.WORKED,
-          customStyles: styles.calendarDayWorked,
-        },
-      });
-    } else if (item.type === 'half') {
-      setMarkedDates({
-        ...markedDates,
-        [workday.dateString]: {
-          type: WorkdaysTypes.HALF,
-          customStyles: styles.calendarHalfDay,
-        },
-      });
-    } else if (item.type === 'remote') {
-      setMarkedDates({
-        ...markedDates,
-        [workday.dateString]: {
-          type: WorkdaysTypes.REMOTE,
-          customStyles: styles.calendarDayRemote,
-        },
-      });
-    } else if (item.type === 'off') {
-      setMarkedDates({
-        ...markedDates,
-        [workday.dateString]: {
-          type: WorkdaysTypes.OFF,
-          payload: { value: item.value },
-          customStyles: styles.calendarDayOff,
-        },
-      });
-    }
-    */
-    setWorkday(null);
-    refBottomSheet.close();
-  };
-  const handlePressWorkdaysItem2 = item => {
     console.log(workday);
     console.log(item);
-    if (item.type === WorkdaysTypes.WORKED) {
+    if (item.type === 'worked') {
       setMarkedDates({
         ...markedDates,
         [workday.dateString]: {
-          type: WorkdaysTypes.WORKED,
-          customStyles: styles.calendarDayWorked,
+          selected: true,
+          selectedColor: Colors.BLUE_PRIMARY,
         },
       });
     } else if (item.type === 'half') {
       setMarkedDates({
         ...markedDates,
         [workday.dateString]: {
-          type: WorkdaysTypes.HALF,
+          selected: true,
           customStyles: styles.calendarHalfDay,
         },
       });
@@ -301,17 +224,18 @@ const HomeScreen = () => {
       setMarkedDates({
         ...markedDates,
         [workday.dateString]: {
-          type: WorkdaysTypes.REMOTE,
+          selected: true,
           customStyles: styles.calendarDayRemote,
+          reason: 'CP',
         },
       });
     } else if (item.type === 'off') {
       setMarkedDates({
         ...markedDates,
         [workday.dateString]: {
-          type: WorkdaysTypes.OFF,
-          payload: { value: item.value },
+          selected: false,
           customStyles: styles.calendarDayOff,
+          reason: item. value,
         },
       });
     }
@@ -338,6 +262,11 @@ const HomeScreen = () => {
             style={styles.buttonSmall}
             onPress={handleSelectAll}>
             <Text style={styles.textButtonSmall}>Select all</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.buttonSmall}
+            onPress={handleDeselectAll}>
+            <Text style={styles.textButtonSmall}>Deselect all</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -395,13 +324,11 @@ const HomeScreen = () => {
         {weekend && <Text>{weekend.date} is a weekend.</Text>}
       </Modal>
       <ButtomSheet onCallbackRef={handleRefBottomSheet}>
-        {workday && (
-          <WorkdaysCollection
-            items={WORKDAYS_ITEMS}
-            workday={workday}
-            onPress={handlePressWorkdaysItem}
-          />
-        )}
+         {workday && <WorkdaysCollection
+          items={WORKDAYS_ITEMS}
+          workday={workday}
+          onPress={handlePressWorkdaysItem}
+        />}
       </ButtomSheet>
     </Layout>
   );

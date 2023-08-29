@@ -7,3 +7,7 @@ import App from './src/app';
 import { name as appName } from './app.json';
 
 AppRegistry.registerComponent(appName, () => App);
+const p = (obj) => {
+  console.log(JSON.stringify(obj, null, 2));
+}
+global.p = p;

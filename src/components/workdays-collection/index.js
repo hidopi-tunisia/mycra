@@ -42,4 +42,13 @@ const WorkdaysCollection = ({ items, workday, onPress }) => (
     </View>
   </ScrollView>
 );
+
+export const WorkdaysTypes = {
+  WORKED: 'worked',
+  HALF: 'half',
+  REMOTE: 'remote',
+  OFF: 'off',
+  WEEKEND: 'weekend',
+  HOLIDAY: 'holiday',
+};
 export default WorkdaysCollection;
