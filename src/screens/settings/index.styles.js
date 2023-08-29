@@ -5,10 +5,10 @@ import Colors from '@constants/colors';
 const styles = StyleSheet.create({
   root: {
     flex: 1,
+    backgroundColor: DefaultTheme.colors.primary,
   },
   containerTop: {
     height: 240,
-    backgroundColor: DefaultTheme.colors.primary,
     justifyContent: 'center',
     alignItems: 'center',
   },

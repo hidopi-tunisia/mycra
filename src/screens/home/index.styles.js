@@ -5,6 +5,7 @@ const styles = StyleSheet.create({
   root: {
     flex: 1,
     backgroundColor: Colors.BLUE_PRIMARY,
+    paddingBottom: 36,
   },
   top: {
     backgroundColor: Colors.BLUE_DARK_PRIMARY,
@@ -44,11 +45,10 @@ const styles = StyleSheet.create({
     flex: 1,
     width: '80%',
     alignSelf: 'center',
-    justifyContent: "center"
+    justifyContent: 'center',
   },
   buttonSubmit: {
     borderRadius: 24,
-    backgroundColor: Colors.BLUE_PRIMARY
   },
   textHeading: {
     fontSize: 28,
