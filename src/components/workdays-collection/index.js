@@ -6,10 +6,10 @@ import { M } from '@components';
 
 const WorkdaysCollection = ({ items, workday, onPress }) => (
   <ScrollView style={{ ...styles.container }}>
-    {console.log(workday)}
-    <Text style={styles.title}>Describe {workday.dateString}</Text>
+    {workday && <Text style={styles.title}>Describe {workday.dateString}</Text>}
+    {!workday && <Text style={styles.title}>Describe all working days</Text>}
     <M v2 />
-    <Text style={styles.subtitle}>Worked day?</Text>
+    <Text style={styles.subtitle}>Worked day{!workday && 's'}</Text>
     <M v1 />
     <View style={styles.containerCollection}>
       {items.worked.map(i => (
@@ -19,13 +19,13 @@ const WorkdaysCollection = ({ items, workday, onPress }) => (
           color={i.color}
           backgroundColor={i.backgroundColor}
           borderColor={i.borderColor}
-          selected={workday.type === i.type}
+          selected={workday && workday.type === i.type}
           onPress={() => onPress(i)}
         />
       ))}
     </View>
     <M v2 />
-    <Text style={styles.subtitle}>Day off?</Text>
+    <Text style={styles.subtitle}>Day{!workday && 's'} off?</Text>
     <M v1 />
     <View style={styles.containerCollection}>
       {items.off.map(i => (
@@ -35,11 +35,16 @@ const WorkdaysCollection = ({ items, workday, onPress }) => (
           color={i.color}
           backgroundColor={i.backgroundColor}
           borderColor={i.borderColor}
-          selected={workday.type === i.type && workday.reason === i.reason}
+          selected={
+            workday &&
+            workday.type === i.type &&
+            workday.payload?.value === i.value
+          }
           onPress={() => onPress(i)}
         />
       ))}
     </View>
+    <M v4 />
   </ScrollView>
 );
 
