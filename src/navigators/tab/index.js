@@ -116,7 +116,7 @@ const TabNavigators = ({ onSignOut }) => (
       name="TabNotifications"
       component={NotificationsScreen}
       options={{
-        tabBarLabel: 'Notificaitons',
+        tabBarLabel: 'Notifications',
         tabBarIcon: NotificationsIcon,
       }}
     />
