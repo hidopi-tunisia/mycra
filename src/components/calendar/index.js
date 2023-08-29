@@ -1,6 +1,10 @@
 import { Calendar as RNCalendar, LocaleConfig } from 'react-native-calendars';
 
-const Calendar = ({ markedDates, onDayPress, onDayLongPress }) => (
+const Calendar = ({
+  markedDates,
+  onDayPress,
+  onDayLongPress,
+}) => (
   <RNCalendar
     hideArrows
     disableMonthChange
@@ -9,6 +13,13 @@ const Calendar = ({ markedDates, onDayPress, onDayLongPress }) => (
     markingType={'custom'}
     onDayPress={onDayPress}
     onDayLongPress={onDayLongPress}
+    theme={{
+      'stylesheet.calendar.header': {
+        header: {
+          height: 0,
+        },
+      },
+    }}
   />
 );
 export default Calendar;

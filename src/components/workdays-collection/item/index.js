@@ -1,7 +1,7 @@
 import { View, TouchableOpacity } from 'react-native';
 import { Text } from '@ui-kitten/components';
 import styles from './index.styles';
-import Colors from '@utils/colors';
+import Colors from '@constants/colors';
 import { Icon } from '@ui-kitten/components';
 import { M } from '@components/miscs/margins';
 

@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 import { DefaultTheme } from '@react-navigation/native';
-import Colors from '@utils/colors';
+import Colors from '@constants/colors';
 
 const styles = StyleSheet.create({
   root: {

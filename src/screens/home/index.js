@@ -1,6 +1,6 @@
-import { useEffect, useState, useCallback } from 'react';
-import { View, TouchableOpacity, Alert } from 'react-native';
-import { Button, Layout, Text } from '@ui-kitten/components';
+import { useEffect, useState } from 'react';
+import { View, TouchableOpacity } from 'react-native';
+import { Button, Icon, Layout, Text } from '@ui-kitten/components';
 import {
   Calendar,
   ButtomSheet,
@@ -14,16 +14,16 @@ import styles from './index.styles';
 import { postCRA } from '@domain/cra';
 import Modal from '@components/modals';
 import { getHolidays } from '@domain/days';
-import Colors from '@utils/colors';
+import Colors from '@constants/colors';
+import moment from 'moment';
 
 const HomeScreen = () => {
   const [markedDates, setMarkedDates] = useState({});
   const [selectedCount, setSelectedCount] = useState(null);
+  const [currentMonth, setCurrentMonth] = useState(moment().format('MMMM'));
   const [holiday, setHoliday] = useState(null);
   const [weekend, setWeekend] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
-  const [modalDeselectAllVisible, setModalDeselectAllVisible] = useState(false);
-  const [modalSelectAllVisible, setModalSelectAllVisible] = useState(false);
   const [modalHolidayVisible, setModalHolidayVisible] = useState(false);
   const [modalWeekendVisible, setModalWeekendVisible] = useState(false);
   useEffect(() => {
@@ -278,40 +278,103 @@ const HomeScreen = () => {
   };
   return (
     <Layout style={styles.root}>
-      <View style={styles.containerDescription}>
-        <Text style={styles.textHeading}>My CRA</Text>
-        <Text>Please fill your CRA before the end of the current month.</Text>
-        <Text style={styles.textDescription}>
-          The month is already prefilled.
-        </Text>
+      <View style={styles.top}>
+        <View style={styles.containerDescription}>
+          <View style={styles.containerHeading}>
+            <Text style={styles.textHeading}>My CRA</Text>
+            <TouchableOpacity onPress={handleSelectAll}>
+              <Icon
+                fill={Colors.WHITE}
+                name="info-outline"
+                width={24}
+                height={24}
+              />
+            </TouchableOpacity>
+          </View>
+          <M v1 />
+          <Text style={styles.textDescription}>
+            Please fill your CRA before the end of the current month.
+          </Text>
+          {/* <Text style={styles.textWarning}>
+            The month is already prefilled.
+          </Text> */}
+        </View>
       </View>
-      <View>
+      <View style={styles.middle}>
         <View style={styles.containerCalendar}>
+          <View style={styles.containerCalendarHeader}>
+            <Text style={styles.containerCalendarTitle}>{currentMonth}</Text>
+            <TouchableOpacity onPress={handleSelectAll}>
+              <Icon
+                fill={Colors.GRAY_PRIMARY}
+                name="done-all-outline"
+                width={24}
+                height={24}
+              />
+            </TouchableOpacity>
+          </View>
+          <M v1 />
           <Calendar
             markedDates={markedDates}
             onDayPress={handleSelected}
             onDayLongPress={handleLongPress}
           />
         </View>
-        <M v4 />
-        <View style={styles.containerButtons}>
-          <TouchableOpacity
-            style={styles.buttonSmall}
-            onPress={handleSelectAll}>
-            <Text style={styles.textButtonSmall}>Select all</Text>
-          </TouchableOpacity>
+        <View style={styles.containerLegends}>
+          <View style={styles.containerLegend}>
+            <View
+              style={{
+                ...styles.shapeLegend,
+                backgroundColor: Colors.BLUE_PRIMARY,
+                borderColor: Colors.BLUE_PRIMARY,
+              }}
+            />
+            <M h1 />
+            <Text>Worked</Text>
+          </View>
+          <View style={styles.containerLegend}>
+            <View
+              style={{
+                ...styles.shapeLegend,
+                backgroundColor: Colors.WHITE,
+                borderColor: Colors.BLUE_PRIMARY,
+              }}
+            />
+            <M h1 />
+            <Text>Half day</Text>
+          </View>
+          <View style={styles.containerLegend}>
+            <View
+              style={{
+                ...styles.shapeLegend,
+                backgroundColor: Colors.PURPLE_PRIMARY,
+                borderColor: Colors.PURPLE_PRIMARY,
+              }}
+            />
+            <M h1 />
+            <Text>Remote</Text>
+          </View>
+          <View style={styles.containerLegend}>
+            <View
+              style={{
+                ...styles.shapeLegend,
+                backgroundColor: Colors.WHITE,
+                borderColor: Colors.RED_PRIMARY,
+              }}
+            />
+            <M h1 />
+            <Text>Absent</Text>
+          </View>
         </View>
-      </View>
-      <View>
-        <Button
-          style={styles.buttonSubmit}
-          status="primary"
-          onPress={handleSubmit}>
-          Submit
-        </Button>
-        <Text style={styles.textSelectedDays}>
-          Selected days ({selectedCount})
-        </Text>
+        <M v2 />
+        <View style={styles.containerButton}>
+          <Button
+            style={styles.buttonSubmit}
+            status="primary"
+            onPress={handleSubmit}>
+            Submit
+          </Button>
+        </View>
       </View>
       <Modal
         title="Submit days?"

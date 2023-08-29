@@ -4,50 +4,10 @@ import { StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    backgroundColor: Colors.BLUE_PRIMARY,
+    backgroundColor: Colors.GRAY_LIGHT_PRIMARY,
   },
   top: {
-    backgroundColor: Colors.BLUE_DARK_PRIMARY,
-    height: '40%',
-    borderBottomLeftRadius: 48,
-    borderBottomRightRadius: 48,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  containerDescription: {
-    width: '80%',
-    alignSelf: 'center',
-  },
-  containerHeading: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  containerLegends: {
-    width: '90%',
-    alignSelf: 'center',
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    flexWrap: 'wrap',
-  },
-  containerLegend: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  shapeLegend: {
-    width: 16,
-    height: 16,
-    borderRadius: 8,
-    borderWidth: 2,
-  },
-  containerButton: {
-    flex: 1,
-    width: '80%',
-    alignSelf: 'center',
-    justifyContent: "center"
-  },
-  buttonSubmit: {
-    borderRadius: 24,
+    backgroundColor: "red"
   },
   textHeading: {
     fontSize: 28,
@@ -55,38 +15,33 @@ const styles = StyleSheet.create({
     color: Colors.WHITE,
   },
   textDescription: {
-    color: Colors.WHITE,
-  },
-  textWarning: {
-    color: Colors.YELLOW_DARK_PRIMARY,
-    textAlign: 'center',
-    borderColor: Colors.YELLOW_DARK_PRIMARY,
-    borderWidth: 2,
-    padding: 6,
-    borderRadius: 16,
-  },
-  middle: {
-    backgroundColor: Colors.WHITE,
-    height: '60%',
-    borderRadius: 48,
-    alignSelf: 'center',
-    width: '90%',
-    bottom: 48,
+    fontWeight: '700',
+    color: Colors.BLUE_PRIMARY,
   },
   containerCalendar: {
-    backgroundColor: 'transparent',
+    backgroundColor: Colors.WHITE,
     padding: 16,
+    borderRadius: 16,
   },
-  containerCalendarHeader: {
-    paddingHorizontal: 16,
+  containerButtons: {
+    justifyContent: 'flex-end',
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
   },
-  containerCalendarTitle: {
+  buttonSmall: {
+    padding: 8,
+  },
+  textButtonSmall: {
+    color: Colors.GRAY_SECONDARY_TEXT,
+    fontSize: 14,
+  },
+  buttonSubmit: {
+    borderRadius: 24,
+  },
+  textSelectedDays: {
+    padding: 8,
     color: Colors.BLUE_DARK_PRIMARY,
-    fontSize: 22,
-    fontWeight: '900',
+    fontSize: 12,
+    fontWeight: '800',
   },
   calendarDayWorked: {
     container: {
