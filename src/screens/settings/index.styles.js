@@ -1,5 +1,4 @@
 import { StyleSheet } from 'react-native';
-import { DefaultTheme } from '@react-navigation/native';
 import Colors from '@constants/colors';
 
 const styles = StyleSheet.create({

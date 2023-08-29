@@ -42,7 +42,7 @@ const SignInScreen = ({ onSignIn }) => {
         <View style={styles.containerImage}>
           <Image
             style={styles.image}
-            source={require('../../../assets/logo.jpg')}
+            source={require('@assets/logo.jpg')}
           />
         </View>
         <M v3 />

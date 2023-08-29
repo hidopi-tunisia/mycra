@@ -1,4 +1,3 @@
-import { M } from '@components/index';
 import Colors from '@constants/colors';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
