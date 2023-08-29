@@ -21,8 +21,7 @@ const SettingsIcon = props => (
 );
 const MyTabBar = ({ state, descriptors, navigation }) => {
   return (
-    <View
-      style={styles.root}>
+    <View style={styles.root}>
       {state.routes.map((route, index) => {
         const { options } = descriptors[route.key];
         const label =
@@ -54,6 +53,7 @@ const MyTabBar = ({ state, descriptors, navigation }) => {
 
         return (
           <TouchableOpacity
+            key={route.name}
             accessibilityRole="button"
             accessibilityStates={isFocused ? ['selected'] : []}
             accessibilityLabel={options.tabBarAccessibilityLabel}
