@@ -32,7 +32,7 @@ const Modal = ({
     <View style={styles.containerButtons}>
       {onPressNegative && (
         <Button
-          style={styles.buttonPositive}
+          style={styles.buttonNegative}
           status="control"
           onPress={onPressNegative}>
           {negativeText}

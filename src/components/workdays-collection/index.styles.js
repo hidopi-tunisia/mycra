@@ -1,4 +1,3 @@
-import Colors from '@constants/colors';
 import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
@@ -6,10 +5,14 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 8,
   },
+  containerTitle: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
   title: {
     fontSize: 20,
     fontWeight: '900',
-    textAlign: "center"
   },
   subtitle: {
     fontSize: 14,

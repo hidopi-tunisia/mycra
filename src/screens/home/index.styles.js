@@ -48,6 +48,7 @@ const styles = StyleSheet.create({
   },
   buttonSubmit: {
     borderRadius: 24,
+    backgroundColor: Colors.BLUE_PRIMARY
   },
   textHeading: {
     fontSize: 28,

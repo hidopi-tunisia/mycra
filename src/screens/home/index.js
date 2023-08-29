@@ -26,6 +26,8 @@ const HomeScreen = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [modalHolidayVisible, setModalHolidayVisible] = useState(false);
   const [modalWeekendVisible, setModalWeekendVisible] = useState(false);
+  const [modalHelpVisible, setModalHelpVisible] = useState(false);
+
   useEffect(() => {
     const fn = async () => {
       try {
@@ -66,7 +68,6 @@ const HomeScreen = () => {
             }
           }
         }
-        print(marked);
         setMarkedDates(marked);
       } catch (error) {
         console.log('"ERRRRRR');
@@ -192,6 +193,9 @@ const HomeScreen = () => {
     setWorkday(null);
     refBottomSheet.open();
   };
+  const handlePressButtomSheetClose = () => {
+    refBottomSheet.close();
+  };
   const handlePressHolidayPositive = () => {
     setHoliday(null);
     setModalHolidayVisible(false);
@@ -282,7 +286,7 @@ const HomeScreen = () => {
         <View style={styles.containerDescription}>
           <View style={styles.containerHeading}>
             <Text style={styles.textHeading}>My CRA</Text>
-            <TouchableOpacity onPress={handleSelectAll}>
+            <TouchableOpacity onPress={() => setModalHelpVisible(true)}>
               <Icon
                 fill={Colors.WHITE}
                 name="info-outline"
@@ -402,11 +406,90 @@ const HomeScreen = () => {
         onPressPositive={handlePressWeekendPositive}>
         {weekend && <Text>{weekend.date} is a weekend.</Text>}
       </Modal>
+      <Modal
+        title="Help"
+        type="info"
+        visible={modalHelpVisible}
+        onPressPositive={() => setModalHelpVisible(false)}>
+        <Text>Fill your working days accordingly.</Text>
+        <Text>Long press on a day to view more options.</Text>
+        <M v2 />
+        <Text>Legend:</Text>
+        <View style={styles.containerLegends}>
+          <View style={styles.containerLegend}>
+            <View
+              style={{
+                ...styles.shapeLegend,
+                backgroundColor: Colors.BLUE_PRIMARY,
+                borderColor: Colors.BLUE_PRIMARY,
+              }}
+            />
+            <M h1 />
+            <Text>Worked</Text>
+          </View>
+          <View style={styles.containerLegend}>
+            <View
+              style={{
+                ...styles.shapeLegend,
+                backgroundColor: Colors.WHITE,
+                borderColor: Colors.BLUE_PRIMARY,
+              }}
+            />
+            <M h1 />
+            <Text>Half day</Text>
+          </View>
+          <View style={styles.containerLegend}>
+            <View
+              style={{
+                ...styles.shapeLegend,
+                backgroundColor: Colors.PURPLE_PRIMARY,
+                borderColor: Colors.PURPLE_PRIMARY,
+              }}
+            />
+            <M h1 />
+            <Text>Remote</Text>
+          </View>
+          <View style={styles.containerLegend}>
+            <View
+              style={{
+                ...styles.shapeLegend,
+                backgroundColor: Colors.WHITE,
+                borderColor: Colors.RED_PRIMARY,
+              }}
+            />
+            <M h1 />
+            <Text>Absent</Text>
+          </View>
+          <View style={styles.containerLegend}>
+            <View
+              style={{
+                ...styles.shapeLegend,
+                backgroundColor: Colors.WHITE,
+                borderColor: Colors.GREEN_PRIMARY,
+              }}
+            />
+            <M h1 />
+            <Text>Weekend</Text>
+          </View>
+          <View style={styles.containerLegend}>
+            <View
+              style={{
+                ...styles.shapeLegend,
+                backgroundColor: Colors.GREEN_PRIMARY,
+                borderColor: Colors.GREEN_PRIMARY,
+              }}
+            />
+            <M h1 />
+            <Text>Holiday</Text>
+          </View>
+        </View>
+      </Modal>
       <ButtomSheet height={480} onCallbackRef={handleRefBottomSheet}>
         <WorkdaysCollection
           items={WORKDAYS_ITEMS}
           workday={workday}
           onPress={handlePressWorkdaysItem}
+          onPressClose={handlePressButtomSheetClose}
         />
       </ButtomSheet>
     </Layout>

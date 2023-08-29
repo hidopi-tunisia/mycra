@@ -1,13 +1,26 @@
-import { View, ScrollView } from 'react-native';
-import { Text } from '@ui-kitten/components';
+import { View, ScrollView, TouchableOpacity } from 'react-native';
+import { Text, Icon } from '@ui-kitten/components';
 import styles from './index.styles';
 import Item from './item';
 import { M } from '@components';
+import Colors from '@constants/colors';
 
-const WorkdaysCollection = ({ items, workday, onPress }) => (
+const WorkdaysCollection = ({ items, workday, onPress, onPressClose }) => (
   <ScrollView style={{ ...styles.container }}>
-    {workday && <Text style={styles.title}>Describe {workday.dateString}</Text>}
-    {!workday && <Text style={styles.title}>Describe all working days</Text>}
+    <View style={styles.containerTitle}>
+      {workday && (
+        <Text style={styles.title}>Describe {workday.dateString}</Text>
+      )}
+      {!workday && <Text style={styles.title}>Describe all working days</Text>}
+      <TouchableOpacity onPress={onPressClose}>
+        <Icon
+          fill={Colors.GRAY_PRIMARY}
+          name="close-outline"
+          width={24}
+          height={24}
+        />
+      </TouchableOpacity>
+    </View>
     <M v2 />
     <Text style={styles.subtitle}>Worked day{!workday && 's'}</Text>
     <M v1 />
