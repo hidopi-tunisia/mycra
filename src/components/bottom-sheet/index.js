@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import styles from './index.styles';
 
-const ButtomSheet = ({ height = 300, onCallbackRef, children }) => {
+const BottomSheet = ({ height = 300, onCallbackRef, children }) => {
   const ref = useCallback(onCallbackRef, []);
   return (
     <RBSheet
@@ -15,4 +15,4 @@ const ButtomSheet = ({ height = 300, onCallbackRef, children }) => {
     </RBSheet>
   );
 };
-export default ButtomSheet;
+export default BottomSheet;

@@ -1,14 +1,24 @@
 import { useState } from 'react';
 import { View, TouchableOpacity, ScrollView } from 'react-native';
 import { Layout, Text } from '@ui-kitten/components';
-import { NotificationsItem, M } from '@components';
+import { NotificationsItem, BottomSheet, M } from '@components';
 import styles from './index.styles';
 import Fab from '@components/fab';
+import AlertForm from '@components/alert-form';
 
 const NotificationsScreen = () => {
-  const [email, setEmail] = useState('');
+  const [refBottomSheet, setRefBottomSheet] = useState(null);
+  const handleSubmit = (text) => {
+    alert(text)
+  }
+  const handleRefBottomSheet = ref => {
+    setRefBottomSheet(ref);
+  };
   const handlePressFab = () => {
-    alert('dfff');
+    refBottomSheet.open();
+  };
+  const handlePressClose = () => {
+    refBottomSheet.close();
   };
   return (
     <Layout style={styles.root}>
@@ -18,11 +28,11 @@ const NotificationsScreen = () => {
         </Text>
         <View style={styles.containerButtonsTop}>
           <TouchableOpacity style={styles.buttonTop}>
-            <Text style={styles.textButtonTop}>Notifications</Text>
+            <Text style={styles.textButtonTop}>Alerts</Text>
           </TouchableOpacity>
           <View style={styles.verticalDivider} />
           <TouchableOpacity style={styles.buttonTop}>
-            <Text style={styles.textButtonTop}>Alerts</Text>
+            <Text style={styles.textButtonTop}>Notifications</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -107,6 +117,9 @@ const NotificationsScreen = () => {
         </ScrollView>
       </View>
       <Fab onPress={handlePressFab} />
+      <BottomSheet height={300} onCallbackRef={handleRefBottomSheet}>
+        <AlertForm onPressClose={handlePressClose} onSubmit={handleSubmit}/>
+      </BottomSheet>
     </Layout>
   );
 };
