@@ -279,17 +279,20 @@ const HomeScreen = () => {
   return (
     <Layout style={styles.root}>
       <View style={styles.containerDescription}>
+        <Text style={styles.textHeading}>My CRA</Text>
         <Text>Please fill your CRA before the end of the current month.</Text>
         <Text style={styles.textDescription}>
           The month is already prefilled.
         </Text>
       </View>
       <View>
-        <Calendar
-          markedDates={markedDates}
-          onDayPress={handleSelected}
-          onDayLongPress={handleLongPress}
-        />
+        <View style={styles.containerCalendar}>
+          <Calendar
+            markedDates={markedDates}
+            onDayPress={handleSelected}
+            onDayLongPress={handleLongPress}
+          />
+        </View>
         <M v4 />
         <View style={styles.containerButtons}>
           <TouchableOpacity

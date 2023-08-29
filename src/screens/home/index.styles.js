@@ -4,14 +4,26 @@ import { StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
   root: {
     flex: 1,
+    backgroundColor: Colors.BLUE_DARK_PRIMARY,
     justifyContent: 'space-around',
   },
   containerDescription: {
-    padding: 8,
+    padding: 16,
+    borderRadius: 16,
+  },
+  textHeading: {
+    fontSize: 28,
+    fontWeight: '900',
+    color: Colors.WHITE,
   },
   textDescription: {
     fontWeight: '700',
     color: Colors.BLUE_PRIMARY,
+  },
+  containerCalendar: {
+    backgroundColor: Colors.WHITE,
+    padding: 16,
+    borderRadius: 16,
   },
   containerButtons: {
     justifyContent: 'flex-end',
