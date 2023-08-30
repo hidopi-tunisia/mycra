@@ -13,12 +13,15 @@ import styles from './index.styles';
 import { useEffect, useState } from 'react';
 import { getProfile } from '@domain/profile';
 import { getStatusBackground } from './index.helpers';
+import { signOut } from '@domain/auth';
+import Modal from '@components/modals';
 
-const SettingsScreen = ({ onSignOut }) => {
+const SettingsScreen = () => {
   const navigation = useNavigation();
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [modalVisible, setModalVisible] = useState(false);
   useEffect(() => {
     const fn = async () => {
       try {
@@ -61,6 +64,16 @@ const SettingsScreen = ({ onSignOut }) => {
       );
     };
     fn();
+  };
+  const handleSignOut = () => {
+    setModalVisible(true);
+  };
+  const handlePressPositive = () => {
+    setModalVisible(false);
+    signOut();
+  };
+  const handlePressNegative = () => {
+    setModalVisible(false);
   };
   return (
     <View style={styles.root}>
@@ -143,7 +156,7 @@ const SettingsScreen = ({ onSignOut }) => {
             title="Sign out"
             description="Sign out and navigate back to the sign in screen"
             icon="log-out-outline"
-            onPress={onSignOut}
+            onPress={handleSignOut}
           />
           <M v4 />
           <View style={styles.containerVersion}>
@@ -152,6 +165,14 @@ const SettingsScreen = ({ onSignOut }) => {
         </ScrollView>
       </View>
       <M v4 />
+      <Modal
+        title="Sign out?"
+        type="confirm"
+        visible={modalVisible}
+        onPressNegative={handlePressNegative}
+        onPressPositive={handlePressPositive}>
+        <Text>Are you sure to sign out?</Text>
+      </Modal>
     </View>
   );
 };
