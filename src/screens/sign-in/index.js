@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { signIn } from '@domain/auth';
 import { View, TouchableOpacity, Image } from 'react-native';
 import {
   Button,
@@ -12,24 +13,29 @@ import { M } from '@components';
 import styles from './index.styles';
 import { APP_VERSION } from '@constants';
 
-const SignInScreen = ({ onSignIn }) => {
+const SignInScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const handleSubmit = () => {
     const fn = async () => {
-      setError(null);
-      setLoading(true);
-      setTimeout(async () => {
-        if (email === 'a@a.com' && password === '000000') {
-          setLoading(false);
-          onSignIn(email);
-        } else {
-          setError('Incorrect email or password');
-        }
+      try {
+        setError(null);
+        setLoading(true);
+        await signIn({ email, password });
+      } catch (error) {
         setLoading(false);
-      }, 2000);
+        if (error && error.code === 'auth/invalid-email') {
+          setError('Invalid email');
+        } else if (error && error.code === 'auth/missing-password') {
+          setError('Missing password');
+        } else if (error && error.code === 'auth/wrong-password') {
+          setError('Wrong password');
+        } else {
+          setError('Error happened');
+        }
+      }
     };
     fn();
   };
@@ -40,10 +46,7 @@ const SignInScreen = ({ onSignIn }) => {
     <Layout style={styles.root}>
       <View style={styles.top}>
         <View style={styles.containerImage}>
-          <Image
-            style={styles.image}
-            source={require('@assets/logo.jpg')}
-          />
+          <Image style={styles.image} source={require('@assets/logo.jpg')} />
         </View>
         <M v3 />
         <Text style={styles.textTitle} category="h1">
