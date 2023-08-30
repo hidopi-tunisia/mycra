@@ -108,10 +108,10 @@ const SettingsScreen = () => {
           </View>
         )}
       </View>
-      <View style={{ borderRadius: 24, padding: 8, justifyContent: 'center' }}>
+      <View style={styles.bottom}>
         <ScrollView
           showsVerticalScrollIndicator={false}
-          style={{ backgroundColor: 'white', borderRadius: 24, padding: 8 }}>
+          style={styles.card}>
           <SettingsItem
             title="CRA History"
             description="View your past CRAs"
