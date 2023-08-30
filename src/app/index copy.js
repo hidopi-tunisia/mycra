@@ -20,10 +20,15 @@ const AppTheme = {
 const App = () => {
   const [user, setUser] = useState(null);
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(u => {
-      setUser(u);
+    const unsubscribe = onAuthStateChanged(user => {
+      // detaching the listener
+      if (user) {
+        // ...your code to handle authenticated users.
+      } else {
+        // No user is signed in...code to handle unauthenticated users.
+      }
     });
-    return unsubscribe;
+    return () => unsubscribe(); // unsubscribing from the listener when the component is unmounting.
   }, []);
   return (
     <>

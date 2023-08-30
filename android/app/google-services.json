@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "474737003844",
+    "project_id": "mycra-dev",
+    "storage_bucket": "mycra-dev.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:474737003844:android:0c0dae2089e7fbe3cd5b11",
+        "android_client_info": {
+          "package_name": "com.mycra"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "474737003844-n2iahv4k4c5no625o0h5rhjv5irpfg1o.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mycra",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "474737003844-2gkhnsc44k2mlksq1fo4vggvl42ge787.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBB93Q0cGwxE9ngX4bO8-knSKmioMYkkPE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "474737003844-2gkhnsc44k2mlksq1fo4vggvl42ge787.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

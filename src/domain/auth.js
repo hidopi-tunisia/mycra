@@ -1,20 +1,15 @@
-import { auth } from './firebase';
-import {
-  signInWithEmailAndPassword,
-  signOut as logout,
-  onAuthStateChanged as onAuthStateUpdated,
-} from 'firebase/auth';
+import auth from '@react-native-firebase/auth';
 
 const signIn = ({ email, password }) => {
-  return signInWithEmailAndPassword(auth, email, password);
+  return auth().signInWithEmailAndPassword(email, password);
 };
 const signOut = () => {
-  return logout(auth);
+  return auth().signOut();
 };
 const onAuthStateChanged = callback => {
-  onAuthStateUpdated(auth, callback);
+  auth().onAuthStateChanged(callback);
 };
 const currentUser = () => {
-  return auth.currentUser;
+  return auth().currentUser;
 };
 export { onAuthStateChanged, signIn, signOut, currentUser };
