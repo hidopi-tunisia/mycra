@@ -90,7 +90,7 @@ const SignInScreen = () => {
         <Button
           style={styles.buttonSignIn}
           status="primary"
-          disabled={loading}
+          disabled={!email || !password || loading}
           onPress={handleSubmit}>
           {loading ? <Spinner status="basic" size="small" /> : 'Sign in'}
         </Button>
