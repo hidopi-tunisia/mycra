@@ -1,8 +1,20 @@
-const user = {
-  uid: '64b45d14042a0b88b9cf929a',
-};
-const getAuthorization = () => {
-  return new Promise(resolve => resolve(user));
-};
+import { auth } from './firebase';
+import {
+  signInWithEmailAndPassword,
+  signOut as logout,
+  onAuthStateChanged as onAuthStateUpdated,
+} from 'firebase/auth';
 
-export { getAuthorization };
+const signIn = ({ email, password }) => {
+  return signInWithEmailAndPassword(auth, email, password);
+};
+const signOut = () => {
+  return logout(auth);
+};
+const onAuthStateChanged = callback => {
+  onAuthStateUpdated(auth, callback);
+};
+const currentUser = () => {
+  return auth.currentUser;
+};
+export { onAuthStateChanged, signIn, signOut, currentUser };

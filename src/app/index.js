@@ -1,4 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import '@domain/firebase';
+import { onAuthStateChanged } from '@domain/auth';
 import { TabNavigator } from '@navigators';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { ApplicationProvider, IconRegistry } from '@ui-kitten/components';
@@ -17,24 +19,22 @@ const AppTheme = {
 };
 
 const App = () => {
-  const [user, setUser] = useState('null');
-  const handleSignIn = email => {
-    setUser(email);
-  };
-  const handleSignOut = () => {
-    setUser(null);
-  };
+  const [user, setUser] = useState(null);
+  useEffect(() => {
+    onAuthStateChanged(u => {
+      setUser(u);
+    });
+  }, []);
   return (
     <>
-      <StatusBar barStyle="light-content" backgroundColor={Colors.BLUE_DARK_PRIMARY} />
+      <StatusBar
+        barStyle="light-content"
+        backgroundColor={Colors.BLUE_DARK_PRIMARY}
+      />
       <IconRegistry icons={EvaIconsPack} />
       <ApplicationProvider mapping={mapping} theme={theme}>
         <NavigationContainer theme={AppTheme}>
-          {user ? (
-            <TabNavigator onSignOut={handleSignOut} />
-          ) : (
-            <SignInScreen onSignIn={handleSignIn} />
-          )}
+          {user ? <TabNavigator /> : <SignInScreen />}
         </NavigationContainer>
       </ApplicationProvider>
     </>

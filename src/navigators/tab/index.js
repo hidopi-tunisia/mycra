@@ -99,7 +99,7 @@ const MyTabBar = ({ state, descriptors, navigation }) => {
   );
 };
 
-const TabNavigators = ({ onSignOut }) => (
+const TabNavigators = () => (
   <Tab.Navigator
     tabBar={props => <MyTabBar {...props} />}
     screenOptions={{ headerShown: false }}>
@@ -128,7 +128,7 @@ const TabNavigators = ({ onSignOut }) => (
       {props => (
         <Settings.Navigator>
           <Settings.Screen name="Settings" options={{ headerShown: false }}>
-            {p => <SettingsScreen {...p} onSignOut={onSignOut} />}
+            {p => <SettingsScreen {...p} />}
           </Settings.Screen>
           <Settings.Screen name="CRA History" component={CRAHistoryScreen} />
         </Settings.Navigator>
