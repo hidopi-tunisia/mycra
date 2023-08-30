@@ -7,7 +7,6 @@ import App from './src/app';
 import { name as appName } from './app.json';
 import { setBackgroundMessageHandler } from '@domain/messaging';
 
-// Register background handler
 setBackgroundMessageHandler(async remoteMessage => {
   console.log('Message handled in the background!', remoteMessage);
 });
