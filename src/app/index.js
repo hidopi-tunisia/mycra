@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import "@domain/firebase"
 import { TabNavigator } from '@navigators';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { ApplicationProvider, IconRegistry } from '@ui-kitten/components';
