@@ -28,6 +28,12 @@ const styles = StyleSheet.create({
     height: height * (1 - 0.15) - 32,
     bottom: 32,
   },
+  card:{
+    backgroundColor: Colors.WHITE,
+    borderRadius: 24,
+    padding: 20,
+    paddingBottom: 72,
+  },
   textTitle: {
     fontSize: 32,
     fontWeight: '900',

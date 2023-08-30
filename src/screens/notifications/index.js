@@ -39,12 +39,7 @@ const NotificationsScreen = () => {
       <View style={styles.bottom}>
         <ScrollView
           showsVerticalScrollIndicator={false}
-          style={{
-            backgroundColor: 'white',
-            borderRadius: 24,
-            padding: 20,
-            paddingBottom: 72,
-          }}>
+          style={styles.card}>
           <M v4 />
           <NotificationsItem
             title="CRA rejected"

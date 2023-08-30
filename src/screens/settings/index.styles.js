@@ -4,12 +4,15 @@ import Colors from '@constants/colors';
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    backgroundColor: Colors.BLUE_DARK_PRIMARY,
+    backgroundColor: Colors.BLUE_PRIMARY,
   },
   containerTop: {
-    height: 240,
+    backgroundColor: Colors.BLUE_DARK_PRIMARY,
+    height: 280,
     justifyContent: 'center',
     alignItems: 'center',
+    borderBottomLeftRadius: 32,
+    borderBottomRightRadius: 32,
   },
   containerImage: {
     width: 96,
@@ -43,6 +46,17 @@ const styles = StyleSheet.create({
     color: Colors.WHITE,
     fontSize: 12,
     margin: 4,
+  },
+  bottom: {
+    borderRadius: 24,
+    padding: 8,
+    justifyContent: 'center',
+    marginTop: -32,
+  },
+  card: {
+    backgroundColor: Colors.WHITE,
+    borderRadius: 24,
+    padding: 8,
   },
   containerVersion: {
     justifyContent: 'center',
