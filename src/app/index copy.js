@@ -6,9 +6,8 @@ import { ApplicationProvider, IconRegistry } from '@ui-kitten/components';
 import { EvaIconsPack } from '@ui-kitten/eva-icons';
 import { mapping, light as theme } from '@eva-design/eva';
 import { SignInScreen } from '@screens';
-import { StatusBar, Alert } from 'react-native';
+import { StatusBar } from 'react-native';
 import Colors from '@constants/colors';
-import { getToken, onMessage, subscribeToTopic } from '@domain/messaging';
 
 const AppTheme = {
   ...DefaultTheme,
@@ -21,27 +20,16 @@ const AppTheme = {
 const App = () => {
   const [user, setUser] = useState(null);
   useEffect(() => {
-    const unsubscribe = onMessage(async remoteMessage => {
-      Alert.alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
+    const unsubscribe = onAuthStateChanged(user => {
+      // detaching the listener
+      if (user) {
+        // ...your code to handle authenticated users.
+      } else {
+        // No user is signed in...code to handle unauthenticated users.
+      }
     });
-    return unsubscribe;
+    return () => unsubscribe(); // unsubscribing from the listener when the component is unmounting.
   }, []);
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(u => {
-      setUser(u);
-    });
-    return unsubscribe;
-  }, []);
-  useEffect(() => {
-    const fn = async () => {
-      try {
-        const w = subscribeToTopic('basketball');
-        console.log('Subscribed to topic!')
-      } catch (error) {}
-    };
-    fn();
-  }, []);
-
   return (
     <>
       <StatusBar

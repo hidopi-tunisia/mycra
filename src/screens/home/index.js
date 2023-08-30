@@ -17,6 +17,8 @@ import { getHolidays } from '@domain/days';
 import Colors from '@constants/colors';
 import moment from 'moment';
 
+import { PermissionsAndroid } from 'react-native';
+
 const HomeScreen = () => {
   const [markedDates, setMarkedDates] = useState({});
   const [selectedCount, setSelectedCount] = useState(null);
@@ -83,6 +85,12 @@ const HomeScreen = () => {
     );
     setSelectedCount(selectedDates.length);
   }, [markedDates]);
+  useEffect(() => {
+    PermissionsAndroid.request(
+      PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS,
+    );
+  }, []);
+
   const handleSelected = day => {
     if (markedDates[day.dateString].type === WorkdaysTypes.HOLIDAY) {
       setHoliday({
