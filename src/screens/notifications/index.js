@@ -1,16 +1,17 @@
-import { useState } from 'react';
-import { View, TouchableOpacity, ScrollView } from 'react-native';
-import { Layout, Text } from '@ui-kitten/components';
+import { useState, useEffect, useRef } from 'react';
+import { View, TouchableOpacity, ScrollView, FlatList } from 'react-native';
+import { Divider, Layout, Text } from '@ui-kitten/components';
 import { NotificationsItem, BottomSheet, M } from '@components';
 import styles from './index.styles';
 import Fab from '@components/fab';
 import AlertForm from '@components/alert-form';
+import { getItem, setItem } from '@domain/storage';
 
-const NotificationsScreen = () => {
+const NotificationsScreen = ({ notifications }) => {
   const [refBottomSheet, setRefBottomSheet] = useState(null);
-  const handleSubmit = (text) => {
-    alert(text)
-  }
+  const handleSubmit = text => {
+    alert(text);
+  };
   const handleRefBottomSheet = ref => {
     setRefBottomSheet(ref);
   };
@@ -20,102 +21,82 @@ const NotificationsScreen = () => {
   const handlePressClose = () => {
     refBottomSheet.close();
   };
+  handlePressItem = async i => {
+    const item = await getItem();
+    const ns = JSON.parse(item);
+    delete ns[i];
+    setItem(JSON.stringify(ns));
+  };
+
+  // Unused function
+  const onViewableItemsChanged = ({ viewableItems }) => {
+    const ids = viewableItems.map(({ item }) => item.messageId);
+    ids.forEach(async id => {
+      const item = await getItem();
+      const ns = JSON.parse(item);
+      ns[id] = { ...ns[id], isUnseen: false };
+      setItem(JSON.stringify(ns));
+    });
+  };
+  const viewabilityConfigCallbackPairs = useRef([{ onViewableItemsChanged }]);
   return (
-    <Layout style={styles.root}>
-      <View style={styles.top}>
-        <Text style={styles.textTitle} category="h1">
-          Notifications
-        </Text>
-        <View style={styles.containerButtonsTop}>
-          <TouchableOpacity style={styles.buttonTop}>
-            <Text style={styles.textButtonTop}>Alerts</Text>
-          </TouchableOpacity>
-          <View style={styles.verticalDivider} />
-          <TouchableOpacity style={styles.buttonTop}>
-            <Text style={styles.textButtonTop}>Notifications</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-      <View style={styles.bottom}>
-        <ScrollView
-          showsVerticalScrollIndicator={false}
-          style={styles.card}>
-          <M v4 />
-          <NotificationsItem
-            title="CRA rejected"
-            subtitle={new Date()
-              .toISOString()
-              .substring(0, 16)
-              .replaceAll('T', ' at ')}
-            type="danger"
-            content="Rejected in 2022-12-20 at 19-09, missing day 7"
-          />
-          <NotificationsItem
-            title="CRA required"
-            subtitle={new Date()
-              .toISOString()
-              .substring(0, 16)
-              .replaceAll('T', ' at ')}
-            type="info"
-          />
-          <NotificationsItem
-            title="Important meeting"
-            subtitle={new Date('2023-03-20')
-              .toISOString()
-              .substring(0, 16)
-              .replaceAll('T', ' at ')}
-            type="warning"
-            content="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. "
-          />
-          <NotificationsItem
-            title="CRA accepted"
-            subtitle={new Date('2022-12-09')
-              .toISOString()
-              .substring(0, 16)
-              .replaceAll('T', ' at ')}
-            type="success"
-            content="Accepted in 2022-12-20 at 19-09"
-          />
-          <NotificationsItem
-            title="CRA changed"
-            subtitle={new Date()
-              .toISOString()
-              .substring(0, 16)
-              .replaceAll('T', ' at ')}
-            type="default"
-          />
-          <NotificationsItem
-            title="CRA changed"
-            subtitle={new Date()
-              .toISOString()
-              .substring(0, 16)
-              .replaceAll('T', ' at ')}
-            type="default"
-          />
-          <NotificationsItem
-            title="CRA changed"
-            subtitle={new Date()
-              .toISOString()
-              .substring(0, 16)
-              .replaceAll('T', ' at ')}
-            type="default"
-          />
-          <NotificationsItem
-            title="CRA changed"
-            subtitle={new Date()
-              .toISOString()
-              .substring(0, 16)
-              .replaceAll('T', ' at ')}
-            type="default"
-          />
-          <M v10 />
-        </ScrollView>
-      </View>
-      <Fab onPress={handlePressFab} />
-      <BottomSheet height={300} onCallbackRef={handleRefBottomSheet}>
-        <AlertForm onPressClose={handlePressClose} onSubmit={handleSubmit}/>
-      </BottomSheet>
-    </Layout>
+    <>
+        <Layout style={styles.root}>
+          <View style={styles.top}>
+            <Text style={styles.textTitle} category="h1">
+              Notifications
+            </Text>
+            <View style={styles.containerButtonsTop}>
+              <TouchableOpacity style={styles.buttonTop}>
+                <Text style={styles.textButtonTop}>Alerts</Text>
+              </TouchableOpacity>
+              <View style={styles.verticalDivider} />
+              <TouchableOpacity style={styles.buttonTop}>
+                <Text style={styles.textButtonTop}>Notifications</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+          <View style={styles.bottom}>
+           
+      {notifications.length > 0 ? ( <FlatList
+              style={styles.card}
+              showsVerticalScrollIndicator={false}
+              ItemSeparatorComponent={<Divider />}
+              data={notifications}
+              ListHeaderComponent={<M v4 />}
+              ListFooterComponent={<M v10 />}
+              renderItem={({ item }) => (
+                <NotificationsItem
+                  title={item.notification.title}
+                  subtitle={new Date(item.sentTime)
+                    .toISOString()
+                    .substring(0, 16)
+                    .replaceAll('T', ' at ')}
+                  type="danger"
+                  content={item.notification.body}
+                  isUnseen={item.isUnseen}
+                  onPress={() => handlePressItem(item.messageId)}
+                />
+              )}
+              // viewabilityConfigCallbackPairs={
+              //   viewabilityConfigCallbackPairs.current
+              // }
+            />
+            ) : (
+              <View style={styles.cardEmpty}>
+                <Text>No notifications</Text>
+              </View>
+            )}
+          </View>
+          <Fab onPress={handlePressFab} />
+          <BottomSheet height={300} onCallbackRef={handleRefBottomSheet}>
+            <AlertForm
+              onPressClose={handlePressClose}
+              onSubmit={handleSubmit}
+            />
+          </BottomSheet>
+        </Layout>
+    </>
   );
 };
 

@@ -19,7 +19,12 @@ const NotificationsIcon = props => (
 const SettingsIcon = props => (
   <Icon width={20} height={20} name="settings-2-outline" {...props} />
 );
-const MyTabBar = ({ state, descriptors, navigation }) => {
+const MyTabBar = ({
+  state,
+  descriptors,
+  navigation,
+  notificationsCount = 0,
+}) => {
   return (
     <View style={styles.root}>
       {state.routes.map((route, index) => {
@@ -70,11 +75,18 @@ const MyTabBar = ({ state, descriptors, navigation }) => {
                 />
               )}
               {route.name === 'TabNotifications' && (
-                <NotificationsIcon
-                  fill={
-                    isFocused ? Colors.BLUE_PRIMARY : Colors.GRAY_DARK_PRIMARY
-                  }
-                />
+                <>
+                  {notificationsCount > 0 && (
+                    <View style={styles.badge}>
+                      <Text style={styles.textBadge}>{notificationsCount}</Text>
+                    </View>
+                  )}
+                  <NotificationsIcon
+                    fill={
+                      isFocused ? Colors.BLUE_PRIMARY : Colors.GRAY_DARK_PRIMARY
+                    }
+                  />
+                </>
               )}
               {route.name === 'TabSettings' && (
                 <SettingsIcon
@@ -99,9 +111,12 @@ const MyTabBar = ({ state, descriptors, navigation }) => {
   );
 };
 
-const TabNavigators = () => (
+const TabNavigators = ({ initialRoute = 'TabHome', notifications }) => (
   <Tab.Navigator
-    tabBar={props => <MyTabBar {...props} />}
+    initialRouteName={initialRoute}
+    tabBar={props => (
+      <MyTabBar {...props} notificationsCount={notifications.length} />
+    )}
     screenOptions={{ headerShown: false }}>
     <Tab.Screen
       name="TabHome"
@@ -113,11 +128,13 @@ const TabNavigators = () => (
     />
     <Tab.Screen
       name="TabNotifications"
-      component={NotificationsScreen}
       options={{
         tabBarLabel: 'Notifications',
         tabBarIcon: NotificationsIcon,
       }}
+      children={props => (
+        <NotificationsScreen {...props} notifications={notifications} />
+      )}
     />
     <Tab.Screen
       name="TabSettings"

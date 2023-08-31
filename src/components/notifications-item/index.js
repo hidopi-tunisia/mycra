@@ -30,10 +30,12 @@ const renderColor = type => {
   }
 };
 
-const Header = ({ title, subtitle, type }) => (
+const Header = ({ title, subtitle, type, isUnseen }) => (
   <View style={styles.containerHeader}>
     <View style={styles.containerHeaderTitles}>
-      <Text category="h6">{title}</Text>
+      <View style={styles.containerHeaderTitlesTitle}>
+        <Text category="h6">{title}</Text>
+      </View>
       <Text
         category="s1"
         style={{ ...styles.textSubtitle, color: renderColor(type) }}>
@@ -55,13 +57,14 @@ const CRAHistoryItem = ({
   title,
   subtitle,
   type,
-  content= "No content",
+  content = 'No content',
+  isUnseen,
   onPress,
 }) => (
   <>
     <Card
       style={styles.card}
-      header={() => <Header title={title} subtitle={subtitle} type={type} />}
+      header={() => <Header title={title} subtitle={subtitle} type={type} isUnseen={isUnseen} />}
       onPress={onPress}>
       {content && <Text style={styles.content}>{content}</Text>}
     </Card>

@@ -289,13 +289,6 @@ const HomeScreen = () => {
     setWorkday(null);
     refBottomSheet.close();
   };
-  useEffect(() => {
-    onChange((en, payload) => {
-      p(en);
-      p(payload);
-    });
-  }, []);
-
   return (
     <Layout style={styles.root}>
       <View style={styles.top}>
@@ -386,10 +379,6 @@ const HomeScreen = () => {
             <Text>Absent</Text>
           </View>
         </View>
-        <TouchableOpacity
-          onPress={() => emitChange({ foo: 'bar', baz: 'Storage Changed' })}>
-          <Text>Emit</Text>
-        </TouchableOpacity>
         <M v2 />
         <View style={styles.containerButton}>
           <Button
