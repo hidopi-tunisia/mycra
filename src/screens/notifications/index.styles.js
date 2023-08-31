@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     height: height * (1 - 0.15) - 32,
     bottom: 32,
   },
-  card:{
+  card: {
     backgroundColor: Colors.WHITE,
     borderRadius: 24,
     padding: 20,
@@ -59,6 +59,15 @@ const styles = StyleSheet.create({
   textButtonTop: {
     color: Colors.WHITE,
   },
+  cardEmpty: {
+    flex: 1,
+    backgroundColor: Colors.WHITE,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 24,
+    padding: 20,
+    paddingBottom: 72,
+  }
 });
 
 export default styles;
