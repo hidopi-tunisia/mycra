@@ -17,6 +17,6 @@ setBackgroundMessageHandler(async message => {
 
 AppRegistry.registerComponent(appName, () => App);
 const p = obj => {
-  console.log(JSON.stringify(obj, null, 2));
+  console.info(JSON.stringify(obj, null, 2));
 };
 global.p = p;

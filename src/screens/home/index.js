@@ -73,9 +73,9 @@ const HomeScreen = () => {
         }
         setMarkedDates(marked);
       } catch (error) {
-        console.log('"ERRRRRR');
-        console.log(error);
-        console.log('"ERRRRRR');
+        console.info('"ERRRRRR');
+        console.info(error);
+        console.info('"ERRRRRR');
       }
     };
     fn();
@@ -162,7 +162,6 @@ const HomeScreen = () => {
             };
           }
         });
-        console.log(arr);
         const datesTravaillees = arr.filter(
           e => e && e.type === WorkdaysTypes.WORKED,
         );
@@ -185,9 +184,9 @@ const HomeScreen = () => {
         p(payload);
         setModalVisible(false);
       } catch (error) {
-        console.log('ERROR');
-        console.log(error);
-        console.log('ERROR');
+        console.info('ERROR');
+        console.info(error);
+        console.info('ERROR');
       }
     };
     fn();
