@@ -66,7 +66,7 @@ const SignInScreen = () => {
         setLoadingResetPassword(true);
         setErrorResetPassword(null);
         await sendPasswordResetEmail(email);
-        handlePressCloseResetPassword()
+        handlePressCloseResetPassword();
         setModalResetPasswordVisible(true);
         setLoadingResetPassword(false);
       } catch (error) {

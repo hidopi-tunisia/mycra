@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
   },
   containerLabel: {
     flexDirection: 'row',
-    justifyContent: "space-between"
+    justifyContent: 'space-between',
   },
   labelInput: {
     fontSize: 16,

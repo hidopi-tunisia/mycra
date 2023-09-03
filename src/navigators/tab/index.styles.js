@@ -31,10 +31,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     textAlign: 'center',
     textAlignVertical: 'center',
-    position: "absolute",
+    position: 'absolute',
     top: -16,
     zIndex: 10,
-    right: 4
+    right: 4,
   },
   textBadge: {
     fontWeight: '900',

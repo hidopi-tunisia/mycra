@@ -6,7 +6,6 @@ import styles from './index.styles';
 import { getCRAHistory_ } from '@domain/cra';
 import CRAHistoryItem from '@components/cra-history-item';
 import { getStatusType } from './index.helpers';
-import Bullet from '@components/bullet';
 import Colors from '@constants/colors';
 
 const CRAHistoryScreen = ({ navigation }) => {
@@ -79,7 +78,7 @@ const CRAHistoryScreen = ({ navigation }) => {
                 type={getStatusType(item.status)}
                 onPress={() => handlePress(item._id)}>
                 <View style={styles.containerLegends}>
-                  {typeof item.nbJoursTravailles == 'number' &&
+                  {typeof item.nbJoursTravailles === 'number' &&
                     item.nbJoursTravailles > 0 && (
                       <>
                         <View style={styles.containerLegend}>
@@ -127,7 +126,7 @@ const CRAHistoryScreen = ({ navigation }) => {
                       </View>
                     </>
                   )}
-                  {typeof item.nbJoursNonTravailles == 'number' &&
+                  {typeof item.nbJoursNonTravailles === 'number' &&
                     item.nbJoursNonTravailles >= 0 && (
                       <>
                         <M h2 />

@@ -2,7 +2,7 @@ import axios from 'axios';
 import { ENDPOINT } from '@constants';
 import { getAuthorization } from './auth';
 
-const postCRA = async (payload) => {
+const postCRA = async payload => {
   const authorization = await getAuthorization();
   return axios.post(`${ENDPOINT}/cra/postCra`, payload, {
     headers: {

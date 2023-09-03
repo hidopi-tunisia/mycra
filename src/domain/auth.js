@@ -15,7 +15,7 @@ const currentUser = () => {
 const getAuthorization = () => {
   return auth().currentUser.getIdToken(true);
 };
-const sendPasswordResetEmail = (email) => {
+const sendPasswordResetEmail = email => {
   return auth().sendPasswordResetEmail(email);
 };
 export {
