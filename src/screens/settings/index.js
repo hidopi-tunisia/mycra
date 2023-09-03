@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
 import { View, Image, Linking, ScrollView } from 'react-native';
 import { SettingsItem, M } from '@components';
-import { Divider, Text, Spinner } from '@ui-kitten/components';
+import { Text, Spinner } from '@ui-kitten/components';
 import {
   TERMS_AND_CONDITIONS_URL,
   PRIVACY_POLICY_URL,
@@ -26,7 +26,7 @@ const SettingsScreen = () => {
     const fn = async () => {
       try {
         setLoading(true);
-        setError(null)
+        setError(null);
         const { data } = await getProfile();
         setProfile(data.consultant);
         setLoading(false);
@@ -111,9 +111,7 @@ const SettingsScreen = () => {
         )}
       </View>
       <View style={styles.bottom}>
-        <ScrollView
-          showsVerticalScrollIndicator={false}
-          style={styles.card}>
+        <ScrollView showsVerticalScrollIndicator={false} style={styles.card}>
           <SettingsItem
             title="CRA History"
             description="View your past CRAs"
@@ -132,28 +130,24 @@ const SettingsScreen = () => {
             icon="checkmark-circle-2-outline"
             onPress={handleTerms}
           />
-          <Divider />
           <SettingsItem
             title="Privacy policy"
             description="View our privacy and policy on our website"
             icon="eye-off-outline"
             onPress={handlePrivacy}
           />
-          <Divider />
           <SettingsItem
             title="Help"
             description="View our help on our website"
             icon="question-mark-circle-outline"
             onPress={handleHelp}
           />
-          <Divider />
           <SettingsItem
             title="Report issue"
             description="Send us an email about an issue in the application"
             icon="alert-triangle-outline"
             onPress={handleReport}
           />
-          <Divider />
           <SettingsItem
             title="Sign out"
             description="Sign out and navigate back to the sign in screen"
