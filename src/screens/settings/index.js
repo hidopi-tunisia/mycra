@@ -26,10 +26,12 @@ const SettingsScreen = () => {
     const fn = async () => {
       try {
         setLoading(true);
+        setError(null)
         const { data } = await getProfile();
         setProfile(data.consultant);
         setLoading(false);
       } catch (error) {
+        console.log(error);
         setLoading(false);
         setError('Error happened');
       }

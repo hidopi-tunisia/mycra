@@ -18,10 +18,12 @@ import Colors from '@constants/colors';
 import moment from 'moment';
 
 import { PermissionsAndroid } from 'react-native';
-import { emitChange, onChange } from '@domain/storage';
 
 const HomeScreen = () => {
-  const [markedDates, setMarkedDates] = useState({});
+  const [loadingFetch, setLoadingFetch] = useState(false);
+  const [errorFetch, setErrorFetch] = useState(null);
+  const [loadingSubmit, setLoadingSubmit] = useState(false);
+  const [errorSubmit, setErrorSubmit] = useState(null);
   const [selectedCount, setSelectedCount] = useState(null);
   const [currentMonth, setCurrentMonth] = useState(moment().format('MMMM'));
   const [holiday, setHoliday] = useState(null);
@@ -34,6 +36,8 @@ const HomeScreen = () => {
   useEffect(() => {
     const fn = async () => {
       try {
+        setLoadingFetch(false);
+        setErrorFetch(null);
         const year = getToday().substring(0, 4);
         const month = getToday().substring(5, 7);
         const days = getDaysInMonth(`${year}-${month}`);
@@ -72,7 +76,10 @@ const HomeScreen = () => {
           }
         }
         setMarkedDates(marked);
+        setLoadingFetch(false);
       } catch (error) {
+        setLoadingFetch(false);
+        setErrorFetch(error);
         console.info('"ERRRRRR');
         console.info(error);
         console.info('"ERRRRRR');
@@ -138,6 +145,8 @@ const HomeScreen = () => {
   const handlePressPositive = () => {
     const fn = async () => {
       try {
+        setLoadingSubmit(false)
+        setErrorSubmit(null)
         const arr = Object.keys(markedDates).map(k => {
           if (markedDates[k].type === WorkdaysTypes.WORKED) {
             return {
@@ -182,8 +191,11 @@ const HomeScreen = () => {
         };
         // const { data } = await postCRA(payload);
         p(payload);
+        setLoadingSubmit(false)
         setModalVisible(false);
       } catch (error) {
+        setLoadingSubmit(false)
+        setErrorSubmit(error)
         console.info('ERROR');
         console.info(error);
         console.info('ERROR');

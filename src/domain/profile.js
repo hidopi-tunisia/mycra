@@ -1,10 +1,15 @@
 import axios from 'axios';
-import { getAuthorization } from './auth';
+import { currentUser, getAuthorization } from '@domain/auth';
 import { ENDPOINT } from '@constants';
 
 const getProfile = async () => {
-  const { uid } = await getAuthorization();
-  return axios.get(`${ENDPOINT}/consultant/consultant/${uid}`);
+  const authorization = await getAuthorization();
+  const uid = "64820b713937a729af5cc814"
+  return axios.get(`${ENDPOINT}/consultant/consultant/${uid}`, {
+    headers: {
+      authorization,
+    },
+  });
 };
 
 export { getProfile };
