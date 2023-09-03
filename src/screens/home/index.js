@@ -24,6 +24,7 @@ const HomeScreen = () => {
   const [errorFetch, setErrorFetch] = useState(null);
   const [loadingSubmit, setLoadingSubmit] = useState(false);
   const [errorSubmit, setErrorSubmit] = useState(null);
+  const [markedDates, setMarkedDates] = useState({});
   const [selectedCount, setSelectedCount] = useState(null);
   const [currentMonth, setCurrentMonth] = useState(moment().format('MMMM'));
   const [holiday, setHoliday] = useState(null);
