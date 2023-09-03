@@ -17,22 +17,29 @@ const styles = StyleSheet.create({
     fontWeight: '900',
   },
   input: {
-    textAlignVertical: 'top',
-    padding: 12,
     borderRadius: 24,
-    borderWidth: 1,
-    borderColor: Colors.GRAY_PRIMARY,
-    height: 128,
-    backgroundColor: Colors.WHITE,
-    color: Colors.GRAY_PRIMARY_TEXT,
   },
-  label: {
+  containerLabel: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  labelInput: {
     fontSize: 16,
     fontWeight: '600',
   },
   buttonSubmit: {
     height: 48,
     borderRadius: 24,
+  },
+  containerError: {
+    backgroundColor: `${Colors.RED_DARK_PRIMARY}11`,
+    padding: 8,
+    borderRadius: 16,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  textError: {
+    color: Colors.RED_DARK_PRIMARY,
   },
 });
 export default styles;

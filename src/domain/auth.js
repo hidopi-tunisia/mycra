@@ -15,4 +15,14 @@ const currentUser = () => {
 const getAuthorization = () => {
   return auth().currentUser.getIdToken(true);
 };
-export { onAuthStateChanged, signIn, signOut, currentUser, getAuthorization };
+const sendPasswordResetEmail = (email) => {
+  return auth().sendPasswordResetEmail(email);
+};
+export {
+  onAuthStateChanged,
+  signIn,
+  signOut,
+  currentUser,
+  getAuthorization,
+  sendPasswordResetEmail,
+};

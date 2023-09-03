@@ -310,7 +310,7 @@ const HomeScreen = () => {
             <TouchableOpacity onPress={() => setModalHelpVisible(true)}>
               <Icon
                 fill={Colors.WHITE}
-                name="info-outline"
+                name="question-mark-circle-outline"
                 width={24}
                 height={24}
               />
