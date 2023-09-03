@@ -61,14 +61,18 @@ const CRAHistoryItem = ({
   isUnseen,
   onPress,
 }) => (
-  <>
-    <Card
-      style={styles.card}
-      header={() => <Header title={title} subtitle={subtitle} type={type} isUnseen={isUnseen} />}
-      onPress={onPress}>
-      {content && <Text style={styles.content}>{content}</Text>}
-    </Card>
-    <M v1 />
-  </>
+  <Card
+    style={styles.card}
+    header={() => (
+      <Header
+        title={title}
+        subtitle={subtitle}
+        type={type}
+        isUnseen={isUnseen}
+      />
+    )}
+    onPress={onPress}>
+    {content && <Text style={styles.content}>{content}</Text>}
+  </Card>
 );
 export default CRAHistoryItem;

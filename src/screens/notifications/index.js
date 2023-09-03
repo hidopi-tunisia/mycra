@@ -41,27 +41,27 @@ const NotificationsScreen = ({ notifications }) => {
   const viewabilityConfigCallbackPairs = useRef([{ onViewableItemsChanged }]);
   return (
     <>
-        <Layout style={styles.root}>
-          <View style={styles.top}>
-            <Text style={styles.textTitle} category="h1">
-              Notifications
-            </Text>
-            <View style={styles.containerButtonsTop}>
-              <TouchableOpacity style={styles.buttonTop}>
-                <Text style={styles.textButtonTop}>Alerts</Text>
-              </TouchableOpacity>
-              <View style={styles.verticalDivider} />
-              <TouchableOpacity style={styles.buttonTop}>
-                <Text style={styles.textButtonTop}>Notifications</Text>
-              </TouchableOpacity>
-            </View>
+      <Layout style={styles.root}>
+        <View style={styles.top}>
+          <Text style={styles.textTitle} category="h1">
+            Notifications
+          </Text>
+          <View style={styles.containerButtonsTop}>
+            <TouchableOpacity style={styles.buttonTop}>
+              <Text style={styles.textButtonTop}>Alerts</Text>
+            </TouchableOpacity>
+            <View style={styles.verticalDivider} />
+            <TouchableOpacity style={styles.buttonTop}>
+              <Text style={styles.textButtonTop}>Notifications</Text>
+            </TouchableOpacity>
           </View>
-          <View style={styles.bottom}>
-           
-      {notifications.length > 0 ? ( <FlatList
+        </View>
+        <View style={styles.bottom}>
+          {notifications.length > 0 ? (
+            <FlatList
               style={styles.card}
               showsVerticalScrollIndicator={false}
-              ItemSeparatorComponent={<Divider />}
+              ItemSeparatorComponent={<M v1 />}
               data={notifications}
               ListHeaderComponent={<M v4 />}
               ListFooterComponent={<M v10 />}
@@ -82,20 +82,17 @@ const NotificationsScreen = ({ notifications }) => {
               //   viewabilityConfigCallbackPairs.current
               // }
             />
-            ) : (
-              <View style={styles.cardEmpty}>
-                <Text>No notifications</Text>
-              </View>
-            )}
-          </View>
-          <Fab onPress={handlePressFab} />
-          <BottomSheet height={300} onCallbackRef={handleRefBottomSheet}>
-            <AlertForm
-              onPressClose={handlePressClose}
-              onSubmit={handleSubmit}
-            />
-          </BottomSheet>
-        </Layout>
+          ) : (
+            <View style={styles.cardEmpty}>
+              <Text>No notifications</Text>
+            </View>
+          )}
+        </View>
+        <Fab onPress={handlePressFab} />
+        <BottomSheet height={300} onCallbackRef={handleRefBottomSheet}>
+          <AlertForm onPressClose={handlePressClose} onSubmit={handleSubmit} />
+        </BottomSheet>
+      </Layout>
     </>
   );
 };

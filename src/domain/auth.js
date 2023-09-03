@@ -12,4 +12,7 @@ const onAuthStateChanged = callback => {
 const currentUser = () => {
   return auth().currentUser;
 };
-export { onAuthStateChanged, signIn, signOut, currentUser };
+const getAuthorization = () => {
+  return auth().currentUser.getIdToken(true);
+};
+export { onAuthStateChanged, signIn, signOut, currentUser, getAuthorization };

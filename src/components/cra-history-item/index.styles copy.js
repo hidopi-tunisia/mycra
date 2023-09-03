@@ -1,25 +1,17 @@
-import Colors from '@constants/colors';
 import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
-  card: {
-    borderRadius: 32,
-    padding: 4,
-  },
+  card: {},
   containerHeader: {
     padding: 8,
     flexDirection: 'row',
   },
-  content: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-  },
   containerHeaderTitles: {
     flex: 1,
   },
-  textSubtitle: {
-    fontSize: 14,
-    fontWeight: '800',
+  textSubtitle:{
+    fontSize: 12,
+    fontWeight: "400"
   },
   containerHeaderIcon: {
     justifyContent: 'center',
@@ -29,10 +21,6 @@ const styles = StyleSheet.create({
   containerHeaderIconHolder: {
     padding: 6,
     borderRadius: 24,
-  },
-  containerHeaderTitlesTitle: {
-    flexDirection: 'row',
-    alignItems: 'center',
   },
 });
 export default styles;

@@ -147,7 +147,7 @@ const TabNavigators = ({ initialRoute = 'TabHome', notifications }) => (
           <Settings.Screen name="Settings" options={{ headerShown: false }}>
             {p => <SettingsScreen {...p} />}
           </Settings.Screen>
-          <Settings.Screen name="CRA History" component={CRAHistoryScreen} />
+          <Settings.Screen name="CRA History" component={CRAHistoryScreen}  options={{ headerShown: false }} />
         </Settings.Navigator>
       )}
     </Tab.Screen>
