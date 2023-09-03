@@ -180,13 +180,6 @@ const SignInScreen = () => {
         <M v1 />
         <Text>If you find any problem please contact your manager.</Text>
       </Modal>
-      <Modal
-        title="Email sent"
-        type="info"
-        visible={modalResetPasswordVisible}
-        onPressPositive={() => setModalResetPasswordVisible(false)}>
-        <Text>Please check your email to reset your password.</Text>
-      </Modal>
       <BottomSheet height={300} onCallbackRef={handleRefBottomSheet}>
         <ResetPasswordForm
           loading={loadingResetPassword}
@@ -195,6 +188,13 @@ const SignInScreen = () => {
           onSubmit={handleSubmitResetPassword}
         />
       </BottomSheet>
+      <Modal
+        title="Email sent"
+        type="info"
+        visible={modalResetPasswordVisible}
+        onPressPositive={() => setModalResetPasswordVisible(false)}>
+        <Text>Please check your email to reset your password.</Text>
+      </Modal>
     </Layout>
   );
 };
