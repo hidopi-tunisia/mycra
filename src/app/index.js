@@ -22,7 +22,8 @@ import {
 } from '@domain/messaging';
 import { getItem, onChange as onStorageChange, setItem } from '@domain/storage';
 import ApplicationIntroScreen from '@screens/intro';
-export const INTRO_DONE = 'intro_done';
+import SplashScreen from 'react-native-splash-screen';
+import { Topics } from '@constants';
 
 const AppTheme = {
   ...DefaultTheme,
@@ -38,6 +39,20 @@ const App = () => {
   const [notifications, setNotifications] = useState([]);
   const [isIntro, setIsIntro] = useState(true);
   useEffect(() => {
+    const fn = async () => {
+      try {
+        const { uid } = await currentUser();
+        if (uid) {
+          await subscribeToTopic(`${Topics.CONSULTANT}~${uid}`);
+        }
+        SplashScreen.hide();
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fn();
+  }, []);
+  useEffect(() => {
     const unsubscribe = onMessage(async message => {
       const item = await getItem();
       const notifications = JSON.parse(item);
@@ -51,15 +66,6 @@ const App = () => {
       setUser(u);
     });
     return unsubscribe;
-  }, []);
-  useEffect(() => {
-    const fn = async () => {
-      try {
-        const { uid } = await currentUser();
-        await subscribeToTopic(`consultant~${uid}`);
-      } catch (error) {}
-    };
-    fn();
   }, []);
   useEffect(() => {
     const fn = async () => {
@@ -90,7 +96,7 @@ const App = () => {
     }
   }, []);
   const handleDone = () => {
-    setIsIntro(true);
+    setIsIntro(!isIntro);
   };
   return (
     <>
