@@ -3,22 +3,26 @@ import { View, TouchableOpacity, FlatList } from 'react-native';
 import { Layout, Text, Spinner, Icon } from '@ui-kitten/components';
 import { M } from '@components';
 import styles from './index.styles';
-import { getCRAHistory_ } from '@domain/cra';
+import { getAllCRAs, getCRAHistory } from '@domain/cra';
 import CRAHistoryItem from '@components/cra-history-item';
 import { getStatusType } from './index.helpers';
-import Bullet from '@components/bullet';
 import Colors from '@constants/colors';
 
 const CRAHistoryScreen = ({ navigation }) => {
   const [history, setHistory] = useState([]);
+  const [page, setPage] = useState(0);
+  const [limit, setLimit] = useState(12);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [loadingMore, setLoadingMore] = useState(false);
+  const [errorLoadingMore, setErrorLoadingMore] = useState(null);
   const retrieveData = async () => {
     try {
       setLoading(true);
       setError(null);
-      const { data } = await getCRAHistory_();
-      setHistory(data);
+      const { data } = await getAllCRAs({ page, limit });
+      setHistory([...history, ...data]);
+      p(data);
       setLoading(false);
     } catch (error) {
       setLoading(false);
@@ -28,8 +32,25 @@ const CRAHistoryScreen = ({ navigation }) => {
   useEffect(() => {
     retrieveData();
   }, []);
+  const handlePressLoadMore = () => {
+    const fn = async () => {
+      try {
+        setLoadingMore(true);
+        setErrorLoadingMore(null);
+        setPage(page + 1);
+        const { data } = await getAllCRAs({ page, limit });
+        setHistory([...history, ...data]);
+        setLoadingMore(false);
+      } catch (error) {
+        setLoadingMore(false);
+        console.log(error);
+        setErrorLoadingMore('Error happened');
+      }
+    };
+    fn();
+  };
   const handlePress = id => {
-    alert('Pressed ' + id);
+    // alert('Pressed ' + id);
   };
   const handePressRetry = () => {
     retrieveData();
@@ -64,7 +85,23 @@ const CRAHistoryScreen = ({ navigation }) => {
             showsVerticalScrollIndicator={false}
             data={history}
             ItemSeparatorComponent={<M v1 />}
-            ListFooterComponent={<M v3 />}
+            ListFooterComponent={
+              <>
+                {loadingMore ? (
+                  <View
+                    onPress={handlePressLoadMore}
+                    style={styles.containerLoadMore}>
+                    <Spinner status="basic" size="small" />
+                  </View>
+                ) : (
+                  <TouchableOpacity
+                    onPress={handlePressLoadMore}
+                    style={styles.containerLoadMore}>
+                    <Text style={styles.textLoadMore}>Load more...</Text>
+                  </TouchableOpacity>
+                )}
+              </>
+            }
             renderItem={({ item }) => (
               <CRAHistoryItem
                 key={item._id}
@@ -79,7 +116,7 @@ const CRAHistoryScreen = ({ navigation }) => {
                 type={getStatusType(item.status)}
                 onPress={() => handlePress(item._id)}>
                 <View style={styles.containerLegends}>
-                  {typeof item.nbJoursTravailles == 'number' &&
+                  {typeof item.nbJoursTravailles === 'number' &&
                     item.nbJoursTravailles > 0 && (
                       <>
                         <View style={styles.containerLegend}>
@@ -127,7 +164,7 @@ const CRAHistoryScreen = ({ navigation }) => {
                       </View>
                     </>
                   )}
-                  {typeof item.nbJoursNonTravailles == 'number' &&
+                  {typeof item.nbJoursNonTravailles === 'number' &&
                     item.nbJoursNonTravailles >= 0 && (
                       <>
                         <M h2 />

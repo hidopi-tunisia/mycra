@@ -9,9 +9,9 @@ const styles = StyleSheet.create({
   containerHeaderTitles: {
     flex: 1,
   },
-  textSubtitle:{
+  textSubtitle: {
     fontSize: 12,
-    fontWeight: "400"
+    fontWeight: '400',
   },
   containerHeaderIcon: {
     justifyContent: 'center',

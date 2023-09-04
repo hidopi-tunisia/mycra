@@ -1,9 +1,9 @@
 import { View } from 'react-native';
-const M = (props) => {
+const M = props => {
   const keys = Object.keys(props);
   let v = 0;
   let h = 0;
-  keys.forEach((k) => {
+  keys.forEach(k => {
     if (k[0] === 'v') {
       v = parseInt(k.substr(1));
     } else if (k[0] === 'h') {

@@ -13,8 +13,10 @@ import styles from './index.styles';
 import { useEffect, useState } from 'react';
 import { getProfile } from '@domain/profile';
 import { getStatusBackground } from './index.helpers';
-import { signOut } from '@domain/auth';
+import { sendPasswordResetEmail, signOut } from '@domain/auth';
 import Modal from '@components/modals';
+import BottomSheet from '@components/bottom-sheet';
+import ResetPasswordForm from '@components/reset-password-form';
 
 const SettingsScreen = () => {
   const navigation = useNavigation();
@@ -22,6 +24,11 @@ const SettingsScreen = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
+  const [modalResetPasswordVisible, setModalResetPasswordVisible] =
+    useState(false);
+  const [refBottomSheet, setRefBottomSheet] = useState(null);
+  const [loadingResetPassword, setLoadingResetPassword] = useState(false);
+  const [errorResetPassword, setErrorResetPassword] = useState(null);
   useEffect(() => {
     const fn = async () => {
       try {
@@ -77,6 +84,43 @@ const SettingsScreen = () => {
   const handlePressNegative = () => {
     setModalVisible(false);
   };
+  const handleResetPassword = () => {
+    setErrorResetPassword(null);
+    refBottomSheet.open();
+  };
+  const handlePressCloseResetPassword = () => {
+    refBottomSheet.close();
+  };
+  const handleRefBottomSheet = ref => {
+    setRefBottomSheet(ref);
+  };
+  const handleSubmitResetPassword = email => {
+    const fn = async () => {
+      try {
+        setLoadingResetPassword(true);
+        setErrorResetPassword(null);
+        await sendPasswordResetEmail(email);
+        handlePressCloseResetPassword();
+        setModalResetPasswordVisible(true);
+        setLoadingResetPassword(false);
+      } catch (error) {
+        console.log(error);
+        setLoadingResetPassword(false);
+        if (error && error.code === 'auth/invalid-email') {
+          setErrorResetPassword('Invalid email');
+        } else if (error && error.code === 'auth/missing-password') {
+          setErrorResetPassword('Missing password');
+        } else if (error && error.code === 'auth/wrong-password') {
+          setErrorResetPassword('Wrong password');
+        } else if (error && error.code === 'auth/user-not-found') {
+          setErrorResetPassword('Incorrect email');
+        } else {
+          setErrorResetPassword('Error happened');
+        }
+      }
+    };
+    fn();
+  };
   return (
     <View style={styles.root}>
       <View style={styles.containerTop}>
@@ -122,7 +166,7 @@ const SettingsScreen = () => {
             title="Reset password"
             description="Start a reset password challange"
             icon="lock-outline"
-            onPress={handleTerms}
+            onPress={handleResetPassword}
           />
           <SettingsItem
             title="Terms and conditions"
@@ -168,6 +212,21 @@ const SettingsScreen = () => {
         onPressNegative={handlePressNegative}
         onPressPositive={handlePressPositive}>
         <Text>Are you sure to sign out?</Text>
+      </Modal>
+      <BottomSheet height={300} onCallbackRef={handleRefBottomSheet}>
+        <ResetPasswordForm
+          loading={loadingResetPassword}
+          error={errorResetPassword}
+          onPressClose={handlePressCloseResetPassword}
+          onSubmit={handleSubmitResetPassword}
+        />
+      </BottomSheet>
+      <Modal
+        title="Email sent"
+        type="info"
+        visible={modalResetPasswordVisible}
+        onPressPositive={() => setModalResetPasswordVisible(false)}>
+        <Text>Please check your email to reset your password.</Text>
       </Modal>
     </View>
   );

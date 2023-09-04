@@ -1,10 +1,6 @@
 import { Calendar as RNCalendar, LocaleConfig } from 'react-native-calendars';
 
-const Calendar = ({
-  markedDates,
-  onDayPress,
-  onDayLongPress,
-}) => (
+const Calendar = ({ markedDates, onDayPress, onDayLongPress }) => (
   <RNCalendar
     hideArrows
     disableMonthChange

@@ -16,12 +16,12 @@ const styles = StyleSheet.create({
   containerContent: {
     width: '100%',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   title: {
     fontWeight: '900',
     fontSize: 18,
-    textAlign: 'center'
+    textAlign: 'center',
   },
   containerButtons: {
     flexDirection: 'row',

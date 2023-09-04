@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     margin: 4,
     borderWidth: 2,
-    flexDirection: "row"
+    flexDirection: 'row',
   },
 });
 export default styles;

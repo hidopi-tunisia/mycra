@@ -67,13 +67,13 @@ const NotificationsScreen = ({ notifications }) => {
               ListFooterComponent={<M v10 />}
               renderItem={({ item }) => (
                 <NotificationsItem
-                  title={item.notification.title}
+                  title={item?.data?.title}
                   subtitle={new Date(item.sentTime)
                     .toISOString()
                     .substring(0, 16)
                     .replaceAll('T', ' at ')}
                   type="danger"
-                  content={item.notification.body}
+                  content={item?.data?.body}
                   isUnseen={item.isUnseen}
                   onPress={() => handlePressItem(item.messageId)}
                 />

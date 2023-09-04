@@ -32,7 +32,7 @@ const AlertForm = ({ onSubmit, onPressClose }) => {
         onChangeText={nextValue => setText(nextValue)}
       />
       <Button
-        style={styles.buttonSignIn}
+        style={styles.buttonSubmit}
         status="primary"
         disabled={loading}
         onPress={() => onSubmit(text)}>

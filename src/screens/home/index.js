@@ -146,8 +146,8 @@ const HomeScreen = () => {
   const handlePressPositive = () => {
     const fn = async () => {
       try {
-        setLoadingSubmit(false)
-        setErrorSubmit(null)
+        setLoadingSubmit(false);
+        setErrorSubmit(null);
         const arr = Object.keys(markedDates).map(k => {
           if (markedDates[k].type === WorkdaysTypes.WORKED) {
             return {
@@ -192,11 +192,11 @@ const HomeScreen = () => {
         };
         // const { data } = await postCRA(payload);
         p(payload);
-        setLoadingSubmit(false)
+        setLoadingSubmit(false);
         setModalVisible(false);
       } catch (error) {
-        setLoadingSubmit(false)
-        setErrorSubmit(error)
+        setLoadingSubmit(false);
+        setErrorSubmit(error);
         console.info('ERROR');
         console.info(error);
         console.info('ERROR');
@@ -310,7 +310,7 @@ const HomeScreen = () => {
             <TouchableOpacity onPress={() => setModalHelpVisible(true)}>
               <Icon
                 fill={Colors.WHITE}
-                name="info-outline"
+                name="question-mark-circle-outline"
                 width={24}
                 height={24}
               />

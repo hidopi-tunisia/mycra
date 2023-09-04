@@ -62,12 +62,12 @@ const styles = StyleSheet.create({
   cardEmpty: {
     flex: 1,
     backgroundColor: Colors.WHITE,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
     borderRadius: 24,
     padding: 20,
     paddingBottom: 72,
-  }
+  },
 });
 
 export default styles;

@@ -80,9 +80,11 @@ const App = () => {
     });
   }, []);
   useEffect(() => {
-    getInitialNotification().then(message => {
-      navigationRef.navigate('TabNotifications');
-    });
+    if (user) {
+      getInitialNotification().then(message => {
+        navigationRef.navigate('TabNotifications');
+      });
+    }
   }, []);
   return (
     <>

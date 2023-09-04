@@ -96,6 +96,16 @@ const styles = StyleSheet.create({
     borderRadius: 24,
     padding: 20,
   },
+  containerLoadMore: {
+    height: 48,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 48,
+    flexDirection: "row"
+  },
+  textLoadMore: {
+    color: Colors.GRAY_PRIMARY,
+  },
   containerError: {
     backgroundColor: `${Colors.RED_DARK_PRIMARY}11`,
     padding: 8,

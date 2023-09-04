@@ -48,11 +48,17 @@ const styles = StyleSheet.create({
     borderRadius: 32,
     bottom: 32,
     zIndex: 5,
+    paddingHorizontal: 24,
+    backgroundColor: Colors.WHITE,
   },
   input: {
     borderRadius: 24,
   },
-  labelEmail: {
+  containerLabel: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  labelInput: {
     fontSize: 16,
     fontWeight: '600',
   },
