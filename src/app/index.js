@@ -24,6 +24,7 @@ import { getItem, onChange as onStorageChange, setItem } from '@domain/storage';
 import ApplicationIntroScreen from '@screens/intro';
 import SplashScreen from 'react-native-splash-screen';
 import { Topics } from '@constants';
+import { isIntroDone, setIsIntroDone } from '@domain/storage';
 
 const AppTheme = {
   ...DefaultTheme,
@@ -37,13 +38,17 @@ const navigationRef = createNavigationContainerRef();
 const App = () => {
   const [user, setUser] = useState(null);
   const [notifications, setNotifications] = useState([]);
-  const [isIntro, setIsIntro] = useState(true);
+  const [isIntro, setIsIntro] = useState(false);
   useEffect(() => {
     const fn = async () => {
       try {
         const { uid } = await currentUser();
         if (uid) {
           await subscribeToTopic(`${Topics.CONSULTANT}~${uid}`);
+        }
+        const isDone = await isIntroDone();
+        if (isDone !== 'true') {
+          setIsIntro(true);
         }
         SplashScreen.hide();
       } catch (error) {
@@ -96,7 +101,8 @@ const App = () => {
     }
   }, []);
   const handleDone = () => {
-    setIsIntro(!isIntro);
+    setIsIntro(false);
+    setIsIntroDone('true');
   };
   return (
     <>
