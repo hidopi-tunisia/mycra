@@ -42,9 +42,9 @@ const App = () => {
   useEffect(() => {
     const fn = async () => {
       try {
-        const { uid } = await currentUser();
-        if (uid) {
-          await subscribeToTopic(`${Topics.CONSULTANT}~${uid}`);
+        const u = await currentUser();
+        if (u !== null && u.uid) {
+          await subscribeToTopic(`${Topics.CONSULTANT}~${u.uid}`);
         }
         const isDone = await isIntroDone();
         if (isDone !== 'true') {
@@ -68,7 +68,9 @@ const App = () => {
   }, []);
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(u => {
-      setUser(u);
+      if (u) {
+        setUser(u);
+      }
     });
     return unsubscribe;
   }, []);
@@ -76,10 +78,12 @@ const App = () => {
     const fn = async () => {
       const item = await getItem();
       const notifications = JSON.parse(item);
-      const arr = Object.keys(notifications)
-        .map(n => notifications[n])
-        .sort((a, b) => b.sentTime - a.sentTime);
-      setNotifications(arr);
+      if (notifications && typeof notifications === 'object') {
+        const arr = Object.keys(notifications)
+          .map(n => notifications[n])
+          .sort((a, b) => b.sentTime - a.sentTime);
+        setNotifications(arr);
+      }
     };
     fn();
   }, []);
@@ -87,10 +91,12 @@ const App = () => {
     onStorageChange(async () => {
       const item = await getItem();
       const notifications = JSON.parse(item);
-      const arr = Object.keys(notifications)
-        .map(n => notifications[n])
-        .sort((a, b) => b.sentTime - a.sentTime);
-      setNotifications(arr);
+      if (notifications && typeof notifications === 'object') {
+        const arr = Object.keys(notifications)
+          .map(n => notifications[n])
+          .sort((a, b) => b.sentTime - a.sentTime);
+        setNotifications(arr);
+      }
     });
   }, []);
   useEffect(() => {
