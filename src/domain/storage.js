@@ -2,6 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { emitter } from './events';
 
 const STORAGE_NAME = 'app';
+const IS_INTRO = 'is_into';
 
 const onChange = callback => {
   emitter.on(`${STORAGE_NAME}:storage-changed`, callback);
@@ -20,4 +21,9 @@ const setItem = (payload = '{}') => {
 const getItem = () => {
   return AsyncStorage.getItem(STORAGE_NAME);
 };
-export { getItem, setItem, onChange };
+
+const isIntroDone = () => AsyncStorage.getItem(IS_INTRO);
+const setIsIntroDone = (value = 'true') =>
+  AsyncStorage.setItem(IS_INTRO, value);
+
+export { getItem, setItem, onChange, isIntroDone, setIsIntroDone };

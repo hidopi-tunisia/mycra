@@ -21,6 +21,10 @@ import {
   subscribeToTopic,
 } from '@domain/messaging';
 import { getItem, onChange as onStorageChange, setItem } from '@domain/storage';
+import ApplicationIntroScreen from '@screens/intro';
+import SplashScreen from 'react-native-splash-screen';
+import { Topics } from '@constants';
+import { isIntroDone, setIsIntroDone } from '@domain/storage';
 
 const AppTheme = {
   ...DefaultTheme,
@@ -34,6 +38,25 @@ const navigationRef = createNavigationContainerRef();
 const App = () => {
   const [user, setUser] = useState(null);
   const [notifications, setNotifications] = useState([]);
+  const [isIntro, setIsIntro] = useState(false);
+  useEffect(() => {
+    const fn = async () => {
+      try {
+        const { uid } = await currentUser();
+        if (uid) {
+          await subscribeToTopic(`${Topics.CONSULTANT}~${uid}`);
+        }
+        const isDone = await isIntroDone();
+        if (isDone !== 'true') {
+          setIsIntro(true);
+        }
+        SplashScreen.hide();
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fn();
+  }, []);
   useEffect(() => {
     const unsubscribe = onMessage(async message => {
       const item = await getItem();
@@ -48,15 +71,6 @@ const App = () => {
       setUser(u);
     });
     return unsubscribe;
-  }, []);
-  useEffect(() => {
-    const fn = async () => {
-      try {
-        const { uid } = await currentUser();
-        await subscribeToTopic(`consultant~${uid}`);
-      } catch (error) {}
-    };
-    fn();
   }, []);
   useEffect(() => {
     const fn = async () => {
@@ -86,22 +100,32 @@ const App = () => {
       });
     }
   }, []);
+  const handleDone = () => {
+    setIsIntro(false);
+    setIsIntroDone('true');
+  };
   return (
     <>
       <StatusBar
         barStyle="light-content"
         backgroundColor={Colors.BLUE_DARK_PRIMARY}
       />
-      <IconRegistry icons={EvaIconsPack} />
-      <ApplicationProvider mapping={mapping} theme={theme}>
-        <NavigationContainer theme={AppTheme} ref={navigationRef}>
-          {user ? (
-            <TabNavigator notifications={notifications} />
-          ) : (
-            <SignInScreen />
-          )}
-        </NavigationContainer>
-      </ApplicationProvider>
+      {isIntro ? (
+        <ApplicationIntroScreen onDone={handleDone} />
+      ) : (
+        <>
+          <IconRegistry icons={EvaIconsPack} />
+          <ApplicationProvider mapping={mapping} theme={theme}>
+            <NavigationContainer theme={AppTheme} ref={navigationRef}>
+              {user ? (
+                <TabNavigator notifications={notifications} />
+              ) : (
+                <SignInScreen />
+              )}
+            </NavigationContainer>
+          </ApplicationProvider>
+        </>
+      )}
     </>
   );
 };

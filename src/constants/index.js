@@ -10,3 +10,8 @@ export const HELP_URL = 'https://en.wikipedia.org/wiki/Help';
 
 export const SUPPORT_EMAIL = 'support@acme.com';
 export const APP_VERSION = '1.0.0';
+
+export const Topics = {
+  CONSULTANT: "consultant"
+};
+export const INTRO_DONE = 'intro_done';
