@@ -50,7 +50,7 @@ const CRAHistoryScreen = ({ navigation }) => {
     fn();
   };
   const handlePress = id => {
-    alert('Pressed ' + id);
+    // alert('Pressed ' + id);
   };
   const handePressRetry = () => {
     retrieveData();
