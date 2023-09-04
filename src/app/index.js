@@ -21,6 +21,8 @@ import {
   subscribeToTopic,
 } from '@domain/messaging';
 import { getItem, onChange as onStorageChange, setItem } from '@domain/storage';
+import ApplicationIntroScreen from '@screens/intro';
+export const INTRO_DONE = 'intro_done';
 
 const AppTheme = {
   ...DefaultTheme,
@@ -34,6 +36,7 @@ const navigationRef = createNavigationContainerRef();
 const App = () => {
   const [user, setUser] = useState(null);
   const [notifications, setNotifications] = useState([]);
+  const [isIntro, setIsIntro] = useState(true);
   useEffect(() => {
     const unsubscribe = onMessage(async message => {
       const item = await getItem();
@@ -86,22 +89,31 @@ const App = () => {
       });
     }
   }, []);
+  const handleDone = () => {
+    setIsIntro(true);
+  };
   return (
     <>
       <StatusBar
         barStyle="light-content"
         backgroundColor={Colors.BLUE_DARK_PRIMARY}
       />
-      <IconRegistry icons={EvaIconsPack} />
-      <ApplicationProvider mapping={mapping} theme={theme}>
-        <NavigationContainer theme={AppTheme} ref={navigationRef}>
-          {user ? (
-            <TabNavigator notifications={notifications} />
-          ) : (
-            <SignInScreen />
-          )}
-        </NavigationContainer>
-      </ApplicationProvider>
+      {isIntro ? (
+        <ApplicationIntroScreen onDone={handleDone} />
+      ) : (
+        <>
+          <IconRegistry icons={EvaIconsPack} />
+          <ApplicationProvider mapping={mapping} theme={theme}>
+            <NavigationContainer theme={AppTheme} ref={navigationRef}>
+              {user ? (
+                <TabNavigator notifications={notifications} />
+              ) : (
+                <SignInScreen />
+              )}
+            </NavigationContainer>
+          </ApplicationProvider>
+        </>
+      )}
     </>
   );
 };
