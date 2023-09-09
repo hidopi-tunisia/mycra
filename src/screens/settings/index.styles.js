@@ -69,8 +69,10 @@ const styles = StyleSheet.create({
   containerError: {
     backgroundColor: `${Colors.RED_DARK_PRIMARY}66`,
     padding: 8,
+    paddingHorizontal: 24,
     justifyContent: 'center',
     alignItems: 'center',
+    borderRadius: 24
   },
   textError: {
     color: Colors.WHITE,
