@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native';
 import { useState, useEffect } from 'react';
 import { View, TouchableOpacity, FlatList } from 'react-native';
 import { Layout, Text, Spinner, Icon } from '@ui-kitten/components';
@@ -22,7 +23,6 @@ const CRAHistoryScreen = ({ navigation }) => {
       setError(null);
       const { data } = await getAllCRAs({ page, limit });
       setHistory([...history, ...data]);
-      p(data);
       setLoading(false);
     } catch (error) {
       setLoading(false);
@@ -50,7 +50,7 @@ const CRAHistoryScreen = ({ navigation }) => {
     fn();
   };
   const handlePress = id => {
-    // alert('Pressed ' + id);
+    navigation.navigate('CRA History Details')
   };
   const handePressRetry = () => {
     retrieveData();
