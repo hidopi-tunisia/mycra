@@ -9,8 +9,8 @@ import { getItem, setItem } from '@domain/storage';
 
 const NotificationsScreen = ({ notifications }) => {
   const [refBottomSheet, setRefBottomSheet] = useState(null);
-  const handleSubmit = text => {
-    alert(text);
+  const handleSubmit = payload => {
+    alert(JSON.stringify(payload, null, 2));
   };
   const handleRefBottomSheet = ref => {
     setRefBottomSheet(ref);
@@ -89,7 +89,7 @@ const NotificationsScreen = ({ notifications }) => {
           )}
         </View>
         <Fab onPress={handlePressFab} />
-        <BottomSheet height={300} onCallbackRef={handleRefBottomSheet}>
+        <BottomSheet height={360} onCallbackRef={handleRefBottomSheet}>
           <AlertForm onPressClose={handlePressClose} onSubmit={handleSubmit} />
         </BottomSheet>
       </Layout>

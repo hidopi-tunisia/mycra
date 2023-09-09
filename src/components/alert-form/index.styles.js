@@ -16,6 +16,10 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: '900',
   },
+  label: {
+    fontSize: 16,
+    fontWeight: '600',
+  },
   input: {
     textAlignVertical: 'top',
     padding: 12,
@@ -26,9 +30,19 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.WHITE,
     color: Colors.GRAY_PRIMARY_TEXT,
   },
-  label: {
-    fontSize: 16,
-    fontWeight: '600',
+  containerImages: {
+    flexDirection: 'row',
+    height: 42,
+    width: "50%",
+    alignSelf: 'center',
+    justifyContent: "space-between"
+  },
+  image: {
+    borderRadius: 24,
+    backgroundColor: 'blue',
+    height: 42,
+    width: 42
+
   },
   buttonSubmit: {
     height: 48,
