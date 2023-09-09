@@ -4,22 +4,19 @@ import { Button, Icon, Layout, Text } from '@ui-kitten/components';
 import {
   Calendar,
   BottomSheet,
-  WorkdaysCollection,
   WorkdaysTypes,
   M,
 } from '@components';
-import { WORKDAYS_ITEMS } from '@constants';
 import { getToday, getDaysInMonth } from '@utils/dates';
 import styles from './index.styles';
-import { postCRA } from '@domain/cra';
 import Modal from '@components/modals';
 import { getHolidays } from '@domain/days';
 import Colors from '@constants/colors';
 import moment from 'moment';
-
 import { PermissionsAndroid } from 'react-native';
+import CRAHistoryDetailsForm from '@components/cra-history-details-form';
 
-const HomeScreen = () => {
+const CRAHistoryDetailsScreen = () => {
   const [loadingFetch, setLoadingFetch] = useState(false);
   const [errorFetch, setErrorFetch] = useState(null);
   const [loadingSubmit, setLoadingSubmit] = useState(false);
@@ -27,11 +24,6 @@ const HomeScreen = () => {
   const [markedDates, setMarkedDates] = useState({});
   const [selectedCount, setSelectedCount] = useState(null);
   const [currentMonth, setCurrentMonth] = useState(moment().format('MMMM'));
-  const [holiday, setHoliday] = useState(null);
-  const [weekend, setWeekend] = useState(null);
-  const [modalVisible, setModalVisible] = useState(false);
-  const [modalHolidayVisible, setModalHolidayVisible] = useState(false);
-  const [modalWeekendVisible, setModalWeekendVisible] = useState(false);
   const [modalHelpVisible, setModalHelpVisible] = useState(false);
 
   useEffect(() => {
@@ -54,11 +46,13 @@ const HomeScreen = () => {
             marked[days[i]] = {
               type: WorkdaysTypes.WEEKEND,
               customStyles: styles.calendarDayWeekend,
+              disableTouchEvent: true,
             };
           } else {
             marked[days[i]] = {
               type: WorkdaysTypes.WORKED,
               customStyles: styles.calendarDayWorked,
+              disableTouchEvent: true,
             };
           }
         }
@@ -97,206 +91,17 @@ const HomeScreen = () => {
       PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS,
     );
   }, []);
-
-  const handleSelected = day => {
-    if (markedDates[day.dateString].type === WorkdaysTypes.HOLIDAY) {
-      setHoliday({
-        date: day.dateString,
-        name: markedDates[day.dateString].payload.value,
-      });
-      setModalHolidayVisible(true);
-    } else if (markedDates[day.dateString].type === WorkdaysTypes.WEEKEND) {
-      setWeekend({
-        date: day.dateString,
-      });
-      setModalWeekendVisible(true);
-    } else {
-      if (
-        markedDates[day.dateString] &&
-        markedDates[day.dateString].type === WorkdaysTypes.OFF
-      ) {
-        setMarkedDates({
-          ...markedDates,
-          [day.dateString]: {
-            type: WorkdaysTypes.WORKED,
-            customStyles: styles.calendarDayWorked,
-          },
-        });
-      } else {
-        setMarkedDates({
-          ...markedDates,
-          [day.dateString]: {
-            type: WorkdaysTypes.OFF,
-            payload: {
-              value: 'CP',
-            },
-            customStyles: styles.calendarDayOff,
-          },
-        });
-      }
-    }
-  };
-  const [workday, setWorkday] = useState(null);
-  const handleLongPress = day => {
-    setWorkday({ ...markedDates[day.dateString], dateString: day.dateString });
-    refBottomSheet.open();
-  };
-  const handlePressPositive = () => {
-    const fn = async () => {
-      try {
-        setLoadingSubmit(false);
-        setErrorSubmit(null);
-        const arr = Object.keys(markedDates).map(k => {
-          if (markedDates[k].type === WorkdaysTypes.WORKED) {
-            return {
-              date: k,
-              type: WorkdaysTypes.WORKED,
-            };
-          } else if (markedDates[k].type === WorkdaysTypes.HALF) {
-            return {
-              date: k,
-              type: WorkdaysTypes.HALF,
-            };
-          } else if (markedDates[k].type === WorkdaysTypes.REMOTE) {
-            return {
-              date: k,
-              type: WorkdaysTypes.REMOTE,
-            };
-          } else if (markedDates[k].type === WorkdaysTypes.OFF) {
-            return {
-              date: k,
-              type: WorkdaysTypes.OFF,
-              raison: markedDates[k].payload.value,
-            };
-          }
-        });
-        const datesTravaillees = arr.filter(
-          e => e && e.type === WorkdaysTypes.WORKED,
-        );
-        const datesDemiTravaillees = arr.filter(
-          e => e && e.type === WorkdaysTypes.HALF,
-        );
-        const datesTeleTravaillees = arr.filter(
-          e => e && e.type === WorkdaysTypes.REMOTE,
-        );
-        const datesNonTravaillees = arr.filter(
-          e => e && e.type === WorkdaysTypes.OFF,
-        );
-        const payload = {
-          datesTravaillees,
-          datesDemiTravaillees,
-          datesTeleTravaillees,
-          datesNonTravaillees,
-        };
-        // const { data } = await postCRA(payload);
-        p(payload);
-        setLoadingSubmit(false);
-        setModalVisible(false);
-      } catch (error) {
-        setLoadingSubmit(false);
-        setErrorSubmit(error);
-        console.info('ERROR');
-        console.info(error);
-        console.info('ERROR');
-      }
-    };
-    fn();
-  };
-  const handlePressNegative = () => {
-    setModalVisible(false);
-  };
   const handleSubmit = () => {
     setModalVisible(true);
   };
-  const handleSelectAll = () => {
-    setWorkday(null);
+  const [refBottomSheet, setRefBottomSheet] = useState(null);
+  const handleReportIssue = () => {
     refBottomSheet.open();
   };
-  const handlePressBottomSheetClose = () => {
-    refBottomSheet.close();
-  };
-  const handlePressHolidayPositive = () => {
-    setHoliday(null);
-    setModalHolidayVisible(false);
-  };
-  const handlePressWeekendPositive = () => {
-    setWeekend(null);
-    setModalWeekendVisible(false);
-  };
-  const [refBottomSheet, setRefBottomSheet] = useState(null);
   const handleRefBottomSheet = ref => {
     setRefBottomSheet(ref);
   };
-  const handlePressWorkdaysItem = item => {
-    if (workday) {
-      if (item.type === WorkdaysTypes.WORKED) {
-        setMarkedDates({
-          ...markedDates,
-          [workday.dateString]: {
-            type: WorkdaysTypes.WORKED,
-            customStyles: styles.calendarDayWorked,
-          },
-        });
-      } else if (item.type === 'half') {
-        setMarkedDates({
-          ...markedDates,
-          [workday.dateString]: {
-            type: WorkdaysTypes.HALF,
-            customStyles: styles.calendarHalfDay,
-          },
-        });
-      } else if (item.type === 'remote') {
-        setMarkedDates({
-          ...markedDates,
-          [workday.dateString]: {
-            type: WorkdaysTypes.REMOTE,
-            customStyles: styles.calendarDayRemote,
-          },
-        });
-      } else if (item.type === 'off') {
-        setMarkedDates({
-          ...markedDates,
-          [workday.dateString]: {
-            type: WorkdaysTypes.OFF,
-            payload: { value: item.value },
-            customStyles: styles.calendarDayOff,
-          },
-        });
-      }
-    } else {
-      let marked = {};
-      Object.keys(markedDates).forEach(d => {
-        if (
-          markedDates[d].type !== WorkdaysTypes.HOLIDAY &&
-          markedDates[d].type !== WorkdaysTypes.WEEKEND
-        ) {
-          if (item.type === WorkdaysTypes.WORKED) {
-            marked[d] = {
-              type: WorkdaysTypes.WORKED,
-              customStyles: styles.calendarDayWorked,
-            };
-          } else if (item.type === WorkdaysTypes.HALF) {
-            marked[d] = {
-              type: WorkdaysTypes.HALF,
-              customStyles: styles.calendarHalfDay,
-            };
-          } else if (item.type === WorkdaysTypes.REMOTE) {
-            marked[d] = {
-              type: WorkdaysTypes.REMOTE,
-              customStyles: styles.calendarDayRemote,
-            };
-          } else if (item.type === WorkdaysTypes.OFF) {
-            marked[d] = {
-              type: WorkdaysTypes.OFF,
-              payload: { value: item.value },
-              customStyles: styles.calendarDayOff,
-            };
-          }
-        }
-      });
-      setMarkedDates({ ...markedDates, ...marked });
-    }
-    setWorkday(null);
+  const handlePressClose = () => {
     refBottomSheet.close();
   };
   return (
@@ -304,7 +109,7 @@ const HomeScreen = () => {
       <View style={styles.top}>
         <View style={styles.containerDescription}>
           <View style={styles.containerHeading}>
-            <Text style={styles.textHeading}>My CRA</Text>
+            <Text style={styles.textHeading}>History</Text>
             <TouchableOpacity onPress={() => setModalHelpVisible(true)}>
               <Icon
                 fill={Colors.WHITE}
@@ -316,7 +121,7 @@ const HomeScreen = () => {
           </View>
           <M v1 />
           <Text style={styles.textDescription}>
-            Please fill your CRA before the end of the current month.
+            Thank you for filling the data.
           </Text>
           {/* <Text style={styles.textWarning}>
             The month is already prefilled.
@@ -327,20 +132,12 @@ const HomeScreen = () => {
         <View style={styles.containerCalendar}>
           <View style={styles.containerCalendarHeader}>
             <Text style={styles.containerCalendarTitle}>{currentMonth}</Text>
-            <TouchableOpacity onPress={handleSelectAll}>
-              <Icon
-                fill={Colors.GRAY_PRIMARY}
-                name="done-all-outline"
-                width={24}
-                height={24}
-              />
-            </TouchableOpacity>
           </View>
           <M v1 />
           <Calendar
             markedDates={markedDates}
-            onDayPress={handleSelected}
-            onDayLongPress={handleLongPress}
+            onDayPress={() => {}}
+            onDayLongPress={() => {}}
           />
         </View>
         <View style={styles.containerLegends}>
@@ -392,46 +189,19 @@ const HomeScreen = () => {
         <M v2 />
         <View style={styles.containerButton}>
           <Button
+            status="warning"
             style={styles.buttonSubmit}
-            status="primary"
-            onPress={handleSubmit}>
-            Submit
+            onPress={handleReportIssue}>
+            Report an issue
           </Button>
         </View>
       </View>
-      <Modal
-        title="Submit days?"
-        type="confirm"
-        visible={modalVisible}
-        onPressNegative={handlePressNegative}
-        onPressPositive={handlePressPositive}>
-        <Text>Are you sure to submit {selectedCount} days for this month?</Text>
-      </Modal>
-      <Modal
-        title="Holiday"
-        type="info"
-        visible={modalHolidayVisible}
-        onPressPositive={handlePressHolidayPositive}>
-        {holiday && (
-          <Text>
-            {holiday.date} is a holiday called "{holiday.name}".
-          </Text>
-        )}
-      </Modal>
-      <Modal
-        title="Weekend"
-        type="info"
-        visible={modalWeekendVisible}
-        onPressPositive={handlePressWeekendPositive}>
-        {weekend && <Text>{weekend.date} is a weekend.</Text>}
-      </Modal>
       <Modal
         title="Help"
         type="info"
         visible={modalHelpVisible}
         onPressPositive={() => setModalHelpVisible(false)}>
-        <Text>Fill your working days accordingly.</Text>
-        <Text>Long press on a day to view more options.</Text>
+        <Text>Thank you for filling the data.</Text>
         <M v2 />
         <Text>Legend:</Text>
         <View style={styles.containerLegends}>
@@ -503,16 +273,11 @@ const HomeScreen = () => {
           </View>
         </View>
       </Modal>
-      <BottomSheet height={480} onCallbackRef={handleRefBottomSheet}>
-        <WorkdaysCollection
-          items={WORKDAYS_ITEMS}
-          workday={workday}
-          onPress={handlePressWorkdaysItem}
-          onPressClose={handlePressBottomSheetClose}
-        />
+      <BottomSheet height={300} onCallbackRef={handleRefBottomSheet}>
+        <CRAHistoryDetailsForm onPressClose={handlePressClose} onSubmit={handleSubmit} />
       </BottomSheet>
     </Layout>
   );
 };
 
-export default HomeScreen;
+export default CRAHistoryDetailsScreen;

@@ -1,8 +1,13 @@
 import Colors from '@constants/colors';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
-import { HomeScreen, NotificationsScreen, SettingsScreen } from '@screens';
-import CRAHistoryScreen from '@screens/settings/cra-history';
+import {
+  HomeScreen,
+  NotificationsScreen,
+  SettingsScreen,
+  CRAHistoryScreen,
+  CRAHistoryDetailsScreen,
+} from '@screens';
 import { Icon } from '@ui-kitten/components';
 import { Text, TouchableOpacity, View } from 'react-native';
 import styles from './index.styles';
@@ -150,6 +155,11 @@ const TabNavigators = ({ initialRoute = 'TabHome', notifications }) => (
           <Settings.Screen
             name="CRA History"
             component={CRAHistoryScreen}
+            options={{ headerShown: false }}
+          />
+          <Settings.Screen
+            name="CRA History Details"
+            component={CRAHistoryDetailsScreen}
             options={{ headerShown: false }}
           />
         </Settings.Navigator>
