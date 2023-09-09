@@ -60,7 +60,12 @@ const App = () => {
   useEffect(() => {
     const unsubscribe = onMessage(async message => {
       const item = await getItem();
-      const notifications = JSON.parse(item);
+      let notifications;
+      if (item === null || item === 'null') {
+        notifications = {};
+      } else {
+        notifications = JSON.parse(item);
+      }
       notifications[message.messageId] = { ...message, isUnseen: true };
       setItem(JSON.stringify(notifications));
     });
@@ -77,7 +82,12 @@ const App = () => {
   useEffect(() => {
     const fn = async () => {
       const item = await getItem();
-      const notifications = JSON.parse(item);
+      let notifications;
+      if (item === null || item === 'null') {
+        notifications = {};
+      } else {
+        notifications = JSON.parse(item);
+      }
       if (notifications && typeof notifications === 'object') {
         const arr = Object.keys(notifications)
           .map(n => notifications[n])
@@ -90,7 +100,12 @@ const App = () => {
   useEffect(() => {
     onStorageChange(async () => {
       const item = await getItem();
-      const notifications = JSON.parse(item);
+      let notifications;
+      if (item === null || item === 'null') {
+        notifications = {};
+      } else {
+        notifications = JSON.parse(item);
+      }
       if (notifications && typeof notifications === 'object') {
         const arr = Object.keys(notifications)
           .map(n => notifications[n])
