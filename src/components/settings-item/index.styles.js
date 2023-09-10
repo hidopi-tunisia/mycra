@@ -1,8 +1,8 @@
-import { StyleSheet } from 'react-native';
+import { ScaledSheet } from 'react-native-size-matters';
 
-const styles = StyleSheet.create({
+const styles = ScaledSheet.create({
   root: {
-    borderRadius: 32,
+    borderRadius: "32@msr",
   },
 });
 

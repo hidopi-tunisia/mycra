@@ -5,6 +5,7 @@ import styles from './index.styles';
 import { M } from '@components';
 import Colors from '@constants/colors';
 import { currentUser } from '@domain/auth';
+import { s } from 'react-native-size-matters';
 
 const ResetPasswordForm = ({ loading, error, onSubmit, onPressClose }) => {
   const [email, setEmail] = useState('');
@@ -32,8 +33,8 @@ const ResetPasswordForm = ({ loading, error, onSubmit, onPressClose }) => {
           <Icon
             fill={Colors.GRAY_PRIMARY}
             name="close-outline"
-            width={24}
-            height={24}
+            width={s(22)}
+            height={s(22)}
           />
         </TouchableOpacity>
       </View>

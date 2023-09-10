@@ -16,6 +16,7 @@ export {
   BottomSheet,
   WorkdaysCollection,
   WorkdaysTypes,
+  CRAHistoryDetailsForm,
   Fab,
   AlertForm,
   M,

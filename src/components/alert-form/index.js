@@ -4,6 +4,7 @@ import { Button, Spinner, Text, Icon } from '@ui-kitten/components';
 import styles from './index.styles';
 import { M } from '@components';
 import Colors from '@constants/colors';
+import { s } from 'react-native-size-matters';
 
 const AlertForm = ({ onSubmit, onPressClose }) => {
   const [text, setText] = useState('');
@@ -31,8 +32,8 @@ const AlertForm = ({ onSubmit, onPressClose }) => {
           <Icon
             fill={Colors.GRAY_PRIMARY}
             name="close-outline"
-            width={24}
-            height={24}
+            width={s(21)}
+            height={s(21)}
           />
         </TouchableOpacity>
       </View>

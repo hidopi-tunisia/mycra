@@ -4,6 +4,7 @@ import styles from './index.styles';
 import Colors from '@constants/colors';
 import { Icon } from '@ui-kitten/components';
 import { M } from '@components/miscs/margins';
+import { s } from 'react-native-size-matters';
 
 const Item = ({
   text,
@@ -17,7 +18,7 @@ const Item = ({
     <View style={{ ...styles.container, backgroundColor, borderColor }}>
       {selected && (
         <>
-          <Icon width={20} height={20} fill={color} name="checkmark-outline" />
+          <Icon width={s(17)} height={s(17)} fill={color} name="checkmark-outline" />
           <M h2 />
         </>
       )}

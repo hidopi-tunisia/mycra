@@ -1,15 +1,15 @@
 import Colors from '@constants/colors';
-import { StyleSheet } from 'react-native';
+import { ScaledSheet } from 'react-native-size-matters';
 
-const styles = StyleSheet.create({
+const styles = ScaledSheet.create({
   container: {
     backgroundColor: Colors.GRAY_PRIMARY,
     alignSelf: 'flex-start',
-    borderRadius: 24,
-    padding: 4,
-    paddingHorizontal: 16,
-    margin: 4,
-    borderWidth: 2,
+    borderRadius: "22@msr",
+    padding: "3@msr",
+    paddingHorizontal: "14@msr",
+    margin: "3@msr",
+    borderWidth: "2@msr",
     flexDirection: 'row',
   },
 });

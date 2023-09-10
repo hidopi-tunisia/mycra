@@ -5,6 +5,7 @@ import { M } from '../index';
 import { renderColor, renderIcon } from './index.helpers';
 
 import styles from './index.styles';
+import { s } from 'react-native-size-matters';
 
 const Modal = ({
   visible = false,
@@ -21,7 +22,7 @@ const Modal = ({
     icon={
       <View
         style={{ ...styles.containerIcon, backgroundColor: renderColor(type) }}>
-        <Icon width={20} height={20} name={renderIcon(type)} fill="white" />
+        <Icon width={s(18)} height={s(18)} name={renderIcon(type)} fill="white" />
       </View>
     }
     style={styles.root}>

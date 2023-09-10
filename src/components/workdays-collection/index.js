@@ -4,6 +4,7 @@ import styles from './index.styles';
 import Item from './item';
 import { M } from '@components';
 import Colors from '@constants/colors';
+import { s } from 'react-native-size-matters';
 
 const WorkdaysCollection = ({ items, workday, onPress, onPressClose }) => (
   <ScrollView style={{ ...styles.container }}>
@@ -16,8 +17,8 @@ const WorkdaysCollection = ({ items, workday, onPress, onPressClose }) => (
         <Icon
           fill={Colors.GRAY_PRIMARY}
           name="close-outline"
-          width={24}
-          height={24}
+          width={s(22)}
+          height={s(22)}
         />
       </TouchableOpacity>
     </View>
