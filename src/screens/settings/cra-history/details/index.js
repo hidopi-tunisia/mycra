@@ -1,12 +1,8 @@
+import SystemNavigationBar from 'react-native-system-navigation-bar';
 import { useEffect, useState } from 'react';
-import { View, TouchableOpacity } from 'react-native';
+import { View, TouchableOpacity, StatusBar } from 'react-native';
 import { Button, Icon, Layout, Text } from '@ui-kitten/components';
-import {
-  Calendar,
-  BottomSheet,
-  WorkdaysTypes,
-  M,
-} from '@components';
+import { Calendar, BottomSheet, WorkdaysTypes, M } from '@components';
 import { getToday, getDaysInMonth } from '@utils/dates';
 import styles from './index.styles';
 import Modal from '@components/modals';
@@ -25,7 +21,9 @@ const CRAHistoryDetailsScreen = () => {
   const [selectedCount, setSelectedCount] = useState(null);
   const [currentMonth, setCurrentMonth] = useState(moment().format('MMMM'));
   const [modalHelpVisible, setModalHelpVisible] = useState(false);
-
+  useEffect(() => {
+    SystemNavigationBar.setNavigationColor(Colors.ORANGE_DARK_PRIMARY, 'light');
+  }, []);
   useEffect(() => {
     const fn = async () => {
       try {
@@ -105,178 +103,184 @@ const CRAHistoryDetailsScreen = () => {
     refBottomSheet.close();
   };
   return (
-    <Layout style={styles.root}>
-      <View style={styles.top}>
-        <View style={styles.containerDescription}>
-          <View style={styles.containerHeading}>
-            <Text style={styles.textHeading}>History</Text>
-            <TouchableOpacity onPress={() => setModalHelpVisible(true)}>
-              <Icon
-                fill={Colors.WHITE}
-                name="question-mark-circle-outline"
-                width={24}
-                height={24}
-              />
-            </TouchableOpacity>
-          </View>
-          <M v1 />
-          <Text style={styles.textDescription}>
-            Thank you for filling the data.
-          </Text>
-          {/* <Text style={styles.textWarning}>
+    <>
+      <StatusBar backgroundColor={Colors.ORANGE_DARK_PRIMARY} barStyle="light-content" />
+      <Layout style={styles.root}>
+        <View style={styles.top}>
+          <View style={styles.containerDescription}>
+            <View style={styles.containerHeading}>
+              <Text style={styles.textHeading}>History</Text>
+              <TouchableOpacity onPress={() => setModalHelpVisible(true)}>
+                <Icon
+                  fill={Colors.WHITE}
+                  name="question-mark-circle-outline"
+                  width={24}
+                  height={24}
+                />
+              </TouchableOpacity>
+            </View>
+            <M v1 />
+            <Text style={styles.textDescription}>
+              Thank you for filling the data.
+            </Text>
+            {/* <Text style={styles.textWarning}>
             The month is already prefilled.
           </Text> */}
-        </View>
-      </View>
-      <View style={styles.middle}>
-        <View style={styles.containerCalendar}>
-          <View style={styles.containerCalendarHeader}>
-            <Text style={styles.containerCalendarTitle}>{currentMonth}</Text>
           </View>
-          <M v1 />
-          <Calendar
-            markedDates={markedDates}
-            onDayPress={() => {}}
-            onDayLongPress={() => {}}
+        </View>
+        <View style={styles.middle}>
+          <View style={styles.containerCalendar}>
+            <View style={styles.containerCalendarHeader}>
+              <Text style={styles.containerCalendarTitle}>{currentMonth}</Text>
+            </View>
+            <M v1 />
+            <Calendar
+              markedDates={markedDates}
+              onDayPress={() => {}}
+              onDayLongPress={() => {}}
+            />
+          </View>
+          <View style={styles.containerLegends}>
+            <View style={styles.containerLegend}>
+              <View
+                style={{
+                  ...styles.shapeLegend,
+                  backgroundColor: Colors.ORANGE_PRIMARY,
+                  borderColor: Colors.ORANGE_PRIMARY,
+                }}
+              />
+              <M h1 />
+              <Text>Worked</Text>
+            </View>
+            <View style={styles.containerLegend}>
+              <View
+                style={{
+                  ...styles.shapeLegend,
+                  backgroundColor: Colors.WHITE,
+                  borderColor: Colors.ORANGE_PRIMARY,
+                }}
+              />
+              <M h1 />
+              <Text>Half day</Text>
+            </View>
+            <View style={styles.containerLegend}>
+              <View
+                style={{
+                  ...styles.shapeLegend,
+                  backgroundColor: Colors.PURPLE_PRIMARY,
+                  borderColor: Colors.PURPLE_PRIMARY,
+                }}
+              />
+              <M h1 />
+              <Text>Remote</Text>
+            </View>
+            <View style={styles.containerLegend}>
+              <View
+                style={{
+                  ...styles.shapeLegend,
+                  backgroundColor: Colors.WHITE,
+                  borderColor: Colors.RED_PRIMARY,
+                }}
+              />
+              <M h1 />
+              <Text>Absent</Text>
+            </View>
+          </View>
+          <M v2 />
+          <View style={styles.containerButton}>
+            <Button
+              status="warning"
+              style={styles.buttonSubmit}
+              onPress={handleReportIssue}>
+              Report an issue
+            </Button>
+          </View>
+        </View>
+        <Modal
+          title="Help"
+          type="info"
+          visible={modalHelpVisible}
+          onPressPositive={() => setModalHelpVisible(false)}>
+          <Text>Thank you for filling the data.</Text>
+          <M v2 />
+          <Text>Legend:</Text>
+          <View style={styles.containerLegends}>
+            <View style={styles.containerLegend}>
+              <View
+                style={{
+                  ...styles.shapeLegend,
+                  backgroundColor: Colors.ORANGE_PRIMARY,
+                  borderColor: Colors.ORANGE_PRIMARY,
+                }}
+              />
+              <M h1 />
+              <Text>Worked</Text>
+            </View>
+            <View style={styles.containerLegend}>
+              <View
+                style={{
+                  ...styles.shapeLegend,
+                  backgroundColor: Colors.WHITE,
+                  borderColor: Colors.ORANGE_PRIMARY,
+                }}
+              />
+              <M h1 />
+              <Text>Half day</Text>
+            </View>
+            <View style={styles.containerLegend}>
+              <View
+                style={{
+                  ...styles.shapeLegend,
+                  backgroundColor: Colors.PURPLE_PRIMARY,
+                  borderColor: Colors.PURPLE_PRIMARY,
+                }}
+              />
+              <M h1 />
+              <Text>Remote</Text>
+            </View>
+            <View style={styles.containerLegend}>
+              <View
+                style={{
+                  ...styles.shapeLegend,
+                  backgroundColor: Colors.WHITE,
+                  borderColor: Colors.RED_PRIMARY,
+                }}
+              />
+              <M h1 />
+              <Text>Absent</Text>
+            </View>
+            <View style={styles.containerLegend}>
+              <View
+                style={{
+                  ...styles.shapeLegend,
+                  backgroundColor: Colors.WHITE,
+                  borderColor: Colors.GREEN_PRIMARY,
+                }}
+              />
+              <M h1 />
+              <Text>Weekend</Text>
+            </View>
+            <View style={styles.containerLegend}>
+              <View
+                style={{
+                  ...styles.shapeLegend,
+                  backgroundColor: Colors.GREEN_PRIMARY,
+                  borderColor: Colors.GREEN_PRIMARY,
+                }}
+              />
+              <M h1 />
+              <Text>Holiday</Text>
+            </View>
+          </View>
+        </Modal>
+        <BottomSheet height={300} onCallbackRef={handleRefBottomSheet}>
+          <CRAHistoryDetailsForm
+            onPressClose={handlePressClose}
+            onSubmit={handleSubmit}
           />
-        </View>
-        <View style={styles.containerLegends}>
-          <View style={styles.containerLegend}>
-            <View
-              style={{
-                ...styles.shapeLegend,
-                backgroundColor: Colors.BLUE_PRIMARY,
-                borderColor: Colors.BLUE_PRIMARY,
-              }}
-            />
-            <M h1 />
-            <Text>Worked</Text>
-          </View>
-          <View style={styles.containerLegend}>
-            <View
-              style={{
-                ...styles.shapeLegend,
-                backgroundColor: Colors.WHITE,
-                borderColor: Colors.BLUE_PRIMARY,
-              }}
-            />
-            <M h1 />
-            <Text>Half day</Text>
-          </View>
-          <View style={styles.containerLegend}>
-            <View
-              style={{
-                ...styles.shapeLegend,
-                backgroundColor: Colors.PURPLE_PRIMARY,
-                borderColor: Colors.PURPLE_PRIMARY,
-              }}
-            />
-            <M h1 />
-            <Text>Remote</Text>
-          </View>
-          <View style={styles.containerLegend}>
-            <View
-              style={{
-                ...styles.shapeLegend,
-                backgroundColor: Colors.WHITE,
-                borderColor: Colors.RED_PRIMARY,
-              }}
-            />
-            <M h1 />
-            <Text>Absent</Text>
-          </View>
-        </View>
-        <M v2 />
-        <View style={styles.containerButton}>
-          <Button
-            status="warning"
-            style={styles.buttonSubmit}
-            onPress={handleReportIssue}>
-            Report an issue
-          </Button>
-        </View>
-      </View>
-      <Modal
-        title="Help"
-        type="info"
-        visible={modalHelpVisible}
-        onPressPositive={() => setModalHelpVisible(false)}>
-        <Text>Thank you for filling the data.</Text>
-        <M v2 />
-        <Text>Legend:</Text>
-        <View style={styles.containerLegends}>
-          <View style={styles.containerLegend}>
-            <View
-              style={{
-                ...styles.shapeLegend,
-                backgroundColor: Colors.BLUE_PRIMARY,
-                borderColor: Colors.BLUE_PRIMARY,
-              }}
-            />
-            <M h1 />
-            <Text>Worked</Text>
-          </View>
-          <View style={styles.containerLegend}>
-            <View
-              style={{
-                ...styles.shapeLegend,
-                backgroundColor: Colors.WHITE,
-                borderColor: Colors.BLUE_PRIMARY,
-              }}
-            />
-            <M h1 />
-            <Text>Half day</Text>
-          </View>
-          <View style={styles.containerLegend}>
-            <View
-              style={{
-                ...styles.shapeLegend,
-                backgroundColor: Colors.PURPLE_PRIMARY,
-                borderColor: Colors.PURPLE_PRIMARY,
-              }}
-            />
-            <M h1 />
-            <Text>Remote</Text>
-          </View>
-          <View style={styles.containerLegend}>
-            <View
-              style={{
-                ...styles.shapeLegend,
-                backgroundColor: Colors.WHITE,
-                borderColor: Colors.RED_PRIMARY,
-              }}
-            />
-            <M h1 />
-            <Text>Absent</Text>
-          </View>
-          <View style={styles.containerLegend}>
-            <View
-              style={{
-                ...styles.shapeLegend,
-                backgroundColor: Colors.WHITE,
-                borderColor: Colors.GREEN_PRIMARY,
-              }}
-            />
-            <M h1 />
-            <Text>Weekend</Text>
-          </View>
-          <View style={styles.containerLegend}>
-            <View
-              style={{
-                ...styles.shapeLegend,
-                backgroundColor: Colors.GREEN_PRIMARY,
-                borderColor: Colors.GREEN_PRIMARY,
-              }}
-            />
-            <M h1 />
-            <Text>Holiday</Text>
-          </View>
-        </View>
-      </Modal>
-      <BottomSheet height={300} onCallbackRef={handleRefBottomSheet}>
-        <CRAHistoryDetailsForm onPressClose={handlePressClose} onSubmit={handleSubmit} />
-      </BottomSheet>
-    </Layout>
+        </BottomSheet>
+      </Layout>
+    </>
   );
 };
 

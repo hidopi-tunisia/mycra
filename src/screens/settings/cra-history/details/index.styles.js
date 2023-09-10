@@ -93,9 +93,9 @@ const styles = StyleSheet.create({
   },
   calendarDayWorked: {
     container: {
-      backgroundColor: Colors.BLUE_PRIMARY,
+      backgroundColor: Colors.ORANGE_PRIMARY,
       borderWidth: 2,
-      borderColor: Colors.BLUE_PRIMARY,
+      borderColor: Colors.ORANGE_PRIMARY,
       justifyContent: 'center',
     },
     text: {
