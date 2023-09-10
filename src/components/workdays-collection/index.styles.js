@@ -1,9 +1,9 @@
-import { StyleSheet } from 'react-native';
+import { ScaledSheet } from 'react-native-size-matters';
 
-const styles = StyleSheet.create({
+const styles = ScaledSheet.create({
   container: {
     flex: 1,
-    padding: 8,
+    padding: "8@msr",
   },
   containerTitle: {
     flexDirection: 'row',
@@ -11,11 +11,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   title: {
-    fontSize: 20,
+    fontSize: "17@msr",
     fontWeight: '900',
   },
   subtitle: {
-    fontSize: 14,
+    fontSize: "12@msr",
     fontWeight: '700',
   },
   containerCollection: {
