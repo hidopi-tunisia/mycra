@@ -19,7 +19,7 @@ const renderIcon = type => {
   }
 };
 
-const renderColor = type => {
+export const renderColor = type => {
   switch (type) {
     case 'success':
       return '#4CAF50cc';

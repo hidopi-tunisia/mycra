@@ -50,7 +50,7 @@ const CRAHistoryScreen = ({ navigation }) => {
     fn();
   };
   const handlePress = id => {
-    navigation.navigate('CRA History Details')
+    navigation.navigate('CRA History Details', { id });
   };
   const handePressRetry = () => {
     retrieveData();
@@ -177,7 +177,7 @@ const CRAHistoryScreen = ({ navigation }) => {
                             }}
                           />
                           <M h1 />
-                          <Text>3 Absent</Text>
+                          <Text>3 Off</Text>
                         </View>
                       </>
                     )}

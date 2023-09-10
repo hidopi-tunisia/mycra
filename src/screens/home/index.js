@@ -386,7 +386,7 @@ const HomeScreen = () => {
               }}
             />
             <M h1 />
-            <Text>Absent</Text>
+            <Text>Off</Text>
           </View>
         </View>
         <M v2 />
@@ -477,7 +477,7 @@ const HomeScreen = () => {
               }}
             />
             <M h1 />
-            <Text>Absent</Text>
+            <Text>Off</Text>
           </View>
           <View style={styles.containerLegend}>
             <View

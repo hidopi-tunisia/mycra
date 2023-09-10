@@ -15,6 +15,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  containerBack: {
+    alignSelf: 'flex-start',
+    marginLeft: 28
+  },
   containerDescription: {
     width: '80%',
     alignSelf: 'center',
@@ -83,13 +87,17 @@ const styles = StyleSheet.create({
   containerCalendarHeader: {
     paddingHorizontal: 16,
     flexDirection: 'row',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
     alignItems: 'center',
   },
   containerCalendarTitle: {
     color: Colors.ORANGE_DARK_PRIMARY,
     fontSize: 22,
     fontWeight: '900',
+  },
+  containerCalendarStatus: {
+    fontSize: 14,
+    fontWeight: '700',
   },
   calendarDayWorked: {
     container: {
