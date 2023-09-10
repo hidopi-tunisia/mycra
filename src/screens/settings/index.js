@@ -187,7 +187,7 @@ const SettingsScreen = () => {
             onPress={handleHelp}
           />
           <SettingsItem
-            title="Report issue"
+            title="Report an issue"
             description="Send us an email about an issue in the application"
             icon="alert-triangle-outline"
             onPress={handleReport}

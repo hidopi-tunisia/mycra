@@ -11,6 +11,7 @@ import {
 import { Icon } from '@ui-kitten/components';
 import { Text, TouchableOpacity, View } from 'react-native';
 import styles from './index.styles';
+import { useState } from 'react';
 
 const Tab = createBottomTabNavigator();
 const Settings = createStackNavigator();
@@ -29,6 +30,7 @@ const MyTabBar = ({
   descriptors,
   navigation,
   notificationsCount = 0,
+  focusedColor = Colors.BLUE_PRIMARY,
 }) => {
   return (
     <View style={styles.root}>
@@ -87,24 +89,18 @@ const MyTabBar = ({
                     </View>
                   )}
                   <NotificationsIcon
-                    fill={
-                      isFocused ? Colors.BLUE_PRIMARY : Colors.GRAY_DARK_PRIMARY
-                    }
+                    fill={isFocused ? focusedColor : Colors.GRAY_DARK_PRIMARY}
                   />
                 </>
               )}
               {route.name === 'TabSettings' && (
                 <SettingsIcon
-                  fill={
-                    isFocused ? Colors.BLUE_PRIMARY : Colors.GRAY_DARK_PRIMARY
-                  }
+                  fill={isFocused ? focusedColor : Colors.GRAY_DARK_PRIMARY}
                 />
               )}
               <Text
                 style={{
-                  color: isFocused
-                    ? Colors.BLUE_PRIMARY
-                    : Colors.GRAY_PRIMARY_TEXT,
+                  color: isFocused ? focusedColor : Colors.GRAY_PRIMARY_TEXT,
                 }}>
                 {label}
               </Text>
@@ -116,56 +112,69 @@ const MyTabBar = ({
   );
 };
 
-const TabNavigators = ({ initialRoute = 'TabHome', notifications }) => (
-  <Tab.Navigator
-    initialRouteName={initialRoute}
-    tabBar={props => (
-      <MyTabBar {...props} notificationsCount={notifications.length} />
-    )}
-    screenOptions={{ headerShown: false }}>
-    <Tab.Screen
-      name="TabHome"
-      component={HomeScreen}
-      options={{
-        tabBarLabel: 'Home',
-        tabBarIcon: HomeIcon,
-      }}
-    />
-    <Tab.Screen
-      name="TabNotifications"
-      options={{
-        tabBarLabel: 'Notifications',
-        tabBarIcon: NotificationsIcon,
-      }}
-      children={props => (
-        <NotificationsScreen {...props} notifications={notifications} />
+const TabNavigators = ({ initialRoute = 'TabHome', notifications }) => {
+  const [focusedColor, setFocusedColor] = useState(Colors.BLUE_PRIMARY);
+  return (
+    <Tab.Navigator
+      initialRouteName={initialRoute}
+      tabBar={props => (
+        <MyTabBar
+          {...props}
+          notificationsCount={notifications.length}
+          focusedColor={focusedColor}
+        />
       )}
-    />
-    <Tab.Screen
-      name="TabSettings"
-      options={{
-        tabBarLabel: 'Settings',
-        tabBarIcon: SettingsIcon,
-      }}>
-      {props => (
-        <Settings.Navigator>
-          <Settings.Screen name="Settings" options={{ headerShown: false }}>
-            {p => <SettingsScreen {...p} />}
-          </Settings.Screen>
-          <Settings.Screen
-            name="CRA History"
-            component={CRAHistoryScreen}
-            options={{ headerShown: false }}
-          />
-          <Settings.Screen
-            name="CRA History Details"
-            component={CRAHistoryDetailsScreen}
-            options={{ headerShown: false }}
-          />
-        </Settings.Navigator>
-      )}
-    </Tab.Screen>
-  </Tab.Navigator>
-);
+      screenOptions={{ headerShown: false }}>
+      <Tab.Screen
+        name="TabHome"
+        component={HomeScreen}
+        options={{
+          tabBarLabel: 'Home',
+          tabBarIcon: HomeIcon,
+        }}
+      />
+      <Tab.Screen
+        name="TabNotifications"
+        options={{
+          tabBarLabel: 'Notifications',
+          tabBarIcon: NotificationsIcon,
+        }}
+        children={props => (
+          <NotificationsScreen {...props} notifications={notifications} />
+        )}
+      />
+      <Tab.Screen
+        name="TabSettings"
+        options={{
+          tabBarLabel: 'Settings',
+          tabBarIcon: SettingsIcon,
+        }}>
+        {props => (
+          <Settings.Navigator>
+            <Settings.Screen name="Settings" options={{ headerShown: false }}>
+              {p => <SettingsScreen {...p} />}
+            </Settings.Screen>
+            <Settings.Screen
+              name="CRA History"
+              component={CRAHistoryScreen}
+              options={{ headerShown: false }}
+            />
+            <Settings.Screen
+              name="CRA History Details"
+              options={{ headerShown: false }}>
+              {props => (
+                <CRAHistoryDetailsScreen
+                  {...props}
+                  onBlur={() => setFocusedColor(Colors.BLUE_PRIMARY)}
+                  onFocus={() => setFocusedColor(Colors.ORANGE_DARK_PRIMARY)}
+                />
+              )}
+            </Settings.Screen>
+          </Settings.Navigator>
+        )}
+      </Tab.Screen>
+    </Tab.Navigator>
+  );
+};
 
 export default TabNavigators;

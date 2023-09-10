@@ -18,7 +18,7 @@ const CRAHistoryDetailsForm = ({ onSubmit, onPressClose }) => {
     <View style={styles.container}>
       <View style={styles.containerTitle}>
         <Text style={styles.label} category="label">
-          Report issue
+          Report an issue
         </Text>
         <TouchableOpacity onPress={onPressClose}>
           <Icon
