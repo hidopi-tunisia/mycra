@@ -1,14 +1,14 @@
 import Colors from '@constants/colors';
-import { StyleSheet } from 'react-native';
+import { ScaledSheet } from 'react-native-size-matters';
 
-const styles = StyleSheet.create({
+const styles = ScaledSheet.create({
   container: {
-    borderRadius: 32,
-    width: 56,
-    height: 56,
+    borderRadius: "32@msr",
+    width: "48@s",
+    height: "48@s",
     position: 'absolute',
-    bottom: 96,
-    right: 48,
+    bottom: "80@vs",
+    right: "40@s",
     justifyContent: 'center',
     alignItems: 'center',
   },
