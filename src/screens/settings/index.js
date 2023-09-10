@@ -11,23 +11,26 @@ import {
 } from '@constants';
 import styles from './index.styles';
 import { useEffect, useState } from 'react';
-import { getProfile } from '@domain/profile';
 import { getStatusBackground } from './index.helpers';
-import { sendPasswordResetEmail, signOut } from '@domain/auth';
+import { currentUser, sendPasswordResetEmail, signOut } from '@domain/auth';
 import Modal from '@components/modals';
 import BottomSheet from '@components/bottom-sheet';
 import ResetPasswordForm from '@components/reset-password-form';
 import { setItem } from '@domain/storage';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const SettingsScreen = () => {
   const navigation = useNavigation();
-  const [profile, setProfile] = useState(null);
+  const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
   const [modalResetPasswordVisible, setModalResetPasswordVisible] =
     useState(false);
-  const [refBottomSheet, setRefBottomSheet] = useState(null);
+  const [refResetPasswordBottomSheet, setRefResetPasswordBottomSheet] =
+    useState(null);
+  const [refUpdateProfileBottomSheet, setRefUpdateProfileBottomSheet] =
+    useState(null);
   const [loadingResetPassword, setLoadingResetPassword] = useState(false);
   const [errorResetPassword, setErrorResetPassword] = useState(null);
   useEffect(() => {
@@ -35,13 +38,13 @@ const SettingsScreen = () => {
       try {
         setLoading(true);
         setError(null);
-        const { data } = await getProfile();
-        setProfile(data.consultant);
+        const u = await currentUser();
+        setUser(u);
         setLoading(false);
       } catch (error) {
-        console.log(error);
         setLoading(false);
         setError('Error happened');
+        console.info(error);
       }
     };
     fn();
@@ -79,12 +82,12 @@ const SettingsScreen = () => {
     setModalVisible(true);
   };
   const handlePressPositive = () => {
-    setModalVisible(false);
-    setItem('null');
     try {
+      setItem('null');
+      setModalVisible(false);
       signOut();
     } catch (error) {
-      console.log(error);
+      console.info(error);
     }
   };
   const handlePressNegative = () => {
@@ -92,13 +95,22 @@ const SettingsScreen = () => {
   };
   const handleResetPassword = () => {
     setErrorResetPassword(null);
-    refBottomSheet.open();
+    refResetPasswordBottomSheet.open();
+  };
+  const handlePressUpdateProfile = () => {
+    refUpdateProfileBottomSheet.open();
   };
   const handlePressCloseResetPassword = () => {
-    refBottomSheet.close();
+    refResetPasswordBottomSheet.close();
   };
-  const handleRefBottomSheet = ref => {
-    setRefBottomSheet(ref);
+  const handlePressCloseUpdateProfile = () => {
+    refUpdateProfileBottomSheet.close();
+  };
+  const handleRefResetPasswordBottomSheet = ref => {
+    setRefResetPasswordBottomSheet(ref);
+  };
+  const handleRefUpdateProfileBottomSheet = ref => {
+    setRefUpdateProfileBottomSheet(ref);
   };
   const handleSubmitResetPassword = email => {
     const fn = async () => {
@@ -130,31 +142,36 @@ const SettingsScreen = () => {
   return (
     <View style={styles.root}>
       <View style={styles.containerTop}>
-        {!loading && profile && (
-          <>
+        {!loading && user && (
+          <TouchableOpacity
+            style={styles.containerInformation}
+            onPress={handlePressUpdateProfile}>
             <View style={styles.containerImage}>
               <Image
                 style={styles.avatar}
-                source={{
-                  uri: 'https://randomuser.me/api/portraits/men/40.jpg',
-                }}
+                source={
+                  user.photoURL
+                    ? {
+                        uri: user.photoURL,
+                      }
+                    : require('@assets/images/settings/avatar-default.jpg')
+                }
+                defaultSource={require('@assets/images/settings/avatar-default.jpg')}
               />
               <View
                 style={{
                   ...styles.status,
-                  backgroundColor: getStatusBackground(profile.statutCompte),
+                  backgroundColor: getStatusBackground(user.statutCompte),
                 }}
               />
             </View>
             <M v1 />
-            <Text style={styles.textName}>
-              {profile.prenom} {profile.nom}
-            </Text>
-            <Text style={styles.textCompany}>{profile.poste}</Text>
-          </>
+            <Text style={styles.textName}>Sofienne Lassoued</Text>
+            <Text style={styles.textCompany}>Développeur informatique</Text>
+          </TouchableOpacity>
         )}
         {loading && !error && <Spinner status="basic" size="small" />}
-        {!loading && (!profile || error) && (
+        {!loading && (!user || error) && (
           <View style={styles.containerError}>
             {error && <Text style={styles.textError}>{error}</Text>}
           </View>
@@ -219,11 +236,23 @@ const SettingsScreen = () => {
         onPressPositive={handlePressPositive}>
         <Text>Are you sure to sign out?</Text>
       </Modal>
-      <BottomSheet height={300} onCallbackRef={handleRefBottomSheet}>
+      <BottomSheet
+        height={300}
+        onCallbackRef={handleRefUpdateProfileBottomSheet}>
         <ResetPasswordForm
           loading={loadingResetPassword}
           error={errorResetPassword}
-          onPressClose={handlePressCloseResetPassword}
+          onPressClose={handlePressCloseUpdateProfile}
+          onSubmit={handleSubmitResetPassword}
+        />
+      </BottomSheet>
+      <BottomSheet
+        height={300}
+        onCallbackRef={handleRefResetPasswordBottomSheet}>
+        <ResetPasswordForm
+          loading={loadingResetPassword}
+          error={errorResetPassword}
+          onPressClose={handlePressCloseUpdateProfile}
           onSubmit={handleSubmitResetPassword}
         />
       </BottomSheet>
