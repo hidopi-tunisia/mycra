@@ -1,5 +1,4 @@
-import SystemNavigationBar from 'react-native-system-navigation-bar';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { View, TouchableOpacity, StatusBar } from 'react-native';
 import { Button, Icon, Layout, Text } from '@ui-kitten/components';
 import { Calendar, BottomSheet, WorkdaysTypes, M } from '@components';
@@ -11,6 +10,8 @@ import Colors from '@constants/colors';
 import moment from 'moment';
 import { PermissionsAndroid } from 'react-native';
 import CRAHistoryDetailsForm from '@components/cra-history-details-form';
+import SystemNavigationBar from 'react-native-system-navigation-bar';
+import { useIsFocused, useFocusEffect } from '@react-navigation/native';
 
 const CRAHistoryDetailsScreen = () => {
   const [loadingFetch, setLoadingFetch] = useState(false);
@@ -20,10 +21,21 @@ const CRAHistoryDetailsScreen = () => {
   const [markedDates, setMarkedDates] = useState({});
   const [selectedCount, setSelectedCount] = useState(null);
   const [currentMonth, setCurrentMonth] = useState(moment().format('MMMM'));
+  const [currentYear, setCurrentYear] = useState(moment().format('YYYY'));
   const [modalHelpVisible, setModalHelpVisible] = useState(false);
-  useEffect(() => {
-    SystemNavigationBar.setNavigationColor(Colors.ORANGE_DARK_PRIMARY, 'light');
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      StatusBar.setBackgroundColor(Colors.ORANGE_DARK_PRIMARY);
+      SystemNavigationBar.setNavigationColor(
+        Colors.ORANGE_DARK_PRIMARY,
+        'light',
+      );
+      return () => {
+        StatusBar.setBackgroundColor(Colors.BLUE_DARK_PRIMARY);
+        SystemNavigationBar.setNavigationColor(Colors.BLUE_PRIMARY, 'light');
+      };
+    }, []),
+  );
   useEffect(() => {
     const fn = async () => {
       try {
@@ -104,7 +116,6 @@ const CRAHistoryDetailsScreen = () => {
   };
   return (
     <>
-      <StatusBar backgroundColor={Colors.ORANGE_DARK_PRIMARY} barStyle="light-content" />
       <Layout style={styles.root}>
         <View style={styles.top}>
           <View style={styles.containerDescription}>
@@ -131,7 +142,7 @@ const CRAHistoryDetailsScreen = () => {
         <View style={styles.middle}>
           <View style={styles.containerCalendar}>
             <View style={styles.containerCalendarHeader}>
-              <Text style={styles.containerCalendarTitle}>{currentMonth}</Text>
+              <Text style={styles.containerCalendarTitle}>{currentMonth} {currentYear}</Text>
             </View>
             <M v1 />
             <Calendar
