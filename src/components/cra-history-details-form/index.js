@@ -4,6 +4,7 @@ import { Button, Spinner, Text, Icon } from '@ui-kitten/components';
 import styles from './index.styles';
 import { M } from '@components';
 import Colors from '@constants/colors';
+import { s } from 'react-native-size-matters';
 
 const CRAHistoryDetailsForm = ({ onSubmit, onPressClose }) => {
   const [text, setText] = useState('');
@@ -17,15 +18,15 @@ const CRAHistoryDetailsForm = ({ onSubmit, onPressClose }) => {
   return (
     <View style={styles.container}>
       <View style={styles.containerTitle}>
-        <Text style={styles.label} category="label">
+        <Text style={styles.title}>
           Report an issue
         </Text>
         <TouchableOpacity onPress={onPressClose}>
           <Icon
             fill={Colors.GRAY_PRIMARY}
             name="close-outline"
-            width={24}
-            height={24}
+            width={s(22)}
+            height={s(22)}
           />
         </TouchableOpacity>
       </View>

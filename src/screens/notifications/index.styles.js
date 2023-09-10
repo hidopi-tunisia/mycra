@@ -1,14 +1,15 @@
-import { StyleSheet, Dimensions } from 'react-native';
+import { Dimensions } from 'react-native';
 import Colors from '@constants/colors';
+import { ScaledSheet } from 'react-native-size-matters';
 const { height } = Dimensions.get('window');
 
-const styles = StyleSheet.create({
+const styles = ScaledSheet.create({
   root: {
     flex: 1,
     backgroundColor: Colors.BLUE_PRIMARY,
   },
   top: {
-    borderRadius: 32,
+    borderRadius: "32@msr",
     borderTopLeftRadius: 0,
     borderTopRightRadius: 0,
     backgroundColor: Colors.BLUE_DARK_PRIMARY,
@@ -18,30 +19,30 @@ const styles = StyleSheet.create({
   },
   verticalDivider: {
     width: 1,
-    height: 16,
+    height: "16@vs",
     backgroundColor: Colors.GRAY_LIGHT_PRIMARY,
   },
   bottom: {
-    borderRadius: 24,
-    padding: 8,
+    borderRadius: "24@msr",
+    padding: "8@msr",
     justifyContent: 'center',
     height: height * (1 - 0.15) - 32,
-    bottom: 32,
+    bottom: "32@vs",
   },
   card: {
     backgroundColor: Colors.WHITE,
-    borderRadius: 24,
-    padding: 20,
-    paddingBottom: 72,
+    borderRadius: "24@msr",
+    padding: "18@msr",
+    paddingBottom: "72@@msr",
   },
   textTitle: {
-    fontSize: 32,
+    fontSize: "28@msr",
     fontWeight: '900',
     color: Colors.WHITE,
     alignSelf: 'center',
   },
   containerButtonsTop: {
-    height: 48,
+    height: "36@vs",
     justifyContent: 'space-around',
     flexDirection: 'row',
     alignItems: 'center',
@@ -64,9 +65,9 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.WHITE,
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 24,
-    padding: 20,
-    paddingBottom: 72,
+    borderRadius: "24@msr",
+    padding: "20@msr",
+    paddingBottom: "72@msr",
   },
 });
 

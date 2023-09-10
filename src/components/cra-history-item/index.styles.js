@@ -1,13 +1,12 @@
-import Colors from '@constants/colors';
-import { StyleSheet } from 'react-native';
+import { ScaledSheet } from 'react-native-size-matters';
 
-const styles = StyleSheet.create({
+const styles = ScaledSheet.create({
   card: {
-    borderRadius: 32,
-    padding: 4,
+    borderRadius: "28@msr",
+    padding: "4@msr",
   },
   containerHeader: {
-    padding: 8,
+    padding: "8@msr",
     flexDirection: 'row',
   },
   content: {
@@ -18,17 +17,17 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   textSubtitle: {
-    fontSize: 14,
+    fontSize: "11@msr",
     fontWeight: '800',
   },
   containerHeaderIcon: {
     justifyContent: 'center',
     alignItems: 'center',
-    width: 48,
+    width: "40@vs",
   },
   containerHeaderIconHolder: {
-    padding: 6,
-    borderRadius: 24,
+    padding: "5@msr",
+    borderRadius: "20@msr",
   },
   containerHeaderTitlesTitle: {
     flexDirection: 'row',

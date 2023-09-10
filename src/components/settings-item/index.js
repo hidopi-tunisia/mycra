@@ -1,6 +1,7 @@
 import { Icon, ListItem } from '@ui-kitten/components';
 import styles from './index.styles';
 import Colors from '@constants/colors';
+import { s } from 'react-native-size-matters';
 
 const SettingsItem = ({
   title,
@@ -14,16 +15,16 @@ const SettingsItem = ({
     description={description}
     accessoryLeft={() => (
       <Icon
-        width={36}
-        height={20}
+        width={s(26)}
+        height={s(22)}
         name={icon}
         fill={Colors.GRAY_DARK_PRIMARY}
       />
     )}
     accessoryRight={() => (
       <Icon
-        width={20}
-        height={20}
+        width={s(18)}
+        height={s(18)}
         name={secondaryIcon}
         fill={Colors.GRAY_DARK_PRIMARY}
       />

@@ -3,6 +3,7 @@ import { Card, Text, Icon } from '@ui-kitten/components';
 import { M } from '../index';
 
 import styles from './index.styles';
+import { s } from 'react-native-size-matters';
 
 const renderIcon = type => {
   switch (type) {
@@ -50,7 +51,7 @@ const Header = ({ title, subtitle, type }) => (
           ...styles.containerHeaderIconHolder,
           backgroundColor: renderColor(type),
         }}>
-        <Icon width={20} height={20} name={renderIcon(type)} fill="white" />
+        <Icon width={s(18)} height={s(18)} name={renderIcon(type)} fill="white" />
       </View>
     </View>
   </View>
