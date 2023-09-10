@@ -1,37 +1,37 @@
-import { StyleSheet } from 'react-native';
 import Colors from '@constants/colors';
+import { ScaledSheet } from 'react-native-size-matters';
 
-const styles = StyleSheet.create({
+const styles = ScaledSheet.create({
   root: {
     flex: 1,
     backgroundColor: Colors.BLUE_PRIMARY,
   },
   containerTop: {
     backgroundColor: Colors.BLUE_DARK_PRIMARY,
-    height: 280,
+    height: "228@vs",
     justifyContent: 'center',
     alignItems: 'center',
-    borderBottomLeftRadius: 32,
-    borderBottomRightRadius: 32,
+    borderBottomLeftRadius: "28@msr",
+    borderBottomRightRadius: "28@msr",
   },
   containerImage: {
-    width: 96,
-    height: 96,
-    borderRadius: 48,
-    borderWidth: 4,
+    width: "72@s",
+    height: "72@s",
+    borderRadius: "36@s",
+    borderWidth: "3.2@s",
     borderColor: Colors.WHITE,
   },
   avatar: {
-    width: 88,
-    height: 88,
-    borderRadius: 48,
+    width: "66@s",
+    height: "66@s",
+    borderRadius: "33@s",
   },
   status: {
-    width: 24,
-    height: 24,
-    borderRadius: 12,
+    width: "18@s",
+    height: "18@s",
+    borderRadius: "10@s",
     borderColor: Colors.WHITE,
-    borderWidth: 2,
+    borderWidth: "1.6@s",
     position: 'absolute',
     bottom: 0,
     backgroundColor: Colors.GRAY_SECONDARY_TEXT,
@@ -44,19 +44,19 @@ const styles = StyleSheet.create({
   textCompany: {
     fontWeight: '400',
     color: Colors.WHITE,
-    fontSize: 12,
-    margin: 4,
+    fontSize: "10@msr",
+    marginTop: "4@msr",
   },
   bottom: {
-    borderRadius: 24,
-    padding: 8,
+    borderRadius: "24@msr",
+    padding: "8@msr",
     justifyContent: 'center',
-    marginTop: -32,
+    marginTop: "-28@msr",
   },
   card: {
     backgroundColor: Colors.WHITE,
-    borderRadius: 24,
-    padding: 8,
+    borderRadius: "24@msr",
+    padding: "6@msr",
   },
   containerVersion: {
     justifyContent: 'center',
@@ -64,15 +64,15 @@ const styles = StyleSheet.create({
   },
   textVersion: {
     color: Colors.GRAY_PRIMARY,
-    fontSize: 12,
+    fontSize: "10@msr",
   },
   containerError: {
     backgroundColor: `${Colors.RED_DARK_PRIMARY}66`,
-    padding: 8,
-    paddingHorizontal: 24,
+    padding: "8@msr",
+    paddingHorizontal: "20@msr",
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 24
+    borderRadius: "20@msr"
   },
   textError: {
     color: Colors.WHITE,

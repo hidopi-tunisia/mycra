@@ -1,4 +1,6 @@
 import { View } from 'react-native';
+import { s, vs } from 'react-native-size-matters';
+
 const M = props => {
   const keys = Object.keys(props);
   let v = 0;
@@ -13,12 +15,13 @@ const M = props => {
   return (
     <View
       style={{
-        marginTop: 4 * v,
-        marginBottom: 4 * v,
-        marginLeft: 4 * h,
-        marginRight: 4 * v,
+        marginTop: vs(3) * v,
+        marginBottom: vs(3) * v,
+        marginLeft: s(3) * h,
+        marginRight: s(3) * v,
       }}
     />
   );
 };
 export { M };
+
