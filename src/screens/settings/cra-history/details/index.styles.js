@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
   containerCalendarHeader: {
     paddingHorizontal: 16,
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     alignItems: 'center',
   },
   containerCalendarTitle: {
