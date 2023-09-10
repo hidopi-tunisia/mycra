@@ -13,7 +13,7 @@ import CRAHistoryDetailsForm from '@components/cra-history-details-form';
 import SystemNavigationBar from 'react-native-system-navigation-bar';
 import { useIsFocused, useFocusEffect } from '@react-navigation/native';
 
-const CRAHistoryDetailsScreen = () => {
+const CRAHistoryDetailsScreen = ({ onBlur, onFocus }) => {
   const [loadingFetch, setLoadingFetch] = useState(false);
   const [errorFetch, setErrorFetch] = useState(null);
   const [loadingSubmit, setLoadingSubmit] = useState(false);
@@ -30,9 +30,11 @@ const CRAHistoryDetailsScreen = () => {
         Colors.ORANGE_DARK_PRIMARY,
         'light',
       );
+      onFocus();
       return () => {
         StatusBar.setBackgroundColor(Colors.BLUE_DARK_PRIMARY);
         SystemNavigationBar.setNavigationColor(Colors.BLUE_PRIMARY, 'light');
+        onBlur();
       };
     }, []),
   );
@@ -142,7 +144,9 @@ const CRAHistoryDetailsScreen = () => {
         <View style={styles.middle}>
           <View style={styles.containerCalendar}>
             <View style={styles.containerCalendarHeader}>
-              <Text style={styles.containerCalendarTitle}>{currentMonth} {currentYear}</Text>
+              <Text style={styles.containerCalendarTitle}>
+                {currentMonth} {currentYear}
+              </Text>
             </View>
             <M v1 />
             <Calendar
