@@ -1,9 +1,9 @@
 import Colors from '@constants/colors';
-import { StyleSheet } from 'react-native';
+import { ScaledSheet } from 'react-native-size-matters';
 
-const styles = StyleSheet.create({
+const styles = ScaledSheet.create({
   container: {
-    padding: 8,
+    padding: "8@msr",
     flex: 1,
     justifyContent: 'space-around',
   },
@@ -13,40 +13,34 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   title: {
-    fontSize: 20,
+    fontSize: "15@msr",
     fontWeight: '900',
-  },
-  label: {
-    fontSize: 16,
-    fontWeight: '600',
   },
   input: {
     textAlignVertical: 'top',
-    padding: 12,
-    borderRadius: 24,
+    padding: "11@msr",
+    borderRadius: "22@msr",
     borderWidth: 1,
     borderColor: Colors.GRAY_PRIMARY,
-    height: 128,
+    height: "106@vs",
     backgroundColor: Colors.WHITE,
     color: Colors.GRAY_PRIMARY_TEXT,
   },
   containerImages: {
     flexDirection: 'row',
-    height: 42,
+    height: "36@vs",
     width: "50%",
     alignSelf: 'center',
     justifyContent: "space-between"
   },
   image: {
-    borderRadius: 24,
-    backgroundColor: 'blue',
-    height: 42,
-    width: 42
-
+    borderRadius: "24@msr",
+    height: "36@s",
+    width: "36@s"
   },
   buttonSubmit: {
-    height: 48,
-    borderRadius: 24,
+    height: "38@vs",
+    borderRadius: "20@msr",
   },
 });
 export default styles;

@@ -24,7 +24,7 @@ const AlertForm = ({ onSubmit, onPressClose }) => {
   return (
     <View style={styles.container}>
       <View style={styles.containerTitle}>
-        <Text style={styles.label} category="label">
+        <Text style={styles.title}>
           New alert
         </Text>
         <TouchableOpacity onPress={onPressClose}>
