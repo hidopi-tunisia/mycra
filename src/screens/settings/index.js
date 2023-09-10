@@ -17,6 +17,7 @@ import { sendPasswordResetEmail, signOut } from '@domain/auth';
 import Modal from '@components/modals';
 import BottomSheet from '@components/bottom-sheet';
 import ResetPasswordForm from '@components/reset-password-form';
+import { setItem } from '@domain/storage';
 
 const SettingsScreen = () => {
   const navigation = useNavigation();
@@ -79,7 +80,12 @@ const SettingsScreen = () => {
   };
   const handlePressPositive = () => {
     setModalVisible(false);
-    signOut();
+    setItem('null');
+    try {
+      signOut();
+    } catch (error) {
+      console.log(error);
+    }
   };
   const handlePressNegative = () => {
     setModalVisible(false);

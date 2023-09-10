@@ -18,6 +18,9 @@ import Colors from '@constants/colors';
 import moment from 'moment';
 
 import { PermissionsAndroid } from 'react-native';
+import { currentUser } from '@domain/auth';
+import { subscribeToTopic } from '@domain/messaging';
+import { Topics } from '@constants';
 
 const HomeScreen = () => {
   const [loadingFetch, setLoadingFetch] = useState(false);
@@ -33,7 +36,19 @@ const HomeScreen = () => {
   const [modalHolidayVisible, setModalHolidayVisible] = useState(false);
   const [modalWeekendVisible, setModalWeekendVisible] = useState(false);
   const [modalHelpVisible, setModalHelpVisible] = useState(false);
-
+  useEffect(() => {
+    const fn = async () => {
+      try {
+        const u = await currentUser();
+        if (u !== null && u.uid) {
+          await subscribeToTopic(`${Topics.CONSULTANT}~${u.uid}`);
+        }
+      } catch (error) {
+        console.info(error);
+      }
+    };
+    fn();
+  }, []);
   useEffect(() => {
     const fn = async () => {
       try {
