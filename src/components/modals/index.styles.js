@@ -1,7 +1,7 @@
 import Colors from '@constants/colors';
-import { StyleSheet } from 'react-native';
+import { ScaledSheet } from 'react-native-size-matters';
 
-const styles = StyleSheet.create({
+const styles = ScaledSheet.create({
   root: {
     backgroundColor: Colors.WHITE,
   },
@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 50,
+    borderRadius: "50@msr",
     width: '100%',
   },
   containerContent: {
@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontWeight: '900',
-    fontSize: 18,
+    fontSize: "16@msr",
     textAlign: 'center',
   },
   containerButtons: {
@@ -29,12 +29,12 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   buttonNegative: {
-    borderRadius: 24,
-    minWidth: 96,
+    borderRadius: "22@msr",
+    minWidth: "86@s",
   },
   buttonPositive: {
-    borderRadius: 24,
-    minWidth: 96,
+    borderRadius: "24@msr",
+    minWidth: "86@s",
   },
 });
 export default styles;
