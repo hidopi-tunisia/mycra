@@ -38,4 +38,13 @@ const getAllCRAs = async ({ sort = 'DESC', page = 0, limit = 1 } = {}) => {
   );
 };
 
-export { getCRAHistory, getAllCRAs, postCRA };
+const getCRA = async id => {
+  const authorization = await getAuthorization();
+  return axios.get(`${ENDPOINT}/cra/get_cra_by_id/${id}`, {
+    headers: {
+      authorization,
+    },
+  });
+};
+
+export { getCRA, getCRAHistory, getAllCRAs, postCRA };
