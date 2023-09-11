@@ -20,7 +20,7 @@ export const renderAvatar = user => {
     <View style={styles.containerImage}>
       {user.photoURL ? (
         <>
-          <Image style={styles.photo} source={user.photoURL} />
+          <Image style={styles.photo} source={{ uri: user.photoURL }} />
           <View
             style={{
               ...styles.statusPhoto,

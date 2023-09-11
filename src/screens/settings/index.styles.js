@@ -26,9 +26,9 @@ const styles = ScaledSheet.create({
     borderColor: Colors.WHITE,
   },
   photo: {
-    width: 72,
-    height: 72,
-    borderRadius: 36,
+    width: '66@s',
+    height: '66@s',
+    borderRadius: '33@s',
   },
   avatar: {
     width: 72,
@@ -82,19 +82,19 @@ const styles = ScaledSheet.create({
     zIndex: 20,
   },
   containerInformation: {
-    flexDirection: "row",
-    alignItems: 'center'
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   containerEdit: {
     width: '24@s',
     height: '24@s',
     justifyContent: 'center',
-    alignItems: "center",
-    borderRadius: '12@s'
+    alignItems: 'center',
+    borderRadius: '12@s',
   },
   containerTexts: {
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   textName: {
     fontWeight: '700',

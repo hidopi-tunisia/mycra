@@ -33,6 +33,7 @@
     "react-native-calendars": "1.1300.0",
     "react-native-expo-fancy-alerts": "2.1.1",
     "react-native-gesture-handler": "2.12.1",
+    "react-native-image-picker": "^7.0.0",
     "react-native-raw-bottom-sheet": "2.2.0",
     "react-native-safe-area-context": "4.7.1",
     "react-native-screens": "3.24.0",

@@ -26,6 +26,7 @@ import { Linking, ScrollView, TouchableOpacity, View } from 'react-native';
 import { s, vs } from 'react-native-size-matters';
 import { renderAvatar } from './index.helpers';
 import styles from './index.styles';
+import { upload } from '@domain/buckets';
 
 const SettingsScreen = () => {
   const navigation = useNavigation();
@@ -35,6 +36,10 @@ const SettingsScreen = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [modalResetPasswordVisible, setModalResetPasswordVisible] =
     useState(false);
+  const [
+    modalSuccessPictureUploadedVisible,
+    setModalSuccessPictureUploadedVisible,
+  ] = useState(false);
   const [refResetPasswordBottomSheet, setRefResetPasswordBottomSheet] =
     useState(null);
   const [refUpdateProfileBottomSheet, setRefUpdateProfileBottomSheet] =
@@ -43,6 +48,7 @@ const SettingsScreen = () => {
   const [errorUpdateProfile, setErrorUpdateProfile] = useState(null);
   const [loadingResetPassword, setLoadingResetPassword] = useState(false);
   const [errorResetPassword, setErrorResetPassword] = useState(null);
+  const [progress, setProgress] = useState(null);
   useEffect(() => {
     const fn = async () => {
       try {
@@ -102,6 +108,9 @@ const SettingsScreen = () => {
   };
   const handlePressNegative = () => {
     setModalVisible(false);
+  };
+  const handlePressSuccessPictureUploadedPositive = () => {
+    setModalSuccessPictureUploadedVisible(false);
   };
   const handleResetPassword = () => {
     setErrorResetPassword(null);
@@ -167,6 +176,31 @@ const SettingsScreen = () => {
       }
     };
     fn();
+  };
+  const handleUpload = uri => {
+    const onComplete = async photoURL => {
+      setProgress(null);
+      refUpdateProfileBottomSheet.close();
+      setModalSuccessPictureUploadedVisible(true);
+      await updateProfile({ photoURL });
+      onAuthStateChanged(u => {
+        setUser(u);
+      });
+    };
+    const onProgress = ({ transferred, total }) => {
+      setProgress(Math.round((transferred / total) * 100));
+    };
+    const onError = error => {
+      setProgress(null);
+      console.log(error);
+    };
+    upload({
+      path: `avatars/${user.uid}`,
+      uri,
+      onError,
+      onProgress,
+      onComplete,
+    });
   };
   return (
     <View style={styles.root}>
@@ -267,13 +301,15 @@ const SettingsScreen = () => {
         <Text>Are you sure to sign out?</Text>
       </Modal>
       <BottomSheet
-        height={vs(300)}
+        height={vs(360)}
         onCallbackRef={handleRefUpdateProfileBottomSheet}>
         <UpdateProfileForm
           loading={loadingUpdateProfile}
           error={errorUpdateProfile}
           user={user}
+          progress={progress}
           onPressClose={handlePressCloseUpdateProfile}
+          onUpload={handleUpload}
           onSubmit={handleSubmitUpdateProfile}
         />
       </BottomSheet>
@@ -293,6 +329,13 @@ const SettingsScreen = () => {
         visible={modalResetPasswordVisible}
         onPressPositive={() => setModalResetPasswordVisible(false)}>
         <Text>Please check your email to reset your password.</Text>
+      </Modal>
+      <Modal
+        title="Picture uploaded"
+        type="success"
+        visible={modalSuccessPictureUploadedVisible}
+        onPressPositive={handlePressSuccessPictureUploadedPositive}>
+        <Text>The avatar picture has been uploaded successfully.</Text>
       </Modal>
     </View>
   );
