@@ -25,6 +25,7 @@
     "@ui-kitten/components": "5.3.1",
     "@ui-kitten/eva-icons": "5.3.1",
     "axios": "1.4.0",
+    "generate-avatar": "^1.4.10",
     "moment": "2.29.4",
     "react": "18.2.0",
     "react-native": "0.72.4",
@@ -37,7 +38,7 @@
     "react-native-screens": "3.24.0",
     "react-native-size-matters": "^0.4.0",
     "react-native-splash-screen": "^3.3.0",
-    "react-native-svg": "13.12.0",
+    "react-native-svg": "^13.13.0",
     "react-native-system-navigation-bar": "^2.6.1"
   },
   "devDependencies": {

@@ -7,7 +7,6 @@ const styles = ScaledSheet.create({
     backgroundColor: Colors.BLUE_PRIMARY,
   },
   containerTop: {
-    backgroundColor: 'red',
     backgroundColor: Colors.BLUE_DARK_PRIMARY,
     height: '228@vs',
     justifyContent: 'center',
@@ -26,12 +25,39 @@ const styles = ScaledSheet.create({
     borderWidth: '3.2@s',
     borderColor: Colors.WHITE,
   },
-  avatar: {
-    width: '66@s',
-    height: '66@s',
-    borderRadius: '33@s',
+  photo: {
+    width: 72,
+    height: 72,
+    borderRadius: 36,
   },
-  status: {
+  avatar: {
+    width: 72,
+    height: 72,
+  },
+  avatarBorder: {
+    zIndex: 10,
+    position: 'absolute',
+    width: '72@s',
+    height: '72@s',
+    borderRadius: '36@s',
+    borderWidth: '3.2@s',
+    borderColor: Colors.WHITE,
+    top: -4,
+    left: -4,
+  },
+  avatarTop: {
+    backgroundColor: Colors.TRANSPARENT,
+    zIndex: 10,
+    position: 'absolute',
+    width: 124,
+    height: 124,
+    borderWidth: 20,
+    borderColor: Colors.BLUE_DARK_PRIMARY,
+    borderRadius: 60,
+    top: -24,
+    left: -24,
+  },
+  statusPhoto: {
     width: '18@s',
     height: '18@s',
     borderRadius: '10@s',
@@ -41,6 +67,34 @@ const styles = ScaledSheet.create({
     bottom: 0,
     backgroundColor: Colors.GRAY_SECONDARY_TEXT,
     right: 0,
+    zIndex: 20,
+  },
+  statusAvatar: {
+    width: '18@s',
+    height: '18@s',
+    borderRadius: '10@s',
+    borderColor: Colors.WHITE,
+    borderWidth: '1.6@s',
+    position: 'absolute',
+    bottom: -8,
+    backgroundColor: Colors.GRAY_SECONDARY_TEXT,
+    right: 0,
+    zIndex: 20,
+  },
+  containerInformation: {
+    flexDirection: "row",
+    alignItems: 'center'
+  },
+  containerEdit: {
+    width: '24@s',
+    height: '24@s',
+    justifyContent: 'center',
+    alignItems: "center",
+    borderRadius: '12@s'
+  },
+  containerTexts: {
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   textName: {
     fontWeight: '700',

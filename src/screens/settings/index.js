@@ -1,7 +1,13 @@
 import { useNavigation } from '@react-navigation/native';
-import { View, Image, Linking, ScrollView } from 'react-native';
+import {
+  View,
+  Image,
+  Linking,
+  ScrollView,
+  TouchableOpacity,
+} from 'react-native';
 import { SettingsItem, M } from '@components';
-import { Text, Spinner } from '@ui-kitten/components';
+import { Text, Spinner, Icon } from '@ui-kitten/components';
 import {
   TERMS_AND_CONDITIONS_URL,
   PRIVACY_POLICY_URL,
@@ -11,13 +17,16 @@ import {
 } from '@constants';
 import styles from './index.styles';
 import { useEffect, useState } from 'react';
-import { getStatusBackground } from './index.helpers';
+import { getStatusBackground, renderAvatar } from './index.helpers';
 import { currentUser, sendPasswordResetEmail, signOut } from '@domain/auth';
 import Modal from '@components/modals';
 import BottomSheet from '@components/bottom-sheet';
 import ResetPasswordForm from '@components/reset-password-form';
 import { setItem } from '@domain/storage';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { SvgXml } from 'react-native-svg';
+import { generateFromString } from 'generate-avatar';
+import Colors from '@constants/colors';
+import { s } from 'react-native-size-matters';
 
 const SettingsScreen = () => {
   const navigation = useNavigation();
@@ -122,7 +131,7 @@ const SettingsScreen = () => {
         setModalResetPasswordVisible(true);
         setLoadingResetPassword(false);
       } catch (error) {
-        console.log(error);
+        console.info(error);
         setLoadingResetPassword(false);
         if (error && error.code === 'auth/invalid-email') {
           setErrorResetPassword('Invalid email');
@@ -143,32 +152,25 @@ const SettingsScreen = () => {
     <View style={styles.root}>
       <View style={styles.containerTop}>
         {!loading && user && (
-          <TouchableOpacity
-            style={styles.containerInformation}
-            onPress={handlePressUpdateProfile}>
-            <View style={styles.containerImage}>
-              <Image
-                style={styles.avatar}
-                source={
-                  user.photoURL
-                    ? {
-                        uri: user.photoURL,
-                      }
-                    : require('@assets/images/settings/avatar-default.jpg')
-                }
-                defaultSource={require('@assets/images/settings/avatar-default.jpg')}
-              />
-              <View
-                style={{
-                  ...styles.status,
-                  backgroundColor: getStatusBackground(user.statutCompte),
-                }}
-              />
-            </View>
+          <>
+            {renderAvatar(user)}
             <M v1 />
-            <Text style={styles.textName}>Sofienne Lassoued</Text>
-            <Text style={styles.textCompany}>Développeur informatique</Text>
-          </TouchableOpacity>
+            <View style={styles.containerInformation}>
+              <View style={styles.containerTexts}>
+                <Text style={styles.textName}>Sofienne Lassoued</Text>
+                <Text style={styles.textCompany}>Développeur informatique</Text>
+              </View>
+              <M h1 />
+              <TouchableOpacity style={styles.containerEdit} onPress={handlePressUpdateProfile}>
+                <Icon
+                  fill={Colors.WHITE}
+                  name="edit-outline"
+                  width={s(21)}
+                  height={s(21)}
+                />
+              </TouchableOpacity>
+            </View>
+          </>
         )}
         {loading && !error && <Spinner status="basic" size="small" />}
         {!loading && (!user || error) && (
