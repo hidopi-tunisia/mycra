@@ -1,32 +1,31 @@
-import { useNavigation } from '@react-navigation/native';
-import {
-  View,
-  Image,
-  Linking,
-  ScrollView,
-  TouchableOpacity,
-} from 'react-native';
-import { SettingsItem, M } from '@components';
-import { Text, Spinner, Icon } from '@ui-kitten/components';
-import {
-  TERMS_AND_CONDITIONS_URL,
-  PRIVACY_POLICY_URL,
-  HELP_URL,
-  SUPPORT_EMAIL,
-  APP_VERSION,
-} from '@constants';
-import styles from './index.styles';
-import { useEffect, useState } from 'react';
-import { getStatusBackground, renderAvatar } from './index.helpers';
-import { currentUser, sendPasswordResetEmail, signOut } from '@domain/auth';
-import Modal from '@components/modals';
+import { M, SettingsItem } from '@components';
 import BottomSheet from '@components/bottom-sheet';
+import Modal from '@components/modals';
 import ResetPasswordForm from '@components/reset-password-form';
-import { setItem } from '@domain/storage';
-import { SvgXml } from 'react-native-svg';
-import { generateFromString } from 'generate-avatar';
+import UpdateProfileForm from '@components/update-profile-form';
+import {
+  APP_VERSION,
+  HELP_URL,
+  PRIVACY_POLICY_URL,
+  SUPPORT_EMAIL,
+  TERMS_AND_CONDITIONS_URL,
+} from '@constants';
 import Colors from '@constants/colors';
-import { s } from 'react-native-size-matters';
+import {
+  currentUser,
+  onAuthStateChanged,
+  sendPasswordResetEmail,
+  signOut,
+  updateProfile,
+} from '@domain/auth';
+import { setItem } from '@domain/storage';
+import { useNavigation } from '@react-navigation/native';
+import { Icon, Spinner, Text } from '@ui-kitten/components';
+import { useEffect, useState } from 'react';
+import { Linking, ScrollView, TouchableOpacity, View } from 'react-native';
+import { s, vs } from 'react-native-size-matters';
+import { renderAvatar } from './index.helpers';
+import styles from './index.styles';
 
 const SettingsScreen = () => {
   const navigation = useNavigation();
@@ -40,6 +39,8 @@ const SettingsScreen = () => {
     useState(null);
   const [refUpdateProfileBottomSheet, setRefUpdateProfileBottomSheet] =
     useState(null);
+  const [loadingUpdateProfile, setLoadingUpdateProfile] = useState(false);
+  const [errorUpdateProfile, setErrorUpdateProfile] = useState(null);
   const [loadingResetPassword, setLoadingResetPassword] = useState(false);
   const [errorResetPassword, setErrorResetPassword] = useState(null);
   useEffect(() => {
@@ -148,6 +149,25 @@ const SettingsScreen = () => {
     };
     fn();
   };
+  const handleSubmitUpdateProfile = ({ fullName, position }) => {
+    const fn = async () => {
+      try {
+        setLoadingUpdateProfile(true);
+        const displayName = `${fullName}!${position}`;
+        await updateProfile({ displayName });
+        setLoadingUpdateProfile(false);
+        refUpdateProfileBottomSheet.close();
+        onAuthStateChanged(u => {
+          setUser(u);
+        });
+      } catch (error) {
+        setLoadingUpdateProfile(false);
+        setErrorUpdateProfile(error);
+        console.info(error);
+      }
+    };
+    fn();
+  };
   return (
     <View style={styles.root}>
       <View style={styles.containerTop}>
@@ -156,12 +176,20 @@ const SettingsScreen = () => {
             {renderAvatar(user)}
             <M v1 />
             <View style={styles.containerInformation}>
-              <View style={styles.containerTexts}>
-                <Text style={styles.textName}>Sofienne Lassoued</Text>
-                <Text style={styles.textCompany}>Développeur informatique</Text>
-              </View>
+              {user.displayName && (
+                <View style={styles.containerTexts}>
+                  <Text style={styles.textName}>
+                    {user.displayName.split('!')[0]}
+                  </Text>
+                  <Text style={styles.textPosition}>
+                    {user.displayName.split('!')[1]}
+                  </Text>
+                </View>
+              )}
               <M h1 />
-              <TouchableOpacity style={styles.containerEdit} onPress={handlePressUpdateProfile}>
+              <TouchableOpacity
+                style={styles.containerEdit}
+                onPress={handlePressUpdateProfile}>
                 <Icon
                   fill={Colors.WHITE}
                   name="edit-outline"
@@ -239,17 +267,18 @@ const SettingsScreen = () => {
         <Text>Are you sure to sign out?</Text>
       </Modal>
       <BottomSheet
-        height={300}
+        height={vs(300)}
         onCallbackRef={handleRefUpdateProfileBottomSheet}>
-        <ResetPasswordForm
-          loading={loadingResetPassword}
-          error={errorResetPassword}
+        <UpdateProfileForm
+          loading={loadingUpdateProfile}
+          error={errorUpdateProfile}
+          user={user}
           onPressClose={handlePressCloseUpdateProfile}
-          onSubmit={handleSubmitResetPassword}
+          onSubmit={handleSubmitUpdateProfile}
         />
       </BottomSheet>
       <BottomSheet
-        height={300}
+        height={vs(240)}
         onCallbackRef={handleRefResetPasswordBottomSheet}>
         <ResetPasswordForm
           loading={loadingResetPassword}

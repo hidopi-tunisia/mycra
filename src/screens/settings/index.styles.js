@@ -100,7 +100,7 @@ const styles = ScaledSheet.create({
     fontWeight: '700',
     color: Colors.WHITE,
   },
-  textCompany: {
+  textPosition: {
     fontWeight: '400',
     color: Colors.WHITE,
     fontSize: '10@msr',
