@@ -85,7 +85,7 @@ const NotificationsScreen = ({ notifications }) => {
             />
           ) : (
             <View style={styles.cardEmpty}>
-              <Text>No notifications</Text>
+              <Text>No notifications {i18n._locale}</Text>
             </View>
           )}
         </View>
