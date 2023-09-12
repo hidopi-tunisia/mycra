@@ -22,6 +22,7 @@ let i18n = new I18n({
 });
 
 i18n.defaultLocale = Locales.FR;
+
 const prepareInternationalization = async () => {
   const l = await getStoredLocale();
   if (l) {
@@ -31,6 +32,10 @@ const prepareInternationalization = async () => {
   }
   return i18n;
 };
+
+i18n.onChange(({ locale }) => {
+  setStoredLocale(locale);
+});
 
 prepareInternationalization().then(i => (i18n = i));
 

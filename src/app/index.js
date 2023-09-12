@@ -122,8 +122,8 @@ const App = () => {
   }, []);
   const [_, setLocale] = useState('');
   useEffect(() => {
-    const unsubscribe = i18n.onChange(({ _locale }) => {
-      setLocale(_locale);
+    const unsubscribe = i18n.onChange(({ locale }) => {
+      setLocale(locale);
     });
     return unsubscribe;
   }, []);
