@@ -121,9 +121,30 @@ const styles = ScaledSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  containerVersion: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   textVersion: {
+    alignSelf: 'center',
     color: Colors.GRAY_PRIMARY,
-    fontSize: '10@msr',
+    fontSize: "10@msr"
+  },
+  containerInternationalization: {
+    flexDirection: 'row',
+  },
+  containerFlag: {
+    width: "20@s",
+    height: "20@s",
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  textInternationalization: {
+    alignSelf: 'center',
+    color: Colors.GRAY_PRIMARY,
+    textTransform: 'uppercase',
+    fontSize: "10@msr"
   },
   containerError: {
     backgroundColor: `${Colors.RED_DARK_PRIMARY}66`,
