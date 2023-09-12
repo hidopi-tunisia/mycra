@@ -1,11 +1,12 @@
 import { useState, useEffect, useRef } from 'react';
-import { View, TouchableOpacity, ScrollView, FlatList } from 'react-native';
+import { View, TouchableOpacity, Button, FlatList } from 'react-native';
 import { Divider, Layout, Text } from '@ui-kitten/components';
 import { NotificationsItem, BottomSheet, M } from '@components';
 import styles from './index.styles';
 import Fab from '@components/fab';
 import AlertForm from '@components/alert-form';
 import { getItem, setItem } from '@domain/storage';
+import { i18n } from '@utils/translations';
 
 const NotificationsScreen = ({ notifications }) => {
   const [refBottomSheet, setRefBottomSheet] = useState(null);

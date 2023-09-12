@@ -10,7 +10,12 @@ import { getItem, setItem } from '@domain/storage';
 
 setBackgroundMessageHandler(async message => {
   const item = await getItem();
-  const notifications = JSON.parse(item);
+  let notifications;
+  if (item === null || item === 'null') {
+    notifications = {};
+  } else {
+    notifications = JSON.parse(item);
+  }
   notifications[message.messageId] = { ...message, isUnseen: true };
   setItem(JSON.stringify(notifications));
 });
