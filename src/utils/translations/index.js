@@ -24,13 +24,17 @@ let i18n = new I18n({
 i18n.defaultLocale = Locales.FR;
 
 const prepareInternationalization = async () => {
-  const l = await getStoredLocale();
-  if (l) {
-    i18n.locale = l;
-  } else {
-    i18n.locale = Locales.FR;
+  try {
+    const l = await getStoredLocale();
+    if (l !== 'null' && l !== null) {
+      i18n.locale = l;
+    } else {
+      i18n.locale = Locales.FR;
+    }
+    return i18n;
+  } catch (error) {
+    console.info(error);
   }
-  return i18n;
 };
 
 i18n.onChange(({ locale }) => {

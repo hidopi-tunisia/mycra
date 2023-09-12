@@ -192,7 +192,7 @@ const SettingsScreen = () => {
     };
     const onError = error => {
       setProgress(null);
-      console.log(error);
+      console.info(error);
     };
     upload({
       path: `avatars/${user.uid}`,

@@ -1,8 +1,7 @@
-import { StyleSheet } from 'react-native';
-import { DefaultTheme } from '@react-navigation/native';
 import Colors from '@constants/colors';
+import { ScaledSheet } from 'react-native-size-matters';
 
-const styles = StyleSheet.create({
+const styles = ScaledSheet.create({
   root: {
     flex: 1,
     backgroundColor: Colors.BLUE_PRIMARY,
@@ -83,9 +82,29 @@ const styles = StyleSheet.create({
   textError: {
     color: Colors.RED_DARK_PRIMARY,
   },
+  containerVersion: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   textVersion: {
     alignSelf: 'center',
     color: Colors.GRAY_LIGHT_PRIMARY,
+  },
+  containerInternationalization: {
+    flexDirection: 'row',
+  },
+  containerFlag: {
+    width: 24,
+    height: 24,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  textInternationalization: {
+    alignSelf: 'center',
+    color: Colors.GRAY_LIGHT_PRIMARY,
+    textTransform: 'uppercase',
+    fontSize: "10@msr"
   },
 });
 

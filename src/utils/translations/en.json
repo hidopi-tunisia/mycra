@@ -1,3 +1,11 @@
 {
-  "hello": "Hello"
+  "Sign In": {
+    "title": "Welcome",
+    "subtitle": "Please sign in using your account",
+    "email": "Email",
+    "password": "Password",
+    "forgot password?": "Forgot password?",
+    "btn_sign in": "Sign in",
+    "version:": "Version:"
+  }
 }
