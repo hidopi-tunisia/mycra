@@ -1,46 +1,66 @@
-import { useNavigation } from '@react-navigation/native';
-import { View, Image, Linking, ScrollView } from 'react-native';
-import { SettingsItem, M } from '@components';
-import { Text, Spinner } from '@ui-kitten/components';
-import {
-  TERMS_AND_CONDITIONS_URL,
-  PRIVACY_POLICY_URL,
-  HELP_URL,
-  SUPPORT_EMAIL,
-  APP_VERSION,
-} from '@constants';
-import styles from './index.styles';
-import { useEffect, useState } from 'react';
-import { getProfile } from '@domain/profile';
-import { getStatusBackground } from './index.helpers';
-import { sendPasswordResetEmail, signOut } from '@domain/auth';
-import Modal from '@components/modals';
+import { M, SettingsItem } from '@components';
 import BottomSheet from '@components/bottom-sheet';
+import Modal from '@components/modals';
 import ResetPasswordForm from '@components/reset-password-form';
+import UpdateProfileForm from '@components/update-profile-form';
+import {
+  APP_VERSION,
+  HELP_URL,
+  PRIVACY_POLICY_URL,
+  SUPPORT_EMAIL,
+  TERMS_AND_CONDITIONS_URL,
+} from '@constants';
+import Colors from '@constants/colors';
+import {
+  currentUser,
+  onAuthStateChanged,
+  sendPasswordResetEmail,
+  signOut,
+  updateProfile,
+} from '@domain/auth';
+import { setItem } from '@domain/storage';
+import { useNavigation } from '@react-navigation/native';
+import { Icon, Spinner, Text } from '@ui-kitten/components';
+import { useEffect, useState } from 'react';
+import { Linking, ScrollView, TouchableOpacity, View } from 'react-native';
+import { s, vs } from 'react-native-size-matters';
+import { renderAvatar } from './index.helpers';
+import styles from './index.styles';
+import { upload } from '@domain/buckets';
 
 const SettingsScreen = () => {
   const navigation = useNavigation();
-  const [profile, setProfile] = useState(null);
+  const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
   const [modalResetPasswordVisible, setModalResetPasswordVisible] =
     useState(false);
-  const [refBottomSheet, setRefBottomSheet] = useState(null);
+  const [
+    modalSuccessPictureUploadedVisible,
+    setModalSuccessPictureUploadedVisible,
+  ] = useState(false);
+  const [refResetPasswordBottomSheet, setRefResetPasswordBottomSheet] =
+    useState(null);
+  const [refUpdateProfileBottomSheet, setRefUpdateProfileBottomSheet] =
+    useState(null);
+  const [loadingUpdateProfile, setLoadingUpdateProfile] = useState(false);
+  const [errorUpdateProfile, setErrorUpdateProfile] = useState(null);
   const [loadingResetPassword, setLoadingResetPassword] = useState(false);
   const [errorResetPassword, setErrorResetPassword] = useState(null);
+  const [progress, setProgress] = useState(null);
   useEffect(() => {
     const fn = async () => {
       try {
         setLoading(true);
         setError(null);
-        const { data } = await getProfile();
-        setProfile(data.consultant);
+        const u = await currentUser();
+        setUser(u);
         setLoading(false);
       } catch (error) {
-        console.log(error);
         setLoading(false);
         setError('Error happened');
+        console.info(error);
       }
     };
     fn();
@@ -78,21 +98,38 @@ const SettingsScreen = () => {
     setModalVisible(true);
   };
   const handlePressPositive = () => {
-    setModalVisible(false);
-    signOut();
+    try {
+      setItem('null');
+      setModalVisible(false);
+      signOut();
+    } catch (error) {
+      console.info(error);
+    }
   };
   const handlePressNegative = () => {
     setModalVisible(false);
   };
+  const handlePressSuccessPictureUploadedPositive = () => {
+    setModalSuccessPictureUploadedVisible(false);
+  };
   const handleResetPassword = () => {
     setErrorResetPassword(null);
-    refBottomSheet.open();
+    refResetPasswordBottomSheet.open();
+  };
+  const handlePressUpdateProfile = () => {
+    refUpdateProfileBottomSheet.open();
   };
   const handlePressCloseResetPassword = () => {
-    refBottomSheet.close();
+    refResetPasswordBottomSheet.close();
   };
-  const handleRefBottomSheet = ref => {
-    setRefBottomSheet(ref);
+  const handlePressCloseUpdateProfile = () => {
+    refUpdateProfileBottomSheet.close();
+  };
+  const handleRefResetPasswordBottomSheet = ref => {
+    setRefResetPasswordBottomSheet(ref);
+  };
+  const handleRefUpdateProfileBottomSheet = ref => {
+    setRefUpdateProfileBottomSheet(ref);
   };
   const handleSubmitResetPassword = email => {
     const fn = async () => {
@@ -104,7 +141,7 @@ const SettingsScreen = () => {
         setModalResetPasswordVisible(true);
         setLoadingResetPassword(false);
       } catch (error) {
-        console.log(error);
+        console.info(error);
         setLoadingResetPassword(false);
         if (error && error.code === 'auth/invalid-email') {
           setErrorResetPassword('Invalid email');
@@ -121,34 +158,84 @@ const SettingsScreen = () => {
     };
     fn();
   };
+  const handleSubmitUpdateProfile = ({ fullName, position }) => {
+    const fn = async () => {
+      try {
+        setLoadingUpdateProfile(true);
+        const displayName = `${fullName}!${position}`;
+        await updateProfile({ displayName });
+        setLoadingUpdateProfile(false);
+        refUpdateProfileBottomSheet.close();
+        onAuthStateChanged(u => {
+          setUser(u);
+        });
+      } catch (error) {
+        setLoadingUpdateProfile(false);
+        setErrorUpdateProfile(error);
+        console.info(error);
+      }
+    };
+    fn();
+  };
+  const handleUpload = uri => {
+    const onComplete = async photoURL => {
+      setProgress(null);
+      refUpdateProfileBottomSheet.close();
+      setModalSuccessPictureUploadedVisible(true);
+      await updateProfile({ photoURL });
+      onAuthStateChanged(u => {
+        setUser(u);
+      });
+    };
+    const onProgress = ({ transferred, total }) => {
+      setProgress(Math.round((transferred / total) * 100));
+    };
+    const onError = error => {
+      setProgress(null);
+      console.log(error);
+    };
+    upload({
+      path: `avatars/${user.uid}`,
+      uri,
+      onError,
+      onProgress,
+      onComplete,
+    });
+  };
   return (
     <View style={styles.root}>
       <View style={styles.containerTop}>
-        {!loading && profile && (
+        {!loading && user && (
           <>
-            <View style={styles.containerImage}>
-              <Image
-                style={styles.avatar}
-                source={{
-                  uri: 'https://randomuser.me/api/portraits/men/40.jpg',
-                }}
-              />
-              <View
-                style={{
-                  ...styles.status,
-                  backgroundColor: getStatusBackground(profile.statutCompte),
-                }}
-              />
-            </View>
+            {renderAvatar(user)}
             <M v1 />
-            <Text style={styles.textName}>
-              {profile.prenom} {profile.nom}
-            </Text>
-            <Text style={styles.textCompany}>{profile.poste}</Text>
+            <View style={styles.containerInformation}>
+              {user.displayName && (
+                <View style={styles.containerTexts}>
+                  <Text style={styles.textName}>
+                    {user.displayName.split('!')[0]}
+                  </Text>
+                  <Text style={styles.textPosition}>
+                    {user.displayName.split('!')[1]}
+                  </Text>
+                </View>
+              )}
+              <M h1 />
+              <TouchableOpacity
+                style={styles.containerEdit}
+                onPress={handlePressUpdateProfile}>
+                <Icon
+                  fill={Colors.WHITE}
+                  name="edit-outline"
+                  width={s(21)}
+                  height={s(21)}
+                />
+              </TouchableOpacity>
+            </View>
           </>
         )}
         {loading && !error && <Spinner status="basic" size="small" />}
-        {!loading && (!profile || error) && (
+        {!loading && (!user || error) && (
           <View style={styles.containerError}>
             {error && <Text style={styles.textError}>{error}</Text>}
           </View>
@@ -213,11 +300,26 @@ const SettingsScreen = () => {
         onPressPositive={handlePressPositive}>
         <Text>Are you sure to sign out?</Text>
       </Modal>
-      <BottomSheet height={300} onCallbackRef={handleRefBottomSheet}>
+      <BottomSheet
+        height={vs(360)}
+        onCallbackRef={handleRefUpdateProfileBottomSheet}>
+        <UpdateProfileForm
+          loading={loadingUpdateProfile}
+          error={errorUpdateProfile}
+          user={user}
+          progress={progress}
+          onPressClose={handlePressCloseUpdateProfile}
+          onUpload={handleUpload}
+          onSubmit={handleSubmitUpdateProfile}
+        />
+      </BottomSheet>
+      <BottomSheet
+        height={vs(240)}
+        onCallbackRef={handleRefResetPasswordBottomSheet}>
         <ResetPasswordForm
           loading={loadingResetPassword}
           error={errorResetPassword}
-          onPressClose={handlePressCloseResetPassword}
+          onPressClose={handlePressCloseUpdateProfile}
           onSubmit={handleSubmitResetPassword}
         />
       </BottomSheet>
@@ -227,6 +329,13 @@ const SettingsScreen = () => {
         visible={modalResetPasswordVisible}
         onPressPositive={() => setModalResetPasswordVisible(false)}>
         <Text>Please check your email to reset your password.</Text>
+      </Modal>
+      <Modal
+        title="Picture uploaded"
+        type="success"
+        visible={modalSuccessPictureUploadedVisible}
+        onPressPositive={handlePressSuccessPictureUploadedPositive}>
+        <Text>The avatar picture has been uploaded successfully.</Text>
       </Modal>
     </View>
   );

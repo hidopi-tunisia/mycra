@@ -6,6 +6,7 @@ import Fab from './fab';
 import AlertForm from './alert-form';
 import CRAHistoryDetailsForm from './cra-history-details-form';
 import WorkdaysCollection, { WorkdaysTypes } from './workdays-collection';
+import UpdateProfileForm from './update-profile-form';
 
 import { M } from './miscs/margins';
 
@@ -19,5 +20,6 @@ export {
   CRAHistoryDetailsForm,
   Fab,
   AlertForm,
+  UpdateProfileForm,
   M,
 };

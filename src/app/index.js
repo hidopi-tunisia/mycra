@@ -73,9 +73,7 @@ const App = () => {
   }, []);
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(u => {
-      if (u) {
-        setUser(u);
-      }
+      setUser(u);
     });
     return unsubscribe;
   }, []);
