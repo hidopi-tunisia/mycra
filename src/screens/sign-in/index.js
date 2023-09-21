@@ -2,12 +2,12 @@ import { useState } from 'react';
 import { sendPasswordResetEmail, signIn } from '@domain/auth';
 import { View, TouchableOpacity, Image } from 'react-native';
 import {
-  Button,
   Layout,
   Input,
   Spinner,
   Text,
   Icon,
+  Button,
 } from '@ui-kitten/components';
 import { M } from '@components';
 import styles from './index.styles';
@@ -16,6 +16,11 @@ import Colors from '@constants/colors';
 import Modal from '@components/modals';
 import BottomSheet from '@components/bottom-sheet';
 import ResetPasswordForm from '@components/reset-password-form';
+import { SvgXml } from 'react-native-svg';
+import { Locales, i18n } from '@utils/translations';
+import { s } from 'react-native-size-matters';
+import { renderFlag } from '@utils/flags';
+import { useEffect } from 'react';
 
 const SignInScreen = () => {
   const [email, setEmail] = useState('');
@@ -94,16 +99,16 @@ const SignInScreen = () => {
         </View>
         <M v3 />
         <Text style={styles.textTitle} category="h1">
-          Welcome
+          {i18n.t('Sign In.title')}
         </Text>
         <Text style={styles.textSubtitle} category="h2">
-          Please sign in using your account
+          {i18n.t('Sign In.subtitle')}
         </Text>
         <M v7 />
       </View>
       <View style={styles.card}>
         <Text style={styles.labelInput} category="label">
-          Email
+          {i18n.t('Sign In.email')}
         </Text>
         <M v1 />
         <Input
@@ -115,7 +120,7 @@ const SignInScreen = () => {
         <M v3 />
         <View style={styles.containerLabel}>
           <Text style={styles.labelInput} category="label">
-            Password
+            {i18n.t('Sign In.password')}
           </Text>
           <TouchableOpacity onPress={() => setModalHelpVisible(true)}>
             <Icon
@@ -147,7 +152,9 @@ const SignInScreen = () => {
         <M v1 />
         <View style={styles.containerForgotPasswordText}>
           <TouchableOpacity onPress={handlePressForgotPassword}>
-            <Text style={styles.textForgotPassword}>Forgot password?</Text>
+            <Text style={styles.textForgotPassword}>
+              {i18n.t('Sign In.forgot password?')}
+            </Text>
           </TouchableOpacity>
         </View>
         <M v3 />
@@ -156,7 +163,11 @@ const SignInScreen = () => {
           status="primary"
           disabled={!email || !password || loading}
           onPress={handleSubmit}>
-          {loading ? <Spinner status="basic" size="small" /> : 'Sign in'}
+          {loading ? (
+            <Spinner status="basic" size="small" />
+          ) : (
+            i18n.t('Sign In.btn_sign in')
+          )}
         </Button>
         <M v1 />
         {error && (
@@ -167,7 +178,33 @@ const SignInScreen = () => {
         <M v1 />
       </View>
       <M v4 />
-      <Text style={styles.textVersion}>Version: {APP_VERSION}</Text>
+      <View style={styles.containerVersion}>
+        <Text style={styles.textVersion}>
+          {i18n.t('Sign In.version:')} {APP_VERSION}
+        </Text>
+        <M h3 />
+        {i18n.locale === Locales.FR ? (
+          <TouchableOpacity onPress={() => (i18n.locale = Locales.EN)}>
+            <View style={styles.containerInternationalization}>
+              <View style={styles.containerFlag}>
+                {renderFlag('en')}
+              </View>
+              <M h2 />
+              <Text style={styles.textInternationalization}>{Locales.EN}</Text>
+            </View>
+          </TouchableOpacity>
+        ) : (
+          <TouchableOpacity onPress={() => (i18n.locale = Locales.FR)}>
+            <View style={styles.containerInternationalization}>
+              <View style={styles.containerFlag}>
+                {renderFlag('fr')}
+              </View>
+              <M h2 />
+              <Text style={styles.textInternationalization}>{Locales.FR}</Text>
+            </View>
+          </TouchableOpacity>
+        )}
+      </View>
       <Modal
         title="Help"
         type="info"

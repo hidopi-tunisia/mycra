@@ -27,6 +27,8 @@ import { s, vs } from 'react-native-size-matters';
 import { renderAvatar } from './index.helpers';
 import styles from './index.styles';
 import { upload } from '@domain/buckets';
+import { renderFlag } from '@utils/flags';
+import { Locales, i18n } from '@utils/translations';
 
 const SettingsScreen = () => {
   const navigation = useNavigation();
@@ -192,7 +194,7 @@ const SettingsScreen = () => {
     };
     const onError = error => {
       setProgress(null);
-      console.log(error);
+      console.info(error);
     };
     upload({
       path: `avatars/${user.uid}`,
@@ -287,7 +289,31 @@ const SettingsScreen = () => {
           />
           <M v4 />
           <View style={styles.containerVersion}>
-            <Text style={styles.textVersion}>Version {APP_VERSION}</Text>
+            <Text style={styles.textVersion}>
+              {i18n.t('Sign In.version:')} {APP_VERSION}
+            </Text>
+            <M h3 />
+            {i18n.locale === Locales.FR ? (
+              <TouchableOpacity onPress={() => (i18n.locale = Locales.EN)}>
+                <View style={styles.containerInternationalization}>
+                  <View style={styles.containerFlag}>{renderFlag('en')}</View>
+                  <M h2 />
+                  <Text style={styles.textInternationalization}>
+                    {Locales.EN}
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity onPress={() => (i18n.locale = Locales.FR)}>
+                <View style={styles.containerInternationalization}>
+                  <View style={styles.containerFlag}>{renderFlag('fr')}</View>
+                  <M h2 />
+                  <Text style={styles.textInternationalization}>
+                    {Locales.FR}
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            )}
           </View>
         </ScrollView>
       </View>

@@ -1,0 +1,11 @@
+{
+  "Sign In": {
+    "title": "Bienvenu",
+    "subtitle": "Merci de se connecter avec votre compte",
+    "email": "Email",
+    "password": "Mot de passe",
+    "forgot password?": "Mot de passe oublié ?",
+    "btn_sign in": "Se connecter",
+    "version:": "Version :"
+  }
+}

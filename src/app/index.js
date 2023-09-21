@@ -25,6 +25,7 @@ import ApplicationIntroScreen from '@screens/intro';
 import SplashScreen from 'react-native-splash-screen';
 import { Topics } from '@constants';
 import { isIntroDone, setIsIntroDone } from '@domain/storage';
+import { i18n } from '@utils/translations';
 
 const AppTheme = {
   ...DefaultTheme,
@@ -119,6 +120,14 @@ const App = () => {
       });
     }
   }, []);
+  const [_, setLocale] = useState('');
+  useEffect(() => {
+    const unsubscribe = i18n.onChange(({ locale }) => {
+      setLocale(locale);
+    });
+    return unsubscribe;
+  }, []);
+
   const handleDone = () => {
     setIsIntro(false);
     setIsIntroDone('true');
