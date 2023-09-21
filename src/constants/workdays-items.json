@@ -1,9 +1,9 @@
 {
-  "worked": [
+  "working": [
     {
       "text": "Travaillé",
-      "value": "worked",
-      "type": "worked",
+      "value": "working",
+      "type": "working",
       "backgroundColor": "#2196f3",
       "borderColor": "#2196f3",
       "color": "white"
@@ -22,6 +22,14 @@
       "type": "remote",
       "backgroundColor": "#9C27B0",
       "borderColor": "#9C27B0",
+      "color": "white"
+    },
+    {
+      "text": "Indisponible",
+      "value": "unavailable",
+      "type": "unavailable",
+      "backgroundColor": "#212121",
+      "borderColor": "#212121",
       "color": "white"
     }
   ],

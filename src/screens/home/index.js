@@ -10,6 +10,7 @@ const HomeScreen = () => {
   const [displayNoProjects, setDisplayNoProjects] = useState(false);
   const [displayCurrentCRA, setDisplayCurrentCRA] = useState(false);
   const [displayNoCRA, setDisplayNoCRA] = useState(false);
+  const [projects, setProjects] = useState([]);
   useEffect(() => {
     subscribeToConsultantTopic();
   }, []);
@@ -17,6 +18,7 @@ const HomeScreen = () => {
     const fn = async () => {
       try {
         const ps = await getProjects();
+        setProjects(ps);
         if (ps.length > 0) {
           const { data } = await getCurrentCRAs();
           if (
@@ -51,8 +53,8 @@ const HomeScreen = () => {
   return (
     <>
       {displayNoProjects && <NoProjects />}
-      {displayCurrentCRA && <NoCurrentCRAs />}
-      {displayNoCRA && <NoCRAs />}
+      {displayCurrentCRA && <NoCurrentCRAs projects={projects} />}
+      {displayNoCRA && <NoCRAs projects={projects} />}
     </>
   );
 };

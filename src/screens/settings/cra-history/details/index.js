@@ -88,8 +88,8 @@ const CRAHistoryDetailsScreen = ({ onBlur, onFocus }) => {
             if (j.travaille) {
               const date = moment(j.date).format('YYYY-MM-DD');
               marked[date] = {
-                type: WorkdaysTypes.WORKED,
-                customStyles: styles.calendarDayWorked,
+                type: WorkdaysTypes.WORKING,
+                customStyles: styles.calendarDayWorking,
                 disableTouchEvent: true,
               };
             } else if (j.nomJourFerieDuMois) {
@@ -247,7 +247,7 @@ const CRAHistoryDetailsScreen = ({ onBlur, onFocus }) => {
               }}
             />
             <M h1 />
-            <Text>Worked</Text>
+            <Text>Working</Text>
           </View>
           <View style={styles.containerLegend}>
             <View
@@ -311,7 +311,7 @@ const CRAHistoryDetailsScreen = ({ onBlur, onFocus }) => {
               }}
             />
             <M h1 />
-            <Text>Worked</Text>
+            <Text>Working</Text>
           </View>
           <View style={styles.containerLegend}>
             <View

@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: '700',
   },
-  calendarDayWorked: {
+  calendarDayWorking: {
     container: {
       backgroundColor: Colors.ORANGE_PRIMARY,
       borderWidth: 2,

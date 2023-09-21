@@ -73,7 +73,7 @@ const NoProjects = ({ onPress }) => {
               }}
             />
             <M h1 />
-            <Text>Worked</Text>
+            <Text>Working</Text>
           </View>
           <View style={styles.containerLegend}>
             <View

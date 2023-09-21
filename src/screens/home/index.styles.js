@@ -89,7 +89,7 @@ const styles = ScaledSheet.create({
     fontSize: "18@s",
     fontWeight: '900',
   },
-  calendarDayWorked: {
+  calendarDayWorking: {
     container: {
       backgroundColor: Colors.BLUE_PRIMARY,
       borderWidth: "2@msr",

@@ -100,7 +100,7 @@ const styles = ScaledSheet.create({
   button: {
     borderRadius: '24@s',
   },
-  calendarDayWorked: {
+  calendarDayWorking: {
     container: {
       backgroundColor: Colors.BLUE_PRIMARY,
       borderWidth: '2@msr',
