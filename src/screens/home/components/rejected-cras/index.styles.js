@@ -49,8 +49,6 @@ const styles = ScaledSheet.create({
   },
   buttonSubmit: {
     borderRadius: '24@s',
-    borderColor: Colors.RED_PRIMARY,
-    borderWidth: 2,
   },
   textHeading: {
     fontSize: '24@s',
@@ -59,7 +57,7 @@ const styles = ScaledSheet.create({
   },
   containerProjects: {
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   textDescription: {
     color: Colors.WHITE,
@@ -94,6 +92,17 @@ const styles = ScaledSheet.create({
     color: Colors.BLUE_DARK_PRIMARY,
     fontSize: '18@s',
     fontWeight: '900',
+  },
+  buttonRejectionMotive: {
+    paddingHorizontal: '10@s',
+    padding: '4@s',
+    borderRadius: '16@s',
+    borderColor: Colors.RED_PRIMARY,
+    borderWidth: 2,
+  },
+  textButtonRejectionMotive:{
+    fontSize: '12@msr',
+    color: Colors.RED_PRIMARY
   },
   calendarDayWorking: {
     container: {

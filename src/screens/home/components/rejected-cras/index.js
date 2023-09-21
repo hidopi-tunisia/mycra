@@ -1,12 +1,5 @@
-import {
-  BottomSheet,
-  Calendar,
-  M,
-  WorkdaysCollection,
-  WorkdaysTypes,
-} from '@components';
+import { Calendar, M, WorkdaysTypes } from '@components';
 import Modal from '@components/modals';
-import { WORKDAYS_ITEMS } from '@constants';
 import Colors from '@constants/colors';
 import { createCRA } from '@domain/me';
 import { getHolidays, getWeekends } from '@domain/miscs';
@@ -37,6 +30,7 @@ const RejectedCRAs = ({ projects, onFocus, onBlur }) => {
   const [currentMonth, setCurrentMonth] = useState(moment().format('MMMM'));
   const [holiday, setHoliday] = useState(null);
   const [weekend, setWeekend] = useState(null);
+  const [modalRejectionMotiveVisible, setModalRejectionMotiveVisible] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [modalHolidayVisible, setModalHolidayVisible] = useState(false);
   const [modalWeekendVisible, setModalWeekendVisible] = useState(false);
@@ -234,12 +228,11 @@ const RejectedCRAs = ({ projects, onFocus, onBlur }) => {
   const handleSubmit = () => {
     setModalVisible(true);
   };
-  const handleSelectAll = () => {
-    setWorkday(null);
-    refBottomSheet.open();
+  const handleViewRejectionMotive = () => {
+    setModalRejectionMotiveVisible(true)
   };
-  const handlePressBottomSheetClose = () => {
-    refBottomSheet.close();
+  const handleRejectionMotivePositive = () => {
+    setModalRejectionMotiveVisible(false)
   };
   const handlePressHolidayPositive = () => {
     setHoliday(null);
@@ -248,97 +241,6 @@ const RejectedCRAs = ({ projects, onFocus, onBlur }) => {
   const handlePressWeekendPositive = () => {
     setWeekend(null);
     setModalWeekendVisible(false);
-  };
-  const [refBottomSheet, setRefBottomSheet] = useState(null);
-  const handleRefBottomSheet = ref => {
-    setRefBottomSheet(ref);
-  };
-  const handlePressWorkdaysItem = item => {
-    if (workday) {
-      if (item.type === WorkdaysTypes.WORKING) {
-        setMarkedDates({
-          ...markedDates,
-          [workday.dateString]: {
-            type: WorkdaysTypes.WORKING,
-            customStyles: styles.calendarDayWorking,
-          },
-        });
-      } else if (item.type === 'half') {
-        setMarkedDates({
-          ...markedDates,
-          [workday.dateString]: {
-            type: WorkdaysTypes.HALF,
-            customStyles: styles.calendarHalfDay,
-          },
-        });
-      } else if (item.type === 'remote') {
-        setMarkedDates({
-          ...markedDates,
-          [workday.dateString]: {
-            type: WorkdaysTypes.REMOTE,
-            customStyles: styles.calendarDayRemote,
-          },
-        });
-      } else if (item.type === 'unavailable') {
-        setMarkedDates({
-          ...markedDates,
-          [workday.dateString]: {
-            type: WorkdaysTypes.UNAVAILABLE,
-            payload: { value: item.value },
-            customStyles: styles.calendarDayUnavailable,
-          },
-        });
-      } else if (item.type === 'off') {
-        setMarkedDates({
-          ...markedDates,
-          [workday.dateString]: {
-            type: WorkdaysTypes.OFF,
-            payload: { value: item.value },
-            customStyles: styles.calendarDayOff,
-          },
-        });
-      }
-    } else {
-      let marked = {};
-      Object.keys(markedDates).forEach(d => {
-        if (
-          markedDates[d].type !== WorkdaysTypes.HOLIDAY &&
-          markedDates[d].type !== WorkdaysTypes.WEEKEND
-        ) {
-          if (item.type === WorkdaysTypes.WORKING) {
-            marked[d] = {
-              type: WorkdaysTypes.WORKING,
-              customStyles: styles.calendarDayWorking,
-            };
-          } else if (item.type === WorkdaysTypes.HALF) {
-            marked[d] = {
-              type: WorkdaysTypes.HALF,
-              customStyles: styles.calendarHalfDay,
-            };
-          } else if (item.type === WorkdaysTypes.REMOTE) {
-            marked[d] = {
-              type: WorkdaysTypes.REMOTE,
-              customStyles: styles.calendarDayRemote,
-            };
-          } else if (item.type === WorkdaysTypes.UNAVAILABLE) {
-            marked[d] = {
-              type: WorkdaysTypes.UNAVAILABLE,
-              payload: { value: item.value },
-              customStyles: styles.calendarDayUnavailable,
-            };
-          } else if (item.type === WorkdaysTypes.OFF) {
-            marked[d] = {
-              type: WorkdaysTypes.OFF,
-              payload: { value: item.value },
-              customStyles: styles.calendarDayOff,
-            };
-          }
-        }
-      });
-      setMarkedDates({ ...markedDates, ...marked });
-    }
-    setWorkday(null);
-    refBottomSheet.close();
   };
   return (
     <Layout style={styles.root}>
@@ -378,13 +280,10 @@ const RejectedCRAs = ({ projects, onFocus, onBlur }) => {
         <View style={styles.containerCalendar}>
           <View style={styles.containerCalendarHeader}>
             <Text style={styles.containerCalendarTitle}>{currentMonth}</Text>
-            <TouchableOpacity onPress={handleSelectAll}>
-              <Icon
-                fill={Colors.GRAY_PRIMARY}
-                name="done-all-outline"
-                width={24}
-                height={24}
-              />
+            <TouchableOpacity onPress={handleViewRejectionMotive}>
+              <View style={styles.buttonRejectionMotive}>
+                <Text style={styles.textButtonRejectionMotive}>Rejected</Text>
+              </View>
             </TouchableOpacity>
           </View>
           <M v1 />
@@ -468,6 +367,14 @@ const RejectedCRAs = ({ projects, onFocus, onBlur }) => {
         onPressNegative={handlePressNegative}
         onPressPositive={handlePressPositive}>
         <Text>Are you sure to submit {selectedCount} days for this month?</Text>
+      </Modal>
+      <Modal
+        title="Rejected"
+        type="confirm"
+        visible={modalRejectionMotiveVisible}
+        onPressPositive={handleRejectionMotivePositive}>
+        <Text>CRA rejected at XXXX-XX-XX</Text>
+        <Text>This is because of -----</Text>
       </Modal>
       <Modal
         title="Holiday"
@@ -576,14 +483,6 @@ const RejectedCRAs = ({ projects, onFocus, onBlur }) => {
           </View>
         </View>
       </Modal>
-      <BottomSheet height={480} onCallbackRef={handleRefBottomSheet}>
-        <WorkdaysCollection
-          items={WORKDAYS_ITEMS}
-          workday={workday}
-          onPress={handlePressWorkdaysItem}
-          onPressClose={handlePressBottomSheetClose}
-        />
-      </BottomSheet>
     </Layout>
   );
 };

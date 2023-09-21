@@ -229,9 +229,6 @@ const PendingCRAs = ({ projects, onFocus, onBlur }) => {
     };
     fn();
   };
-  const handlePressNegative = () => {
-    setModalVisible(false);
-  };
   const handleSubmit = () => {
     setModalVisible(true);
   };

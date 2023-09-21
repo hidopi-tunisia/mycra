@@ -29,24 +29,24 @@ const HomeScreen = ({ onFocus, onBlur }) => {
             Array.isArray(data.rejected) &&
             data.rejected.length > 0
           ) {
-            setDisplayPendingCRA(true);
+            setDisplayRejectedCRA(true);
           } else if (
             data &&
             Array.isArray(data.approved) &&
             data.approved.length > 0
           ) {
-            setDisplayPendingCRA(false);
+            setDisplayApprovedCRA(false);
           } else if (
             data &&
             Array.isArray(data.pending) &&
             data.pending.length > 0
           ) {
-            setDisplayCurrentCRA(true);
+            setDisplayPendingCRA(false);
           } else {
-            setDisplayNoCRA(true);
+            setDisplayNoCRA(false);
           }
         } else {
-          setDisplayNoProjects(true);
+          setDisplayNoProjects(false);
         }
       } catch (error) {
         console.info(error);
