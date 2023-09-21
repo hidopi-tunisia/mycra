@@ -85,9 +85,7 @@ const NotificationsScreen = ({ notifications }) => {
             />
           ) : (
             <View style={styles.cardEmpty}>
-              <Text>No notifications {i18n._locale}</Text>
-              <Button title="en" onPress={() => (i18n.locale = 'en')} />
-              <Button title="fr" onPress={() => (i18n.locale = 'fr')} />
+              <Text>No notifications</Text>
             </View>
           )}
         </View>

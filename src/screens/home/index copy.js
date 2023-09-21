@@ -18,7 +18,6 @@ import moment from 'moment';
 import { PermissionsAndroid } from 'react-native';
 import { getCurrentCRAs, getProfile } from '@domain/me';
 import { getProjects, subscribeToConsultantTopic } from './composables';
-import NoProjects from './components/no-projects';
 
 const HomeScreen = () => {
   const [loadingFetch, setLoadingFetch] = useState(false);
@@ -330,7 +329,218 @@ const HomeScreen = () => {
     refBottomSheet.close();
   };
   return (
-    <NoProjects />
+    <Layout style={styles.root}>
+      <View style={styles.top}>
+        <View style={styles.containerDescription}>
+          <View style={styles.containerHeading}>
+            <Text style={styles.textHeading}>My CRA</Text>
+            <TouchableOpacity onPress={() => setModalHelpVisible(true)}>
+              <Icon
+                fill={Colors.WHITE}
+                name="question-mark-circle-outline"
+                width={24}
+                height={24}
+              />
+            </TouchableOpacity>
+          </View>
+          <M v1 />
+          <Text style={styles.textDescription}>
+            Please fill your CRA before the end of the current month.
+          </Text>
+          {/* <Text style={styles.textWarning}>
+            The month is already prefilled.
+          </Text> */}
+        </View>
+      </View>
+      <View style={styles.middle}>
+        <View style={styles.containerCalendar}>
+          <View style={styles.containerCalendarHeader}>
+            <Text style={styles.containerCalendarTitle}>{currentMonth}</Text>
+            <TouchableOpacity onPress={handleSelectAll}>
+              <Icon
+                fill={Colors.GRAY_PRIMARY}
+                name="done-all-outline"
+                width={24}
+                height={24}
+              />
+            </TouchableOpacity>
+          </View>
+          <M v1 />
+          <Calendar
+            markedDates={markedDates}
+            onDayPress={handleSelected}
+            onDayLongPress={handleLongPress}
+          />
+        </View>
+        <View style={styles.containerLegends}>
+          <View style={styles.containerLegend}>
+            <View
+              style={{
+                ...styles.shapeLegend,
+                backgroundColor: Colors.BLUE_PRIMARY,
+                borderColor: Colors.BLUE_PRIMARY,
+              }}
+            />
+            <M h1 />
+            <Text>Worked</Text>
+          </View>
+          <View style={styles.containerLegend}>
+            <View
+              style={{
+                ...styles.shapeLegend,
+                backgroundColor: Colors.WHITE,
+                borderColor: Colors.BLUE_PRIMARY,
+              }}
+            />
+            <M h1 />
+            <Text>Half day</Text>
+          </View>
+          <View style={styles.containerLegend}>
+            <View
+              style={{
+                ...styles.shapeLegend,
+                backgroundColor: Colors.PURPLE_PRIMARY,
+                borderColor: Colors.PURPLE_PRIMARY,
+              }}
+            />
+            <M h1 />
+            <Text>Remote</Text>
+          </View>
+          <View style={styles.containerLegend}>
+            <View
+              style={{
+                ...styles.shapeLegend,
+                backgroundColor: Colors.WHITE,
+                borderColor: Colors.RED_PRIMARY,
+              }}
+            />
+            <M h1 />
+            <Text>Off</Text>
+          </View>
+        </View>
+        <M v2 />
+        <View style={styles.containerButton}>
+          <Button
+            style={styles.buttonSubmit}
+            status="primary"
+            onPress={handleSubmit}>
+            Submit
+          </Button>
+        </View>
+      </View>
+      <Modal
+        title="Submit days?"
+        type="confirm"
+        visible={modalVisible}
+        onPressNegative={handlePressNegative}
+        onPressPositive={handlePressPositive}>
+        <Text>Are you sure to submit {selectedCount} days for this month?</Text>
+      </Modal>
+      <Modal
+        title="Holiday"
+        type="info"
+        visible={modalHolidayVisible}
+        onPressPositive={handlePressHolidayPositive}>
+        {holiday && (
+          <Text>
+            {holiday.date} is a holiday called "{holiday.name}".
+          </Text>
+        )}
+      </Modal>
+      <Modal
+        title="Weekend"
+        type="info"
+        visible={modalWeekendVisible}
+        onPressPositive={handlePressWeekendPositive}>
+        {weekend && <Text>{weekend.date} is a weekend.</Text>}
+      </Modal>
+      <Modal
+        title="Help"
+        type="info"
+        visible={modalHelpVisible}
+        onPressPositive={() => setModalHelpVisible(false)}>
+        <Text>Fill your working days accordingly.</Text>
+        <Text>Long press on a day to view more options.</Text>
+        <M v2 />
+        <Text>Legend:</Text>
+        <View style={styles.containerLegends}>
+          <View style={styles.containerLegend}>
+            <View
+              style={{
+                ...styles.shapeLegend,
+                backgroundColor: Colors.BLUE_PRIMARY,
+                borderColor: Colors.BLUE_PRIMARY,
+              }}
+            />
+            <M h1 />
+            <Text>Worked</Text>
+          </View>
+          <View style={styles.containerLegend}>
+            <View
+              style={{
+                ...styles.shapeLegend,
+                backgroundColor: Colors.WHITE,
+                borderColor: Colors.BLUE_PRIMARY,
+              }}
+            />
+            <M h1 />
+            <Text>Half day</Text>
+          </View>
+          <View style={styles.containerLegend}>
+            <View
+              style={{
+                ...styles.shapeLegend,
+                backgroundColor: Colors.PURPLE_PRIMARY,
+                borderColor: Colors.PURPLE_PRIMARY,
+              }}
+            />
+            <M h1 />
+            <Text>Remote</Text>
+          </View>
+          <View style={styles.containerLegend}>
+            <View
+              style={{
+                ...styles.shapeLegend,
+                backgroundColor: Colors.WHITE,
+                borderColor: Colors.RED_PRIMARY,
+              }}
+            />
+            <M h1 />
+            <Text>Off</Text>
+          </View>
+          <View style={styles.containerLegend}>
+            <View
+              style={{
+                ...styles.shapeLegend,
+                backgroundColor: Colors.WHITE,
+                borderColor: Colors.GREEN_PRIMARY,
+              }}
+            />
+            <M h1 />
+            <Text>Weekend</Text>
+          </View>
+          <View style={styles.containerLegend}>
+            <View
+              style={{
+                ...styles.shapeLegend,
+                backgroundColor: Colors.GREEN_PRIMARY,
+                borderColor: Colors.GREEN_PRIMARY,
+              }}
+            />
+            <M h1 />
+            <Text>Holiday</Text>
+          </View>
+        </View>
+      </Modal>
+      <BottomSheet height={480} onCallbackRef={handleRefBottomSheet}>
+        <WorkdaysCollection
+          items={WORKDAYS_ITEMS}
+          workday={workday}
+          onPress={handlePressWorkdaysItem}
+          onPressClose={handlePressBottomSheetClose}
+        />
+      </BottomSheet>
+    </Layout>
   );
 };
 

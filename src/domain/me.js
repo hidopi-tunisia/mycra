@@ -2,9 +2,9 @@ import axios from 'axios';
 import { getAuthorization } from '@domain/auth';
 import { ENDPOINT } from '@constants';
 
-const getProfile = async () => {
+const getProfile = async ({ populate } = {}) => {
   const authorization = await getAuthorization();
-  return axios.get(`${ENDPOINT}/me?populate=projects`, {
+  return axios.get(`${ENDPOINT}/me?populate=${populate}`, {
     headers: {
       authorization,
     },
