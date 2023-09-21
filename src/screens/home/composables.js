@@ -18,7 +18,7 @@ const getProjects = async () => {
   ) {
     return data.projects.filter(p => p.status === ProjectStatuses.ACTIVE);
   }
-  throw 'No active projects';
+  return [];
 };
 
 const subscribeToConsultantTopic = async () => {
