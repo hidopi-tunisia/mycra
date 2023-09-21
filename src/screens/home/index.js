@@ -13,7 +13,7 @@ import { getToday, getDaysInMonth } from '@utils/dates';
 import styles from './index.styles';
 import { postCRA } from '@domain/cra';
 import Modal from '@components/modals';
-import { getHolidays } from '@domain/days';
+import { getHolidays, getWeekends } from '@domain/miscs';
 import Colors from '@constants/colors';
 import moment from 'moment';
 
@@ -21,6 +21,7 @@ import { PermissionsAndroid } from 'react-native';
 import { currentUser } from '@domain/auth';
 import { subscribeToTopic } from '@domain/messaging';
 import { Topics } from '@constants';
+import { getCurrentCRAs, getProfile } from '@domain/me';
 
 const HomeScreen = () => {
   const [loadingFetch, setLoadingFetch] = useState(false);
@@ -49,6 +50,74 @@ const HomeScreen = () => {
     };
     fn();
   }, []);
+  useEffect(() => {
+    const fn = async () => {
+      try {
+        const { data: holidays } = await getHolidays();
+        const {
+          data: { saturdays, sundays },
+        } = await getWeekends();
+        const marked = {};
+        const weekends = [...saturdays, ...sundays];
+        Array.from(
+          {
+            length: new Date(
+              new Date().getFullYear(),
+              new Date().getMonth() + 1,
+              0,
+            ).getDate(),
+          },
+          (_, i) => i + 1,
+        ).forEach(d => {
+          const str = new Date(new Date().setDate(d))
+            .toISOString()
+            .substring(0, 10);
+          marked[str] = {
+            type: WorkdaysTypes.WORKED,
+            customStyles: styles.calendarDayWorked,
+          };
+          weekends.forEach(element => {
+            if (element === d) {
+              marked[str] = {
+                type: WorkdaysTypes.WEEKEND,
+                customStyles: styles.calendarDayWeekend,
+              };
+            }
+          });
+          holidays.forEach(element => {
+            if (element.date === str) {
+              marked[str] = {
+                type: WorkdaysTypes.HOLIDAY,
+                payload: {
+                  value: element.nom_jour_ferie,
+                },
+                customStyles: styles.calendarDayHoliday,
+              };
+            }
+          });
+        });
+        setMarkedDates(marked);
+        setLoadingFetch(false);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    fn();
+  }, []);
+  useEffect(() => {
+    const fn = async () => {
+      try {
+        console.log('1');
+        const { data } = await getCurrentCRAs();
+        if (data && Array.isArray(data.rejected) && data.rejected.length > 0) {
+          console.log('rejected', rejected);
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    // fn();
+  });
   useEffect(() => {
     const fn = async () => {
       try {
@@ -99,7 +168,7 @@ const HomeScreen = () => {
         console.info(error);
       }
     };
-    fn();
+    // fn();
   }, []);
   useEffect(() => {
     const selectedDates = Object.keys(markedDates).filter(
@@ -203,7 +272,7 @@ const HomeScreen = () => {
           datesTeleTravaillees,
           datesNonTravaillees,
         };
-        // const { data } = await postCRA(payload);
+        const { data } = await postCRA(payload);
         p(payload);
         setLoadingSubmit(false);
         setModalVisible(false);
