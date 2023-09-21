@@ -100,21 +100,6 @@ const styles = ScaledSheet.create({
   button: {
     borderRadius: '24@s',
   },
-  containerCalendar: {
-    backgroundColor: 'transparent',
-    padding: '16@msr',
-  },
-  containerCalendarHeader: {
-    paddingHorizontal: '12@s',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  containerCalendarTitle: {
-    color: Colors.BLUE_DARK_PRIMARY,
-    fontSize: '18@s',
-    fontWeight: '900',
-  },
   calendarDayWorked: {
     container: {
       backgroundColor: Colors.BLUE_PRIMARY,

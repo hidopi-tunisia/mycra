@@ -44,7 +44,7 @@ const NoProjects = ({ onPress }) => {
           <Text style={styles.textTitle}>No projects</Text>
           <M v2 />
           <Text style={styles.textInfo}>
-            Currently you are not assigned to any project.
+            You are not assigned to any project at the moment.
           </Text>
         </View>
         <M v4 />
