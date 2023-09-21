@@ -13,12 +13,20 @@ import { getHolidays, getWeekends } from '@domain/miscs';
 import { Button, Icon, Layout, Text } from '@ui-kitten/components';
 import moment from 'moment';
 import { useEffect, useState } from 'react';
-import { PermissionsAndroid, TouchableOpacity, View } from 'react-native';
+import {
+  PermissionsAndroid,
+  StatusBar,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { s } from 'react-native-size-matters';
 import { subscribeToConsultantTopic } from '../../composables';
 import styles from './index.styles';
+import { useFocusEffect } from '@react-navigation/native';
+import { useCallback } from 'react';
+import SystemNavigationBar from 'react-native-system-navigation-bar';
 
-const NoCRAs = ({ projects }) => {
+const RejectedCRAs = ({ projects, onFocus, onBlur }) => {
   const [loadingFetch, setLoadingFetch] = useState(false);
   const [errorFetch, setErrorFetch] = useState(null);
   const [loadingSubmit, setLoadingSubmit] = useState(false);
@@ -33,6 +41,19 @@ const NoCRAs = ({ projects }) => {
   const [modalHolidayVisible, setModalHolidayVisible] = useState(false);
   const [modalWeekendVisible, setModalWeekendVisible] = useState(false);
   const [modalHelpVisible, setModalHelpVisible] = useState(false);
+
+  useFocusEffect(
+    useCallback(() => {
+      StatusBar.setBackgroundColor(Colors.RED_DARK_PRIMARY);
+      SystemNavigationBar.setNavigationColor(Colors.RED_DARK_PRIMARY, 'light');
+      onFocus(Colors.RED_DARK_PRIMARY);
+      return () => {
+        StatusBar.setBackgroundColor(Colors.BLUE_DARK_PRIMARY);
+        SystemNavigationBar.setNavigationColor(Colors.BLUE_PRIMARY, 'light');
+        onBlur(Colors.BLUE_DARK_PRIMARY);
+      };
+    }, []),
+  );
   useEffect(() => {
     subscribeToConsultantTopic();
   }, []);
@@ -172,7 +193,7 @@ const NoCRAs = ({ projects }) => {
               type: WorkdaysTypes.OFF,
               raison: markedDates[k].payload.value,
             };
-          } 
+          }
           // else if (markedDates[k].type === WorkdaysTypes.UNAVAILABLE) {
           //   return {
           //     date: k,
@@ -567,4 +588,4 @@ const NoCRAs = ({ projects }) => {
   );
 };
 
-export default NoCRAs;
+export default RejectedCRAs;

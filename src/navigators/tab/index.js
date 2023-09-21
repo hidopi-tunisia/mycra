@@ -76,9 +76,7 @@ const MyTabBar = ({
             <View style={styles.containerItem}>
               {route.name === 'TabHome' && (
                 <HomeIcon
-                  fill={
-                    isFocused ? Colors.BLUE_PRIMARY : Colors.GRAY_DARK_PRIMARY
-                  }
+                  fill={isFocused ? focusedColor : Colors.GRAY_DARK_PRIMARY}
                 />
               )}
               {route.name === 'TabNotifications' && (
@@ -111,9 +109,15 @@ const MyTabBar = ({
     </View>
   );
 };
-
 const TabNavigators = ({ initialRoute = 'TabHome', notifications }) => {
   const [focusedColor, setFocusedColor] = useState(Colors.BLUE_PRIMARY);
+  const handleFocus = (color = Colors.BLUE_PRIMARY) => {
+    setFocusedColor(color)
+  }
+  const handleBlur = (color = Colors.BLUE_PRIMARY) => {
+    setFocusedColor(color)
+  }
+
   return (
     <Tab.Navigator
       initialRouteName={initialRoute}
@@ -127,12 +131,18 @@ const TabNavigators = ({ initialRoute = 'TabHome', notifications }) => {
       screenOptions={{ headerShown: false }}>
       <Tab.Screen
         name="TabHome"
-        component={HomeScreen}
         options={{
           tabBarLabel: 'Home',
           tabBarIcon: HomeIcon,
-        }}
-      />
+        }}>
+        {p => (
+          <HomeScreen
+            {...p}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
+          />
+        )}
+      </Tab.Screen>
       <Tab.Screen
         name="TabNotifications"
         options={{
@@ -162,11 +172,11 @@ const TabNavigators = ({ initialRoute = 'TabHome', notifications }) => {
             <Settings.Screen
               name="CRA History Details"
               options={{ headerShown: false }}>
-              {props => (
+              {ps => (
                 <CRAHistoryDetailsScreen
-                  {...props}
-                  onBlur={() => setFocusedColor(Colors.BLUE_PRIMARY)}
-                  onFocus={() => setFocusedColor(Colors.ORANGE_DARK_PRIMARY)}
+                  {...ps}
+                  onBlur={handleBlur}
+                  onFocus={handleFocus}
                 />
               )}
             </Settings.Screen>

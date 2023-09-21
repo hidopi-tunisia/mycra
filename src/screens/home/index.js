@@ -1,14 +1,17 @@
 import { getCurrentCRAs } from '@domain/me';
 import { useEffect, useState } from 'react';
 import { PermissionsAndroid } from 'react-native';
-import NoCRAs from './components/no-cras';
-import NoCurrentCRAs from './components/no-current-cras';
 import NoProjects from './components/no-projects';
+import RejectedCRAs from './components/rejected-cras';
 import { getProjects, subscribeToConsultantTopic } from './composables';
+import ApprovedCRAs from './components/approved-cras';
+import PendingCRAs from './components/pending-cras';
 
-const HomeScreen = () => {
+const HomeScreen = ({ onFocus, onBlur }) => {
   const [displayNoProjects, setDisplayNoProjects] = useState(false);
-  const [displayCurrentCRA, setDisplayCurrentCRA] = useState(false);
+  const [displayRejectedCRA, setDisplayRejectedCRA] = useState(false);
+  const [displayApprovedCRA, setDisplayApprovedCRA] = useState(false);
+  const [displayPendingCRA, setDisplayPendingCRA] = useState(false);
   const [displayNoCRA, setDisplayNoCRA] = useState(false);
   const [projects, setProjects] = useState([]);
   useEffect(() => {
@@ -26,11 +29,17 @@ const HomeScreen = () => {
             Array.isArray(data.rejected) &&
             data.rejected.length > 0
           ) {
-            setDisplayCurrentCRA(true);
+            setDisplayPendingCRA(true);
           } else if (
             data &&
             Array.isArray(data.approved) &&
             data.approved.length > 0
+          ) {
+            setDisplayPendingCRA(false);
+          } else if (
+            data &&
+            Array.isArray(data.pending) &&
+            data.pending.length > 0
           ) {
             setDisplayCurrentCRA(true);
           } else {
@@ -52,9 +61,18 @@ const HomeScreen = () => {
   }, []);
   return (
     <>
-      {displayNoProjects && <NoProjects />}
-      {displayCurrentCRA && <NoCurrentCRAs projects={projects} />}
-      {displayNoCRA && <NoCRAs projects={projects} />}
+      {displayNoProjects && <NoProjects onBlur={onBlur} />}
+      {displayRejectedCRA && (
+        <RejectedCRAs projects={projects} onFocus={onFocus} onBlur={onBlur} />
+      )}
+      {displayApprovedCRA && (
+        <ApprovedCRAs projects={projects} onFocus={onFocus} onBlur={onBlur} />
+      )}
+      {displayPendingCRA && (
+        <PendingCRAs projects={projects} onFocus={onFocus} onBlur={onBlur} />
+      )}
+      {/* {displayCurrentCRA && <NoCurrentCRAs projects={projects} />}
+      {displayNoCRA && <NoCRAs projects={projects} />} */}
     </>
   );
 };

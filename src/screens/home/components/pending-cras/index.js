@@ -13,12 +13,20 @@ import { getHolidays, getWeekends } from '@domain/miscs';
 import { Button, Icon, Layout, Text } from '@ui-kitten/components';
 import moment from 'moment';
 import { useEffect, useState } from 'react';
-import { PermissionsAndroid, TouchableOpacity, View } from 'react-native';
+import {
+  PermissionsAndroid,
+  StatusBar,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { s } from 'react-native-size-matters';
 import { subscribeToConsultantTopic } from '../../composables';
 import styles from './index.styles';
+import { useFocusEffect } from '@react-navigation/native';
+import { useCallback } from 'react';
+import SystemNavigationBar from 'react-native-system-navigation-bar';
 
-const NoCRAs = ({ projects }) => {
+const PendingCRAs = ({ projects, onFocus, onBlur }) => {
   const [loadingFetch, setLoadingFetch] = useState(false);
   const [errorFetch, setErrorFetch] = useState(null);
   const [loadingSubmit, setLoadingSubmit] = useState(false);
@@ -33,6 +41,19 @@ const NoCRAs = ({ projects }) => {
   const [modalHolidayVisible, setModalHolidayVisible] = useState(false);
   const [modalWeekendVisible, setModalWeekendVisible] = useState(false);
   const [modalHelpVisible, setModalHelpVisible] = useState(false);
+
+  useFocusEffect(
+    useCallback(() => {
+      StatusBar.setBackgroundColor(Colors.ORANGE_DARK_PRIMARY);
+      SystemNavigationBar.setNavigationColor(Colors.ORANGE_PRIMARY, 'light');
+      onFocus(Colors.ORANGE_DARK_PRIMARY);
+      return () => {
+        StatusBar.setBackgroundColor(Colors.BLUE_DARK_PRIMARY);
+        SystemNavigationBar.setNavigationColor(Colors.BLUE_PRIMARY, 'light');
+        onBlur(Colors.BLUE_PRIMARY);
+      };
+    }, []),
+  );
   useEffect(() => {
     subscribeToConsultantTopic();
   }, []);
@@ -61,6 +82,7 @@ const NoCRAs = ({ projects }) => {
           marked[str] = {
             type: WorkdaysTypes.WORKING,
             customStyles: styles.calendarDayWorking,
+            disableTouchEvent: true,
           };
           weekends.forEach(element => {
             if (element === d) {
@@ -172,7 +194,7 @@ const NoCRAs = ({ projects }) => {
               type: WorkdaysTypes.OFF,
               raison: markedDates[k].payload.value,
             };
-          } 
+          }
           // else if (markedDates[k].type === WorkdaysTypes.UNAVAILABLE) {
           //   return {
           //     date: k,
@@ -434,19 +456,18 @@ const NoCRAs = ({ projects }) => {
         <View style={styles.containerButton}>
           <Button
             style={styles.buttonSubmit}
-            status="primary"
+            status="control"
             onPress={handleSubmit}>
-            Submit
+            CRA is pending
           </Button>
         </View>
       </View>
       <Modal
-        title="Submit days?"
+        title="Pending"
         type="confirm"
         visible={modalVisible}
-        onPressNegative={handlePressNegative}
         onPressPositive={handlePressPositive}>
-        <Text>Are you sure to submit {selectedCount} days for this month?</Text>
+        <Text>CRA submitted at XXXX-XX-XX</Text>
       </Modal>
       <Modal
         title="Holiday"
@@ -567,4 +588,4 @@ const NoCRAs = ({ projects }) => {
   );
 };
 
-export default NoCRAs;
+export default PendingCRAs;

@@ -49,11 +49,11 @@ const CRAHistoryDetailsScreen = ({ onBlur, onFocus }) => {
         Colors.ORANGE_DARK_PRIMARY,
         'light',
       );
-      onFocus();
+      onFocus(Colors.ORANGE_DARK_PRIMARY);
       return () => {
         StatusBar.setBackgroundColor(Colors.BLUE_DARK_PRIMARY);
         SystemNavigationBar.setNavigationColor(Colors.BLUE_PRIMARY, 'light');
-        onBlur();
+        onBlur(Colors.BLUE_PRIMARY);
       };
     }, []),
   );
