@@ -1,11 +1,15 @@
 import { Calendar, M, WorkdaysTypes } from '@components';
+import BottomSheet from '@components/bottom-sheet';
 import Modal from '@components/modals';
+import WorkdaysCollection from '@components/workdays-collection';
+import { WORKDAYS_ITEMS } from '@constants';
 import Colors from '@constants/colors';
-import { createCRA } from '@domain/me';
+import { updateCRA } from '@domain/me';
 import { getHolidays, getWeekends } from '@domain/miscs';
+import { useFocusEffect } from '@react-navigation/native';
 import { Button, Icon, Layout, Text } from '@ui-kitten/components';
 import moment from 'moment';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import {
   PermissionsAndroid,
   StatusBar,
@@ -13,11 +17,8 @@ import {
   View,
 } from 'react-native';
 import { s } from 'react-native-size-matters';
-import { subscribeToConsultantTopic } from '../../composables';
-import styles from './index.styles';
-import { useFocusEffect } from '@react-navigation/native';
-import { useCallback } from 'react';
 import SystemNavigationBar from 'react-native-system-navigation-bar';
+import styles from './index.styles';
 
 const RejectedCRAs = ({ cra, projects, onFocus, onBlur }) => {
   const [loadingFetch, setLoadingFetch] = useState(false);
@@ -30,7 +31,8 @@ const RejectedCRAs = ({ cra, projects, onFocus, onBlur }) => {
   const [currentMonth, setCurrentMonth] = useState(moment().format('MMMM'));
   const [holiday, setHoliday] = useState(null);
   const [weekend, setWeekend] = useState(null);
-  const [modalRejectionMotiveVisible, setModalRejectionMotiveVisible] = useState(false);
+  const [modalRejectionMotiveVisible, setModalRejectionMotiveVisible] =
+    useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [modalHolidayVisible, setModalHolidayVisible] = useState(false);
   const [modalWeekendVisible, setModalWeekendVisible] = useState(false);
@@ -182,7 +184,9 @@ const RejectedCRAs = ({ cra, projects, onFocus, onBlur }) => {
             return {
               date: k,
               type: WorkdaysTypes.OFF,
-              raison: markedDates[k].meta.value,
+              meta: {
+                value: markedDates[k].meta.value,
+              },
             };
           }
           // else if (markedDates[k].type === WorkdaysTypes.UNAVAILABLE) {
@@ -206,7 +210,7 @@ const RejectedCRAs = ({ cra, projects, onFocus, onBlur }) => {
           off,
           // unavailable, -- TODO: Unavailable
         };
-        await createCRA(selectedProject._id, payload);
+        await updateCRA(cra._id, payload);
         setLoadingSubmit(false);
         setModalVisible(false);
       } catch (error) {
@@ -226,10 +230,10 @@ const RejectedCRAs = ({ cra, projects, onFocus, onBlur }) => {
     setModalVisible(true);
   };
   const handleViewRejectionMotive = () => {
-    setModalRejectionMotiveVisible(true)
+    setModalRejectionMotiveVisible(true);
   };
   const handleRejectionMotivePositive = () => {
-    setModalRejectionMotiveVisible(false)
+    setModalRejectionMotiveVisible(false);
   };
   const handlePressHolidayPositive = () => {
     setHoliday(null);
@@ -238,6 +242,100 @@ const RejectedCRAs = ({ cra, projects, onFocus, onBlur }) => {
   const handlePressWeekendPositive = () => {
     setWeekend(null);
     setModalWeekendVisible(false);
+  };
+  const [refBottomSheet, setRefBottomSheet] = useState(null);
+  const handleRefBottomSheet = ref => {
+    setRefBottomSheet(ref);
+  };
+  const handlePressWorkdaysItem = item => {
+    if (workday) {
+      if (item.type === WorkdaysTypes.WORKING) {
+        setMarkedDates({
+          ...markedDates,
+          [workday.dateString]: {
+            type: WorkdaysTypes.WORKING,
+            customStyles: styles.calendarDayWorking,
+          },
+        });
+      } else if (item.type === 'half') {
+        setMarkedDates({
+          ...markedDates,
+          [workday.dateString]: {
+            type: WorkdaysTypes.HALF,
+            customStyles: styles.calendarHalfDay,
+          },
+        });
+      } else if (item.type === 'remote') {
+        setMarkedDates({
+          ...markedDates,
+          [workday.dateString]: {
+            type: WorkdaysTypes.REMOTE,
+            customStyles: styles.calendarDayRemote,
+          },
+        });
+      } else if (item.type === 'unavailable') {
+        setMarkedDates({
+          ...markedDates,
+          [workday.dateString]: {
+            type: WorkdaysTypes.UNAVAILABLE,
+            meta: { value: item.value },
+            customStyles: styles.calendarDayUnavailable,
+          },
+        });
+      } else if (item.type === 'off') {
+        setMarkedDates({
+          ...markedDates,
+          [workday.dateString]: {
+            type: WorkdaysTypes.OFF,
+            meta: { value: item.value },
+            customStyles: styles.calendarDayOff,
+          },
+        });
+      }
+    } else {
+      let marked = {};
+      Object.keys(markedDates).forEach(d => {
+        if (
+          markedDates[d].type !== WorkdaysTypes.HOLIDAY &&
+          markedDates[d].type !== WorkdaysTypes.WEEKEND
+        ) {
+          if (item.type === WorkdaysTypes.WORKING) {
+            marked[d] = {
+              type: WorkdaysTypes.WORKING,
+              customStyles: styles.calendarDayWorking,
+            };
+          } else if (item.type === WorkdaysTypes.HALF) {
+            marked[d] = {
+              type: WorkdaysTypes.HALF,
+              customStyles: styles.calendarHalfDay,
+            };
+          } else if (item.type === WorkdaysTypes.REMOTE) {
+            marked[d] = {
+              type: WorkdaysTypes.REMOTE,
+              customStyles: styles.calendarDayRemote,
+            };
+          } else if (item.type === WorkdaysTypes.UNAVAILABLE) {
+            marked[d] = {
+              type: WorkdaysTypes.UNAVAILABLE,
+              meta: { value: item.value },
+              customStyles: styles.calendarDayUnavailable,
+            };
+          } else if (item.type === WorkdaysTypes.OFF) {
+            marked[d] = {
+              type: WorkdaysTypes.OFF,
+              meta: { value: item.value },
+              customStyles: styles.calendarDayOff,
+            };
+          }
+        }
+      });
+      setMarkedDates({ ...markedDates, ...marked });
+    }
+    setWorkday(null);
+    refBottomSheet.close();
+  };
+  const handlePressBottomSheetClose = () => {
+    refBottomSheet.close();
   };
   return (
     <Layout style={styles.root}>
@@ -480,6 +578,14 @@ const RejectedCRAs = ({ cra, projects, onFocus, onBlur }) => {
           </View>
         </View>
       </Modal>
+      <BottomSheet height={480} onCallbackRef={handleRefBottomSheet}>
+        <WorkdaysCollection
+          items={WORKDAYS_ITEMS}
+          workday={workday}
+          onPress={handlePressWorkdaysItem}
+          onPressClose={handlePressBottomSheetClose}
+        />
+      </BottomSheet>
     </Layout>
   );
 };

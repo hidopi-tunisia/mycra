@@ -189,7 +189,9 @@ const ApprovedCRAs = ({ projects, onFocus, onBlur }) => {
             return {
               date: k,
               type: WorkdaysTypes.OFF,
-              raison: markedDates[k].meta.value,
+              meta: {
+                value: markedDates[k].meta.value,
+              },
             };
           }
           // else if (markedDates[k].type === WorkdaysTypes.UNAVAILABLE) {
@@ -225,9 +227,6 @@ const ApprovedCRAs = ({ projects, onFocus, onBlur }) => {
       }
     };
     fn();
-  };
-  const handlePressNegative = () => {
-    setModalVisible(false);
   };
   const handleSubmit = () => {
     setModalVisible(true);

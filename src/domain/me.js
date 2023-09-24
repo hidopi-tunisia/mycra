@@ -32,7 +32,7 @@ const createCRA = async (projectId, payload) => {
 
 const updateCRA = async (craId, payload) => {
   const authorization = await getAuthorization();
-  return axios.post(`${ENDPOINT}/me/cras/${craId}`, payload, {
+  return axios.put(`${ENDPOINT}/me/cras/${craId}`, payload, {
     headers: {
       authorization,
     },
