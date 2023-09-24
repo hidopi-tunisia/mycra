@@ -19,6 +19,7 @@ import {
 import { s } from 'react-native-size-matters';
 import SystemNavigationBar from 'react-native-system-navigation-bar';
 import styles from './index.styles';
+import { getHistoryItem } from '@screens/home/composables';
 
 const RejectedCRAs = ({ cra, projects, onFocus, onBlur }) => {
   const [loadingFetch, setLoadingFetch] = useState(false);
@@ -467,8 +468,23 @@ const RejectedCRAs = ({ cra, projects, onFocus, onBlur }) => {
         type="confirm"
         visible={modalRejectionMotiveVisible}
         onPressPositive={handleRejectionMotivePositive}>
-        <Text>CRA rejected at XXXX-XX-XX</Text>
-        <Text>This is because of -----</Text>
+        <Text>
+          CRA rejected
+          {getHistoryItem(cra.history, 'rejected') &&
+          getHistoryItem(cra.history, 'rejected').at
+            ? ` at ${
+                (cra.history,
+                getHistoryItem(cra.history, 'rejected').at.substring(0, 10))
+              } ${getHistoryItem(cra.history, 'rejected').substring(11, 16)}`
+            : ''}
+        </Text>
+        {getHistoryItem(cra.history, 'rejected') &&
+          getHistoryItem(cra.history, 'rejected').by &&
+          getHistoryItem(cra.history, 'rejected').by.motive && (
+            <Text>
+              Reason: {getHistoryItem(cra.history, 'rejected').by.motive}
+            </Text>
+          )}
       </Modal>
       <Modal
         title="Holiday"

@@ -1,7 +1,6 @@
 import { Calendar, M, WorkdaysTypes } from '@components';
 import Modal from '@components/modals';
 import Colors from '@constants/colors';
-import { getHolidays, getWeekends } from '@domain/miscs';
 import { useFocusEffect } from '@react-navigation/native';
 import { Button, Icon, Layout, Text } from '@ui-kitten/components';
 import moment from 'moment';
@@ -15,6 +14,7 @@ import {
 import { s } from 'react-native-size-matters';
 import SystemNavigationBar from 'react-native-system-navigation-bar';
 import styles from './index.styles';
+import { getHistoryItem } from '@screens/home/composables';
 
 const PendingCRAs = ({ cra, projects, onFocus, onBlur }) => {
   const [loadingFetch, setLoadingFetch] = useState(false);
@@ -142,16 +142,6 @@ const PendingCRAs = ({ cra, projects, onFocus, onBlur }) => {
     setWeekend(null);
     setModalWeekendVisible(false);
   };
-  const getSubmitted = () => {
-    const submittedDates = cra.history.filter(
-      ({ action }) => action === 'submitted',
-    );
-    const sorted = submittedDates.sort(
-      (a, b) =>
-        new Date(b?.meta?.at).getTime() - new Date(a.meta?.at).getTime(),
-    );
-    return sorted[0]?.meta?.at;
-  };
   return (
     <Layout style={styles.root}>
       <View style={styles.top}>
@@ -267,8 +257,17 @@ const PendingCRAs = ({ cra, projects, onFocus, onBlur }) => {
         visible={modalVisible}
         onPressPositive={handlePressPositive}>
         <Text>
-          CRA submitted{' '}
-          {getSubmitted() ? `at ${getSubmitted().substring(0, 10)}` : ''}
+          CRA submitted
+          {getHistoryItem(cra.history, 'submitted') &&
+          getHistoryItem(cra.history, 'submitted').at
+            ? ` at ${getHistoryItem(cra.history, 'submitted').at.substring(
+                0,
+                10,
+              )} ${getHistoryItem(cra.history, 'submitted').at.substring(
+                11,
+                16,
+              )}`
+            : ''}
         </Text>
         <M v2 />
         <Text>Days summary:</Text>

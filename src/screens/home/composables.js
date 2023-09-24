@@ -32,4 +32,11 @@ const subscribeToConsultantTopic = async () => {
   }
 };
 
-export { getProjects, subscribeToConsultantTopic };
+const getHistoryItem = (history, a) => {
+  const dates = history.filter(({ action }) => action === a);
+  const sorted = dates.sort(
+    (a, b) => new Date(b?.meta?.at).getTime() - new Date(a.meta?.at).getTime(),
+  );
+  return sorted[0]?.meta;
+};
+export { getProjects, subscribeToConsultantTopic, getHistoryItem };
