@@ -19,7 +19,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import { useCallback } from 'react';
 import SystemNavigationBar from 'react-native-system-navigation-bar';
 
-const RejectedCRAs = ({ projects, onFocus, onBlur }) => {
+const RejectedCRAs = ({ cra, projects, onFocus, onBlur }) => {
   const [loadingFetch, setLoadingFetch] = useState(false);
   const [errorFetch, setErrorFetch] = useState(null);
   const [loadingSubmit, setLoadingSubmit] = useState(false);

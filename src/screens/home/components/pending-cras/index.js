@@ -8,7 +8,7 @@ import {
 import Modal from '@components/modals';
 import { WORKDAYS_ITEMS } from '@constants';
 import Colors from '@constants/colors';
-import { createCRA } from '@domain/me';
+import { createCRA, updateCRA } from '@domain/me';
 import { getHolidays, getWeekends } from '@domain/miscs';
 import { Button, Icon, Layout, Text } from '@ui-kitten/components';
 import moment from 'moment';
@@ -26,7 +26,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import { useCallback } from 'react';
 import SystemNavigationBar from 'react-native-system-navigation-bar';
 
-const PendingCRAs = ({ projects, onFocus, onBlur }) => {
+const PendingCRAs = ({ cra, projects, onFocus, onBlur }) => {
   const [loadingFetch, setLoadingFetch] = useState(false);
   const [errorFetch, setErrorFetch] = useState(null);
   const [loadingSubmit, setLoadingSubmit] = useState(false);
@@ -165,66 +165,7 @@ const PendingCRAs = ({ projects, onFocus, onBlur }) => {
     refBottomSheet.open();
   };
   const handlePressPositive = () => {
-    const fn = async () => {
-      try {
-        setLoadingSubmit(false);
-        setErrorSubmit(null);
-        const arr = Object.keys(markedDates).map(k => {
-          if (markedDates[k].type === WorkdaysTypes.WORKING) {
-            return {
-              date: k,
-              type: WorkdaysTypes.WORKING,
-            };
-          } else if (markedDates[k].type === WorkdaysTypes.HALF) {
-            return {
-              date: k,
-              type: WorkdaysTypes.HALF,
-            };
-          } else if (markedDates[k].type === WorkdaysTypes.REMOTE) {
-            return {
-              date: k,
-              type: WorkdaysTypes.REMOTE,
-            };
-          } else if (markedDates[k].type === WorkdaysTypes.OFF) {
-            return {
-              date: k,
-              type: WorkdaysTypes.OFF,
-              raison: markedDates[k].meta.value,
-            };
-          }
-          // else if (markedDates[k].type === WorkdaysTypes.UNAVAILABLE) {
-          //   return {
-          //     date: k,
-          //     type: WorkdaysTypes.UNAVAILABLE,
-          //   };
-          // } -- TODO: Unavailable
-        });
-        const working = arr.filter(e => e && e.type === WorkdaysTypes.WORKING);
-        const half = arr.filter(e => e && e.type === WorkdaysTypes.HALF);
-        const remote = arr.filter(e => e && e.type === WorkdaysTypes.REMOTE);
-        // const unavailable = arr.filter(
-        //   e => e && e.type === WorkdaysTypes.UNAVAILABLE,
-        // ) -- TODO: Unavailable;
-        const off = arr.filter(e => e && e.type === WorkdaysTypes.OFF);
-        const payload = {
-          working,
-          half,
-          remote,
-          off,
-          // unavailable, -- TODO: Unavailable
-        };
-        await createCRA(selectedProject._id, payload);
-        setLoadingSubmit(false);
-        setModalVisible(false);
-      } catch (error) {
-        setLoadingSubmit(false);
-        setErrorSubmit(error);
-        console.info('ERROR');
-        console.info(error);
-        console.info('ERROR');
-      }
-    };
-    fn();
+    setModalVisible(false);
   };
   const handleSubmit = () => {
     setModalVisible(true);

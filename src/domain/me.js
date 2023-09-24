@@ -29,4 +29,14 @@ const createCRA = async (projectId, payload) => {
   });
 };
 
-export { getProfile, getCurrentCRAs, createCRA };
+
+const updateCRA = async (craId, payload) => {
+  const authorization = await getAuthorization();
+  return axios.post(`${ENDPOINT}/me/cras/${craId}`, payload, {
+    headers: {
+      authorization,
+    },
+  });
+};
+
+export { getProfile, getCurrentCRAs, createCRA,updateCRA };

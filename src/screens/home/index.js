@@ -18,6 +18,7 @@ const HomeScreen = ({ onFocus, onBlur }) => {
   const [displayPendingCRA, setDisplayPendingCRA] = useState(false);
   const [displayNoCRA, setDisplayNoCRA] = useState(false);
   const [projects, setProjects] = useState([]);
+  const [cra, setCRA] = useState([]);
   useEffect(() => {
     subscribeToConsultantTopic();
   }, []);
@@ -35,18 +36,21 @@ const HomeScreen = ({ onFocus, onBlur }) => {
             Array.isArray(data.rejected) &&
             data.rejected.length > 0
           ) {
+            setCRA(data.rejected[0])
             setDisplayRejectedCRA(true);
           } else if (
             data &&
             Array.isArray(data.approved) &&
             data.approved.length > 0
           ) {
+            setCRA(data.approved[0])
             setDisplayApprovedCRA(true);
           } else if (
             data &&
             Array.isArray(data.pending) &&
             data.pending.length > 0
           ) {
+            setCRA(data.pending[0])
             setDisplayPendingCRA(true);
           } else {
             setDisplayNoCRA(true);
@@ -67,17 +71,18 @@ const HomeScreen = ({ onFocus, onBlur }) => {
       PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS,
     );
   }, []);
+  console.log(cra);
   return (
     <>
       {displayNoProjects && <NoProjects onFocus={onFocus} onBlur={onBlur} />}
       {displayRejectedCRA && (
-        <RejectedCRAs projects={projects} onFocus={onFocus} onBlur={onBlur} />
+        <RejectedCRAs cra={cra} projects={projects} onFocus={onFocus} onBlur={onBlur} />
       )}
       {displayApprovedCRA && (
-        <ApprovedCRAs projects={projects} onFocus={onFocus} onBlur={onBlur} />
+        <ApprovedCRAs cra={cra} projects={projects} onFocus={onFocus} onBlur={onBlur} />
       )}
       {displayPendingCRA && (
-        <PendingCRAs projects={projects} onFocus={onFocus} onBlur={onBlur} />
+        <PendingCRAs cra={cra} projects={projects} onFocus={onFocus} onBlur={onBlur} />
       )}
       {displayNoCRA && (
         <NoCRAs projects={projects} onFocus={onFocus} onBlur={onBlur} />
