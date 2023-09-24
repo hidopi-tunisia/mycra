@@ -52,7 +52,7 @@ const WorkdaysCollection = ({ items, workday, onPress, onPressClose }) => (
           selected={
             workday &&
             workday.type === i.type &&
-            workday.payload?.value === i.value
+            workday.meta?.value === i.value
           }
           onPress={() => onPress(i)}
         />

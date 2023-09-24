@@ -13,7 +13,12 @@ import { getHolidays, getWeekends } from '@domain/miscs';
 import { Button, Icon, Layout, Text } from '@ui-kitten/components';
 import moment from 'moment';
 import { useCallback, useEffect, useState } from 'react';
-import { PermissionsAndroid, StatusBar, TouchableOpacity, View } from 'react-native';
+import {
+  PermissionsAndroid,
+  StatusBar,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { s } from 'react-native-size-matters';
 import { subscribeToConsultantTopic } from '../../composables';
 import styles from './index.styles';
@@ -35,7 +40,7 @@ const NoCRAs = ({ projects, onFocus, onBlur }) => {
   const [modalHolidayVisible, setModalHolidayVisible] = useState(false);
   const [modalWeekendVisible, setModalWeekendVisible] = useState(false);
   const [modalHelpVisible, setModalHelpVisible] = useState(false);
-  
+
   useFocusEffect(
     useCallback(() => {
       StatusBar.setBackgroundColor(Colors.BLUE_DARK_PRIMARY);
@@ -86,7 +91,7 @@ const NoCRAs = ({ projects, onFocus, onBlur }) => {
             if (element.date === str) {
               marked[str] = {
                 type: WorkdaysTypes.HOLIDAY,
-                payload: {
+                meta: {
                   value: element.name,
                 },
                 customStyles: styles.calendarDayHoliday,
@@ -118,7 +123,7 @@ const NoCRAs = ({ projects, onFocus, onBlur }) => {
     if (markedDates[day.dateString].type === WorkdaysTypes.HOLIDAY) {
       setHoliday({
         date: day.dateString,
-        name: markedDates[day.dateString].payload.value,
+        name: markedDates[day.dateString].meta.value,
       });
       setModalHolidayVisible(true);
     } else if (markedDates[day.dateString].type === WorkdaysTypes.WEEKEND) {
@@ -143,7 +148,7 @@ const NoCRAs = ({ projects, onFocus, onBlur }) => {
           ...markedDates,
           [day.dateString]: {
             type: WorkdaysTypes.OFF,
-            payload: {
+            meta: {
               value: 'Paid leave',
             },
             customStyles: styles.calendarDayOff,
@@ -182,9 +187,11 @@ const NoCRAs = ({ projects, onFocus, onBlur }) => {
             return {
               date: k,
               type: WorkdaysTypes.OFF,
-              raison: markedDates[k].payload.value,
+              meta: {
+                value: markedDates[k].meta.value,
+              },
             };
-          } 
+          }
           // else if (markedDates[k].type === WorkdaysTypes.UNAVAILABLE) {
           //   return {
           //     date: k,
@@ -206,7 +213,8 @@ const NoCRAs = ({ projects, onFocus, onBlur }) => {
           off,
           // unavailable, -- TODO: Unavailable
         };
-        await createCRA(selectedProject._id, payload);
+        p(payload);
+         await createCRA(selectedProject._id, payload);
         setLoadingSubmit(false);
         setModalVisible(false);
       } catch (error) {
@@ -275,7 +283,7 @@ const NoCRAs = ({ projects, onFocus, onBlur }) => {
           ...markedDates,
           [workday.dateString]: {
             type: WorkdaysTypes.UNAVAILABLE,
-            payload: { value: item.value },
+            meta: { value: item.value },
             customStyles: styles.calendarDayUnavailable,
           },
         });
@@ -284,7 +292,7 @@ const NoCRAs = ({ projects, onFocus, onBlur }) => {
           ...markedDates,
           [workday.dateString]: {
             type: WorkdaysTypes.OFF,
-            payload: { value: item.value },
+            meta: { value: item.value },
             customStyles: styles.calendarDayOff,
           },
         });
@@ -314,13 +322,13 @@ const NoCRAs = ({ projects, onFocus, onBlur }) => {
           } else if (item.type === WorkdaysTypes.UNAVAILABLE) {
             marked[d] = {
               type: WorkdaysTypes.UNAVAILABLE,
-              payload: { value: item.value },
+              meta: { value: item.value },
               customStyles: styles.calendarDayUnavailable,
             };
           } else if (item.type === WorkdaysTypes.OFF) {
             marked[d] = {
               type: WorkdaysTypes.OFF,
-              payload: { value: item.value },
+              meta: { value: item.value },
               customStyles: styles.calendarDayOff,
             };
           }
