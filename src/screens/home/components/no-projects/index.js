@@ -1,12 +1,26 @@
-import { useState } from 'react';
-import { View, TouchableOpacity, Image } from 'react-native';
+import { useCallback, useState } from 'react';
+import { View, TouchableOpacity, Image, StatusBar } from 'react-native';
 import { Button, Icon, Layout, Text } from '@ui-kitten/components';
 import Modal from '@components/modals';
 import styles from './index.styles';
 import Colors from '@constants/colors';
 import { M } from '@components/index';
+import { useFocusEffect } from '@react-navigation/native';
+import SystemNavigationBar from 'react-native-system-navigation-bar';
 
-const NoProjects = ({ onPress }) => {
+const NoProjects = ({ onPress, onFocus, onBlur }) => {
+  useFocusEffect(
+    useCallback(() => {
+      StatusBar.setBackgroundColor(Colors.GRAY_DARK_PRIMARY);
+      SystemNavigationBar.setNavigationColor(Colors.GRAY_PRIMARY, 'light');
+      onFocus(Colors.GRAY_PRIMARY);
+      return () => {
+        StatusBar.setBackgroundColor(Colors.BLUE_DARK_PRIMARY);
+        SystemNavigationBar.setNavigationColor(Colors.BLUE_PRIMARY, 'light');
+        onBlur(Colors.BLUE_PRIMARY);
+      };
+    }, []),
+  );
   const [modalHelpVisible, setModalHelpVisible] = useState(false);
   return (
     <Layout style={styles.root}>

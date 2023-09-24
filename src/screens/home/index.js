@@ -9,6 +9,7 @@ import PendingCRAs from './components/pending-cras';
 import NoCRAs from './components/no-cras';
 import styles from './index.styles';
 import { Layout } from '@ui-kitten/components';
+import HomeLoading from './components/loading';
 
 const HomeScreen = ({ onFocus, onBlur }) => {
   const [loading, setLoading] = useState(false);
@@ -36,21 +37,21 @@ const HomeScreen = ({ onFocus, onBlur }) => {
             Array.isArray(data.rejected) &&
             data.rejected.length > 0
           ) {
-            setCRA(data.rejected[0])
+            setCRA(data.rejected[0]);
             setDisplayRejectedCRA(true);
           } else if (
             data &&
             Array.isArray(data.approved) &&
             data.approved.length > 0
           ) {
-            setCRA(data.approved[0])
+            setCRA(data.approved[0]);
             setDisplayApprovedCRA(true);
           } else if (
             data &&
             Array.isArray(data.pending) &&
             data.pending.length > 0
           ) {
-            setCRA(data.pending[0])
+            setCRA(data.pending[0]);
             setDisplayPendingCRA(true);
           } else {
             setDisplayNoCRA(true);
@@ -60,7 +61,7 @@ const HomeScreen = ({ onFocus, onBlur }) => {
           setDisplayNoProjects(true);
         }
       } catch (error) {
-        setLoading(false)
+        setLoading(false);
         console.info(error);
       }
     };
@@ -73,25 +74,20 @@ const HomeScreen = ({ onFocus, onBlur }) => {
   }, []);
   return (
     <>
-      {displayNoProjects && <NoProjects onFocus={onFocus} onBlur={onBlur} />}
       {displayRejectedCRA && cra && (
         <RejectedCRAs cra={cra} projects={projects} onFocus={onFocus} onBlur={onBlur} />
-      )}
+        )}
       {displayApprovedCRA && cra  && (
         <ApprovedCRAs cra={cra} projects={projects} onFocus={onFocus} onBlur={onBlur} />
-      )}
+        )}
       {displayPendingCRA && cra  && (
         <PendingCRAs cra={cra} projects={projects} onFocus={onFocus} onBlur={onBlur} />
       )}
       {displayNoCRA && (
         <NoCRAs projects={projects} onFocus={onFocus} onBlur={onBlur} />
-      )}
-      {loading && <Layout style={styles.root}>
-        <Image
-          source={require('@assets/images/home/loader.gif')}
-          style={styles.imageLoader}
-        />
-      </Layout>}
+        )}
+      {displayNoProjects && <NoProjects onFocus={onFocus} onBlur={onBlur} />}
+      {loading && <HomeLoading onFocus={onFocus} onBlur={onBlur} />}
     </>
   );
 };
