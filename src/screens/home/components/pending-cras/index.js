@@ -45,63 +45,62 @@ const PendingCRAs = ({ cra, projects, onFocus, onBlur }) => {
     }, []),
   );
   useEffect(() => {
-    p(cra);
-  }, []);
-
-  useEffect(() => {
-    const fn = async () => {
-      try {
-        const { data: holidays } = await getHolidays();
-        const {
-          data: { saturdays, sundays },
-        } = await getWeekends();
-        const marked = {};
-        const weekends = [...saturdays, ...sundays];
-        Array.from(
-          {
-            length: new Date(
-              new Date().getFullYear(),
-              new Date().getMonth() + 1,
-              0,
-            ).getDate(),
-          },
-          (_, i) => i + 1,
-        ).forEach(d => {
-          const str = new Date(new Date().setDate(d))
-            .toISOString()
-            .substring(0, 10);
-          marked[str] = {
-            type: WorkdaysTypes.WORKING,
-            customStyles: styles.calendarDayWorking,
-            disableTouchEvent: true,
-          };
-          weekends.forEach(element => {
-            if (element === d) {
-              marked[str] = {
-                type: WorkdaysTypes.WEEKEND,
-                customStyles: styles.calendarDayWeekend,
-              };
-            }
-          });
-          holidays.forEach(element => {
-            if (element.date === str) {
-              marked[str] = {
-                type: WorkdaysTypes.HOLIDAY,
-                meta: {
-                  value: element.name,
-                },
-                customStyles: styles.calendarDayHoliday,
-              };
-            }
-          });
-        });
-        setMarkedDates(marked);
-        setLoadingFetch(false);
-      } catch (e) {
-        console.log(e);
-      }
-    };
-    fn();
+    const marked = {};
+    const { working, half, remote, off, weekends, holidays } = cra;
+    working.forEach(element => {
+      marked[element.date] = {
+        type: WorkdaysTypes.WORKING,
+        customStyles: styles.calendarDayWorking,
+        disableTouchEvent: true,
+      };
+    });
+    working.forEach(element => {
+      marked[element.date] = {
+        type: WorkdaysTypes.WORKING,
+        customStyles: styles.calendarDayWorking,
+        disableTouchEvent: true,
+      };
+    });
+    half.forEach(element => {
+      marked[element.date] = {
+        type: WorkdaysTypes.HALF,
+        customStyles: styles.calendarHalfDay,
+        disableTouchEvent: true,
+      };
+    });
+    remote.forEach(element => {
+      marked[element.date] = {
+        type: WorkdaysTypes.REMOTE,
+        customStyles: styles.calendarDayRemote,
+        disableTouchEvent: true,
+      };
+    });
+    off.forEach(element => {
+      marked[element.date] = {
+        type: WorkdaysTypes.OFF,
+        customStyles: styles.calendarDayOff,
+        meta: {
+          value: element.meta.value,
+        },
+        disableTouchEvent: true,
+      };
+    });
+    weekends.forEach(element => {
+      marked[element.date] = {
+        type: WorkdaysTypes.WEEKEND,
+        customStyles: styles.calendarDayWeekend,
+      };
+    });
+    holidays.forEach(element => {
+      marked[element.date] = {
+        type: WorkdaysTypes.HOLIDAY,
+        meta: {
+          value: element.name,
+        },
+        customStyles: styles.calendarDayHoliday,
+      };
+    });
+    setMarkedDates(marked);
   }, []);
   useEffect(() => {
     const selectedDates = Object.keys(markedDates).filter(
@@ -114,20 +113,26 @@ const PendingCRAs = ({ cra, projects, onFocus, onBlur }) => {
       PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS,
     );
   }, []);
-  const [workday, setWorkday] = useState(null);
-  const handleLongPress = day => {
-    setWorkday({ ...markedDates[day.dateString], dateString: day.dateString });
-    refBottomSheet.open();
+
+  const handleSelected = day => {
+    if (markedDates[day.dateString].type === WorkdaysTypes.HOLIDAY) {
+      setHoliday({
+        date: day.dateString,
+        name: markedDates[day.dateString].meta.value,
+      });
+      setModalHolidayVisible(true);
+    } else if (markedDates[day.dateString].type === WorkdaysTypes.WEEKEND) {
+      setWeekend({
+        date: day.dateString,
+      });
+      setModalWeekendVisible(true);
+    }
   };
   const handlePressPositive = () => {
     setModalVisible(false);
   };
   const handleSubmit = () => {
     setModalVisible(true);
-  };
-  const handleSelectAll = () => {
-    setWorkday(null);
-    refBottomSheet.open();
   };
   const handlePressHolidayPositive = () => {
     setHoliday(null);
@@ -136,6 +141,16 @@ const PendingCRAs = ({ cra, projects, onFocus, onBlur }) => {
   const handlePressWeekendPositive = () => {
     setWeekend(null);
     setModalWeekendVisible(false);
+  };
+  const getSubmitted = () => {
+    const submittedDates = cra.history.filter(
+      ({ action }) => action === 'submitted',
+    );
+    const sorted = submittedDates.sort(
+      (a, b) =>
+        new Date(b?.meta?.at).getTime() - new Date(a.meta?.at).getTime(),
+    );
+    return sorted[0]?.meta?.at;
   };
   return (
     <Layout style={styles.root}>
@@ -175,21 +190,9 @@ const PendingCRAs = ({ cra, projects, onFocus, onBlur }) => {
         <View style={styles.containerCalendar}>
           <View style={styles.containerCalendarHeader}>
             <Text style={styles.containerCalendarTitle}>{currentMonth}</Text>
-            <TouchableOpacity onPress={handleSelectAll}>
-              <Icon
-                fill={Colors.GRAY_PRIMARY}
-                name="done-all-outline"
-                width={24}
-                height={24}
-              />
-            </TouchableOpacity>
           </View>
           <M v1 />
-          <Calendar
-            markedDates={markedDates}
-            onDayPress={handleSelected}
-            onDayLongPress={handleLongPress}
-          />
+          <Calendar markedDates={markedDates} onDayPress={handleSelected} />
         </View>
         <View style={styles.containerLegends}>
           <View style={styles.containerLegend}>
@@ -259,11 +262,95 @@ const PendingCRAs = ({ cra, projects, onFocus, onBlur }) => {
         </View>
       </View>
       <Modal
-        title="Pending"
+        title="Waiting for approval"
         type="confirm"
         visible={modalVisible}
         onPressPositive={handlePressPositive}>
-        <Text>CRA submitted at XXXX-XX-XX</Text>
+        <Text>
+          CRA submitted{' '}
+          {getSubmitted() ? `at ${getSubmitted().substring(0, 10)}` : ''}
+        </Text>
+        <M v2 />
+        <Text>Days summary:</Text>
+        <View style={styles.containerLegends}>
+          <View style={styles.containerLegend}>
+            <View
+              style={{
+                ...styles.shapeLegend,
+                backgroundColor: Colors.BLUE_PRIMARY,
+                borderColor: Colors.BLUE_PRIMARY,
+              }}
+            />
+            <M h1 />
+            <Text>Working ({cra.working?.length})</Text>
+          </View>
+          <View style={styles.containerLegend}>
+            <View
+              style={{
+                ...styles.shapeLegend,
+                backgroundColor: Colors.WHITE,
+                borderColor: Colors.BLUE_PRIMARY,
+              }}
+            />
+            <M h1 />
+            <Text>Half ({cra.half?.length})</Text>
+          </View>
+          <View style={styles.containerLegend}>
+            <View
+              style={{
+                ...styles.shapeLegend,
+                backgroundColor: Colors.PURPLE_PRIMARY,
+                borderColor: Colors.PURPLE_PRIMARY,
+              }}
+            />
+            <M h1 />
+            <Text>Remote ({cra.remote?.length})</Text>
+          </View>
+          {/* <View style={styles.containerLegend}>
+            <View
+              style={{
+                ...styles.shapeLegend,
+                backgroundColor: Colors.GRAY_DARK_PRIMARY,
+                borderColor: Colors.GRAY_DARK_PRIMARY,
+              }}
+            />
+            <M h1 />
+            <Text>Unavailable</Text>
+          </View> --  TODO: Unavailable */}
+          <View style={styles.containerLegend}>
+            <View
+              style={{
+                ...styles.shapeLegend,
+                backgroundColor: Colors.WHITE,
+                borderColor: Colors.RED_PRIMARY,
+              }}
+            />
+            <M h1 />
+            <Text>Off ({cra.off?.length})</Text>
+          </View>
+          <View style={styles.containerLegend}>
+            <View
+              style={{
+                ...styles.shapeLegend,
+                backgroundColor: Colors.WHITE,
+                borderColor: Colors.GREEN_PRIMARY,
+              }}
+            />
+            <M h1 />
+            <Text>Weekends ({cra.weekends?.length})</Text>
+          </View>
+          <View style={styles.containerLegend}>
+            <View
+              style={{
+                ...styles.shapeLegend,
+                backgroundColor: Colors.GREEN_PRIMARY,
+                borderColor: Colors.GREEN_PRIMARY,
+              }}
+            />
+            <M h1 />
+            <Text>Holiday ({cra.holidays?.length})</Text>
+          </View>
+        </View>
       </Modal>
       <Modal
         title="Holiday"

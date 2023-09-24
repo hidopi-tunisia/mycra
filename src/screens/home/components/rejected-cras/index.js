@@ -50,7 +50,6 @@ const RejectedCRAs = ({ cra, projects, onFocus, onBlur }) => {
       };
     }, []),
   );
-
   useEffect(() => {
     const marked = {};
     const { working, half, remote, off, weekends, holidays } = cra;
@@ -103,7 +102,6 @@ const RejectedCRAs = ({ cra, projects, onFocus, onBlur }) => {
       };
     });
     setMarkedDates(marked);
-
   }, []);
   useEffect(() => {
     const selectedDates = Object.keys(markedDates).filter(
