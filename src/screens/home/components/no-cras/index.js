@@ -213,8 +213,7 @@ const NoCRAs = ({ projects, onFocus, onBlur }) => {
           off,
           // unavailable, -- TODO: Unavailable
         };
-        p(payload);
-         await createCRA(selectedProject._id, payload);
+        await createCRA(selectedProject._id, payload);
         setLoadingSubmit(false);
         setModalVisible(false);
       } catch (error) {

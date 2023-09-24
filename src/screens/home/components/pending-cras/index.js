@@ -93,7 +93,7 @@ const PendingCRAs = ({ projects, onFocus, onBlur }) => {
             if (element.date === str) {
               marked[str] = {
                 type: WorkdaysTypes.HOLIDAY,
-                payload: {
+                meta: {
                   value: element.name,
                 },
                 customStyles: styles.calendarDayHoliday,
@@ -125,7 +125,7 @@ const PendingCRAs = ({ projects, onFocus, onBlur }) => {
     if (markedDates[day.dateString].type === WorkdaysTypes.HOLIDAY) {
       setHoliday({
         date: day.dateString,
-        name: markedDates[day.dateString].payload.value,
+        name: markedDates[day.dateString].meta.value,
       });
       setModalHolidayVisible(true);
     } else if (markedDates[day.dateString].type === WorkdaysTypes.WEEKEND) {
@@ -150,7 +150,7 @@ const PendingCRAs = ({ projects, onFocus, onBlur }) => {
           ...markedDates,
           [day.dateString]: {
             type: WorkdaysTypes.OFF,
-            payload: {
+            meta: {
               value: 'Paid leave',
             },
             customStyles: styles.calendarDayOff,
@@ -189,7 +189,7 @@ const PendingCRAs = ({ projects, onFocus, onBlur }) => {
             return {
               date: k,
               type: WorkdaysTypes.OFF,
-              raison: markedDates[k].payload.value,
+              raison: markedDates[k].meta.value,
             };
           }
           // else if (markedDates[k].type === WorkdaysTypes.UNAVAILABLE) {
@@ -279,7 +279,7 @@ const PendingCRAs = ({ projects, onFocus, onBlur }) => {
           ...markedDates,
           [workday.dateString]: {
             type: WorkdaysTypes.UNAVAILABLE,
-            payload: { value: item.value },
+            meta: { value: item.value },
             customStyles: styles.calendarDayUnavailable,
           },
         });
@@ -288,7 +288,7 @@ const PendingCRAs = ({ projects, onFocus, onBlur }) => {
           ...markedDates,
           [workday.dateString]: {
             type: WorkdaysTypes.OFF,
-            payload: { value: item.value },
+            meta: { value: item.value },
             customStyles: styles.calendarDayOff,
           },
         });
@@ -318,13 +318,13 @@ const PendingCRAs = ({ projects, onFocus, onBlur }) => {
           } else if (item.type === WorkdaysTypes.UNAVAILABLE) {
             marked[d] = {
               type: WorkdaysTypes.UNAVAILABLE,
-              payload: { value: item.value },
+              meta: { value: item.value },
               customStyles: styles.calendarDayUnavailable,
             };
           } else if (item.type === WorkdaysTypes.OFF) {
             marked[d] = {
               type: WorkdaysTypes.OFF,
-              payload: { value: item.value },
+              meta: { value: item.value },
               customStyles: styles.calendarDayOff,
             };
           }
