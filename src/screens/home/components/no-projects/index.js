@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 import { View, TouchableOpacity, Image, StatusBar } from 'react-native';
-import { Button, Icon, Layout, Text } from '@ui-kitten/components';
+import { Button, Icon, Layout, Spinner, Text } from '@ui-kitten/components';
 import Modal from '@components/modals';
 import styles from './index.styles';
 import Colors from '@constants/colors';
@@ -8,7 +8,7 @@ import { M } from '@components/index';
 import { useFocusEffect } from '@react-navigation/native';
 import SystemNavigationBar from 'react-native-system-navigation-bar';
 
-const NoProjects = ({ onPress, onFocus, onBlur }) => {
+const NoProjects = ({ loading, onFocus, onBlur, onPress }) => {
   useFocusEffect(
     useCallback(() => {
       StatusBar.setBackgroundColor(Colors.GRAY_DARK_PRIMARY);
@@ -63,9 +63,15 @@ const NoProjects = ({ onPress, onFocus, onBlur }) => {
         </View>
         <M v4 />
         <View>
-          <Button style={styles.button} status="basic" onPress={onPress}>
-            Try again
-          </Button>
+          {loading ? (
+            <Button style={styles.button} status="basic" disabled>
+              <Spinner status="basic" size="small" />
+            </Button>
+          ) : (
+            <Button style={styles.button} status="basic" onPress={onPress}>
+              Try again
+            </Button>
+          )}
         </View>
       </View>
       <Modal

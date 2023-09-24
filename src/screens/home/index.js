@@ -13,6 +13,7 @@ import HomeLoading from './components/loading';
 
 const HomeScreen = ({ onFocus, onBlur }) => {
   const [loading, setLoading] = useState(false);
+  const [loadingTryAgain, setLoadingTryAgain] = useState(false);
   const [displayNoProjects, setDisplayNoProjects] = useState(false);
   const [displayRejectedCRA, setDisplayRejectedCRA] = useState(false);
   const [displayApprovedCRA, setDisplayApprovedCRA] = useState(false);
@@ -23,50 +24,53 @@ const HomeScreen = ({ onFocus, onBlur }) => {
   useEffect(() => {
     subscribeToConsultantTopic();
   }, []);
-  useEffect(() => {
-    const fn = async () => {
-      try {
-        setLoading(true);
-        const ps = await getProjects();
-        setProjects(ps);
-        if (ps.length > 0) {
-          setLoading(false);
-          const { data } = await getCurrentCRAs();
-          if (
-            data &&
-            Array.isArray(data.rejected) &&
-            data.rejected.length > 0
-          ) {
-            setCRA(data.rejected[0]);
-            setDisplayRejectedCRA(true);
-          } else if (
-            data &&
-            Array.isArray(data.approved) &&
-            data.approved.length > 0
-          ) {
-            setCRA(data.approved[0]);
-            setDisplayApprovedCRA(true);
-          } else if (
-            data &&
-            Array.isArray(data.pending) &&
-            data.pending.length > 0
-          ) {
-            setCRA(data.pending[0]);
-            setDisplayPendingCRA(true);
-          } else {
-            setDisplayNoCRA(true);
-          }
-        } else {
-          setLoading(false);
-          setDisplayNoProjects(true);
-        }
-      } catch (error) {
+  const fn = async () => {
+    try {
+      setLoading(true);
+      setLoadingTryAgain(true);
+      const ps = await getProjects();
+      setProjects(ps);
+      if (ps.length > 0) {
         setLoading(false);
-        console.info(error);
+        setLoadingTryAgain(false);
+        const { data } = await getCurrentCRAs();
+        if (data && Array.isArray(data.rejected) && data.rejected.length > 0) {
+          setCRA(data.rejected[0]);
+          setDisplayRejectedCRA(true);
+        } else if (
+          data &&
+          Array.isArray(data.approved) &&
+          data.approved.length > 0
+        ) {
+          setCRA(data.approved[0]);
+          setDisplayApprovedCRA(true);
+        } else if (
+          data &&
+          Array.isArray(data.pending) &&
+          data.pending.length > 0
+        ) {
+          setCRA(data.pending[0]);
+          setDisplayPendingCRA(true);
+        } else {
+          setDisplayNoCRA(true);
+        }
+      } else {
+        setLoading(false);
+        setLoadingTryAgain(false);
+        setDisplayNoProjects(true);
       }
-    };
+    } catch (error) {
+      setLoadingTryAgain(false);
+      setLoading(false);
+      console.info(error);
+    }
+  };
+  useEffect(() => {
     fn();
   }, []);
+  const handleTryAgain = () => {
+    fn();
+  };
   useEffect(() => {
     PermissionsAndroid.request(
       PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS,
@@ -74,20 +78,47 @@ const HomeScreen = ({ onFocus, onBlur }) => {
   }, []);
   return (
     <>
-      {displayRejectedCRA && cra && (
-        <RejectedCRAs cra={cra} projects={projects} onFocus={onFocus} onBlur={onBlur} />
-        )}
-      {displayApprovedCRA && cra  && (
-        <ApprovedCRAs cra={cra} projects={projects} onFocus={onFocus} onBlur={onBlur} />
-        )}
-      {displayPendingCRA && cra  && (
-        <PendingCRAs cra={cra} projects={projects} onFocus={onFocus} onBlur={onBlur} />
+      {loading && !loadingTryAgain ? (
+        <HomeLoading onFocus={onFocus} onBlur={onBlur} />
+      ) : (
+        <>
+          {displayRejectedCRA && cra && (
+            <RejectedCRAs
+              cra={cra}
+              projects={projects}
+              onFocus={onFocus}
+              onBlur={onBlur}
+            />
+          )}
+          {displayApprovedCRA && cra && (
+            <ApprovedCRAs
+              cra={cra}
+              projects={projects}
+              onFocus={onFocus}
+              onBlur={onBlur}
+            />
+          )}
+          {displayPendingCRA && cra && (
+            <PendingCRAs
+              cra={cra}
+              projects={projects}
+              onFocus={onFocus}
+              onBlur={onBlur}
+            />
+          )}
+          {displayNoCRA && (
+            <NoCRAs projects={projects} onFocus={onFocus} onBlur={onBlur} />
+          )}
+          {displayNoProjects && (
+            <NoProjects
+              loading={loadingTryAgain}
+              onFocus={onFocus}
+              onBlur={onBlur}
+              onPress={handleTryAgain}
+            />
+          )}
+        </>
       )}
-      {displayNoCRA && (
-        <NoCRAs projects={projects} onFocus={onFocus} onBlur={onBlur} />
-        )}
-      {displayNoProjects && <NoProjects onFocus={onFocus} onBlur={onBlur} />}
-      {loading && <HomeLoading onFocus={onFocus} onBlur={onBlur} />}
     </>
   );
 };

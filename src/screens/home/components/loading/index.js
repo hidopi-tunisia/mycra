@@ -33,11 +33,13 @@ const HomeLoading = ({ onFocus, onBlur }) => {
               alignItems="center"
               height={24}
               width={s(100)}
+              left={20}
               marginBottom={s(10)}></SkeletonPlaceholder.Item>
             <SkeletonPlaceholder.Item
               borderRadius={24}
               flexDirection="row"
               alignItems="center"
+              left={20}
               height={18}
               width={s(200)}></SkeletonPlaceholder.Item>
           </SkeletonPlaceholder>
@@ -50,7 +52,7 @@ const HomeLoading = ({ onFocus, onBlur }) => {
             flexDirection="row"
             alignItems="center"
             alignSelf="center"
-            height={height * 0.6}
+            height={height * 0.6 - 24}
             width={width * 0.9}></SkeletonPlaceholder.Item>
         </SkeletonPlaceholder>
       </View>
