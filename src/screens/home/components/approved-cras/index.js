@@ -454,7 +454,7 @@ const ApprovedCRAs = ({ projects, onFocus, onBlur }) => {
             style={styles.buttonSubmit}
             status="control"
             onPress={handleSubmit}>
-            View details
+            Approved CRA
           </Button>
         </View>
       </View>
