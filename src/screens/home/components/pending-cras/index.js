@@ -55,9 +55,6 @@ const PendingCRAs = ({ projects, onFocus, onBlur }) => {
     }, []),
   );
   useEffect(() => {
-    subscribeToConsultantTopic();
-  }, []);
-  useEffect(() => {
     const fn = async () => {
       try {
         const { data: holidays } = await getHolidays();

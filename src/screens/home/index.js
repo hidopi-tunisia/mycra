@@ -6,6 +6,7 @@ import RejectedCRAs from './components/rejected-cras';
 import { getProjects, subscribeToConsultantTopic } from './composables';
 import ApprovedCRAs from './components/approved-cras';
 import PendingCRAs from './components/pending-cras';
+import NoCRAs from './components/no-cras';
 
 const HomeScreen = ({ onFocus, onBlur }) => {
   const [displayNoProjects, setDisplayNoProjects] = useState(false);
@@ -35,18 +36,18 @@ const HomeScreen = ({ onFocus, onBlur }) => {
             Array.isArray(data.approved) &&
             data.approved.length > 0
           ) {
-            setDisplayApprovedCRA(false);
+            setDisplayApprovedCRA(true);
           } else if (
             data &&
             Array.isArray(data.pending) &&
             data.pending.length > 0
           ) {
-            setDisplayPendingCRA(false);
+            setDisplayPendingCRA(true);
           } else {
-            setDisplayNoCRA(false);
+            setDisplayNoCRA(true);
           }
         } else {
-          setDisplayNoProjects(false);
+          setDisplayNoProjects(true);
         }
       } catch (error) {
         console.info(error);
@@ -61,7 +62,7 @@ const HomeScreen = ({ onFocus, onBlur }) => {
   }, []);
   return (
     <>
-      {displayNoProjects && <NoProjects onBlur={onBlur} />}
+      {displayNoProjects && <NoProjects onFocus={onFocus} onBlur={onBlur} />}
       {displayRejectedCRA && (
         <RejectedCRAs projects={projects} onFocus={onFocus} onBlur={onBlur} />
       )}
@@ -71,8 +72,7 @@ const HomeScreen = ({ onFocus, onBlur }) => {
       {displayPendingCRA && (
         <PendingCRAs projects={projects} onFocus={onFocus} onBlur={onBlur} />
       )}
-      {/* {displayCurrentCRA && <NoCurrentCRAs projects={projects} />}
-      {displayNoCRA && <NoCRAs projects={projects} />} */}
+      {displayNoCRA && <NoCRAs projects={projects} onFocus={onFocus} onBlur={onBlur} />}
     </>
   );
 };

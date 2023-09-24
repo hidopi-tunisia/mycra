@@ -12,13 +12,15 @@ import { createCRA } from '@domain/me';
 import { getHolidays, getWeekends } from '@domain/miscs';
 import { Button, Icon, Layout, Text } from '@ui-kitten/components';
 import moment from 'moment';
-import { useEffect, useState } from 'react';
-import { PermissionsAndroid, TouchableOpacity, View } from 'react-native';
+import { useCallback, useEffect, useState } from 'react';
+import { PermissionsAndroid, StatusBar, TouchableOpacity, View } from 'react-native';
 import { s } from 'react-native-size-matters';
 import { subscribeToConsultantTopic } from '../../composables';
 import styles from './index.styles';
+import { useFocusEffect } from '@react-navigation/native';
+import SystemNavigationBar from 'react-native-system-navigation-bar';
 
-const NoCRAs = ({ projects }) => {
+const NoCRAs = ({ projects, onFocus, onBlur }) => {
   const [loadingFetch, setLoadingFetch] = useState(false);
   const [errorFetch, setErrorFetch] = useState(null);
   const [loadingSubmit, setLoadingSubmit] = useState(false);
@@ -33,9 +35,19 @@ const NoCRAs = ({ projects }) => {
   const [modalHolidayVisible, setModalHolidayVisible] = useState(false);
   const [modalWeekendVisible, setModalWeekendVisible] = useState(false);
   const [modalHelpVisible, setModalHelpVisible] = useState(false);
-  useEffect(() => {
-    subscribeToConsultantTopic();
-  }, []);
+  
+  useFocusEffect(
+    useCallback(() => {
+      StatusBar.setBackgroundColor(Colors.BLUE_DARK_PRIMARY);
+      SystemNavigationBar.setNavigationColor(Colors.BLUE_PRIMARY, 'light');
+      onFocus(Colors.BLUE_PRIMARY);
+      return () => {
+        StatusBar.setBackgroundColor(Colors.BLUE_DARK_PRIMARY);
+        SystemNavigationBar.setNavigationColor(Colors.BLUE_PRIMARY, 'light');
+        onBlur(Colors.BLUE_PRIMARY);
+      };
+    }, []),
+  );
   useEffect(() => {
     const fn = async () => {
       try {
