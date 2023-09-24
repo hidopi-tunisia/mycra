@@ -39,7 +39,7 @@ const RejectedCRAs = ({ projects, onFocus, onBlur }) => {
   useFocusEffect(
     useCallback(() => {
       StatusBar.setBackgroundColor(Colors.RED_DARK_PRIMARY);
-      SystemNavigationBar.setNavigationColor(Colors.RED_DARK_PRIMARY, 'light');
+      SystemNavigationBar.setNavigationColor(Colors.RED_PRIMARY, 'light');
       onFocus(Colors.RED_DARK_PRIMARY);
       return () => {
         StatusBar.setBackgroundColor(Colors.BLUE_DARK_PRIMARY);
