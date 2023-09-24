@@ -71,17 +71,16 @@ const HomeScreen = ({ onFocus, onBlur }) => {
       PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS,
     );
   }, []);
-  console.log(cra);
   return (
     <>
       {displayNoProjects && <NoProjects onFocus={onFocus} onBlur={onBlur} />}
-      {displayRejectedCRA && (
+      {displayRejectedCRA && cra && (
         <RejectedCRAs cra={cra} projects={projects} onFocus={onFocus} onBlur={onBlur} />
       )}
-      {displayApprovedCRA && (
+      {displayApprovedCRA && cra  && (
         <ApprovedCRAs cra={cra} projects={projects} onFocus={onFocus} onBlur={onBlur} />
       )}
-      {displayPendingCRA && (
+      {displayPendingCRA && cra  && (
         <PendingCRAs cra={cra} projects={projects} onFocus={onFocus} onBlur={onBlur} />
       )}
       {displayNoCRA && (

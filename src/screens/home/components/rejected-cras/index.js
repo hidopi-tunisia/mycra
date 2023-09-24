@@ -50,59 +50,60 @@ const RejectedCRAs = ({ cra, projects, onFocus, onBlur }) => {
       };
     }, []),
   );
+
   useEffect(() => {
-    const fn = async () => {
-      try {
-        const { data: holidays } = await getHolidays();
-        const {
-          data: { saturdays, sundays },
-        } = await getWeekends();
-        const marked = {};
-        const weekends = [...saturdays, ...sundays];
-        Array.from(
-          {
-            length: new Date(
-              new Date().getFullYear(),
-              new Date().getMonth() + 1,
-              0,
-            ).getDate(),
-          },
-          (_, i) => i + 1,
-        ).forEach(d => {
-          const str = new Date(new Date().setDate(d))
-            .toISOString()
-            .substring(0, 10);
-          marked[str] = {
-            type: WorkdaysTypes.WORKING,
-            customStyles: styles.calendarDayWorking,
-          };
-          weekends.forEach(element => {
-            if (element === d) {
-              marked[str] = {
-                type: WorkdaysTypes.WEEKEND,
-                customStyles: styles.calendarDayWeekend,
-              };
-            }
-          });
-          holidays.forEach(element => {
-            if (element.date === str) {
-              marked[str] = {
-                type: WorkdaysTypes.HOLIDAY,
-                meta: {
-                  value: element.name,
-                },
-                customStyles: styles.calendarDayHoliday,
-              };
-            }
-          });
-        });
-        setMarkedDates(marked);
-        setLoadingFetch(false);
-      } catch (e) {
-        console.log(e);
-      }
-    };
-    fn();
+    const marked = {};
+    const { working, half, remote, off, weekends, holidays } = cra;
+    working.forEach(element => {
+      marked[element.date] = {
+        type: WorkdaysTypes.WORKING,
+        customStyles: styles.calendarDayWorking,
+      };
+    });
+    working.forEach(element => {
+      marked[element.date] = {
+        type: WorkdaysTypes.WORKING,
+        customStyles: styles.calendarDayWorking,
+      };
+    });
+    half.forEach(element => {
+      marked[element.date] = {
+        type: WorkdaysTypes.HALF,
+        customStyles: styles.calendarHalfDay,
+      };
+    });
+    remote.forEach(element => {
+      marked[element.date] = {
+        type: WorkdaysTypes.REMOTE,
+        customStyles: styles.calendarDayRemote,
+      };
+    });
+    off.forEach(element => {
+      marked[element.date] = {
+        type: WorkdaysTypes.OFF,
+        customStyles: styles.calendarDayOff,
+        meta: {
+          value: element.meta.value,
+        },
+      };
+    });
+    weekends.forEach(element => {
+      marked[element.date] = {
+        type: WorkdaysTypes.WEEKEND,
+        customStyles: styles.calendarDayWeekend,
+      };
+    });
+    holidays.forEach(element => {
+      marked[element.date] = {
+        type: WorkdaysTypes.HOLIDAY,
+        meta: {
+          value: element.name,
+        },
+        customStyles: styles.calendarDayHoliday,
+      };
+    });
+    setMarkedDates(marked);
+
   }, []);
   useEffect(() => {
     const selectedDates = Object.keys(markedDates).filter(
