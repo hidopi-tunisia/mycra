@@ -1,14 +1,17 @@
 import { getCurrentCRAs } from '@domain/me';
 import { useEffect, useState } from 'react';
-import { PermissionsAndroid } from 'react-native';
+import { Image, PermissionsAndroid } from 'react-native';
 import NoProjects from './components/no-projects';
 import RejectedCRAs from './components/rejected-cras';
 import { getProjects, subscribeToConsultantTopic } from './composables';
 import ApprovedCRAs from './components/approved-cras';
 import PendingCRAs from './components/pending-cras';
 import NoCRAs from './components/no-cras';
+import styles from './index.styles';
+import { Layout } from '@ui-kitten/components';
 
 const HomeScreen = ({ onFocus, onBlur }) => {
+  const [loading, setLoading] = useState(false);
   const [displayNoProjects, setDisplayNoProjects] = useState(false);
   const [displayRejectedCRA, setDisplayRejectedCRA] = useState(false);
   const [displayApprovedCRA, setDisplayApprovedCRA] = useState(false);
@@ -21,9 +24,11 @@ const HomeScreen = ({ onFocus, onBlur }) => {
   useEffect(() => {
     const fn = async () => {
       try {
+        setLoading(true);
         const ps = await getProjects();
         setProjects(ps);
         if (ps.length > 0) {
+          setLoading(false);
           const { data } = await getCurrentCRAs();
           if (
             data &&
@@ -47,9 +52,11 @@ const HomeScreen = ({ onFocus, onBlur }) => {
             setDisplayNoCRA(true);
           }
         } else {
+          setLoading(false);
           setDisplayNoProjects(true);
         }
       } catch (error) {
+        setLoading(false)
         console.info(error);
       }
     };
@@ -72,7 +79,15 @@ const HomeScreen = ({ onFocus, onBlur }) => {
       {displayPendingCRA && (
         <PendingCRAs projects={projects} onFocus={onFocus} onBlur={onBlur} />
       )}
-      {displayNoCRA && <NoCRAs projects={projects} onFocus={onFocus} onBlur={onBlur} />}
+      {displayNoCRA && (
+        <NoCRAs projects={projects} onFocus={onFocus} onBlur={onBlur} />
+      )}
+      {loading && <Layout style={styles.root}>
+        <Image
+          source={require('@assets/images/home/loader.gif')}
+          style={styles.imageLoader}
+        />
+      </Layout>}
     </>
   );
 };
