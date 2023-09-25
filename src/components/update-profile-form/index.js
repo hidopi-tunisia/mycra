@@ -8,7 +8,7 @@ import { launchImageLibrary } from 'react-native-image-picker';
 import { s } from 'react-native-size-matters';
 
 const UpdateProfileForm = ({
-  user,
+  profile,
   loading,
   error,
   progress,
@@ -17,22 +17,22 @@ const UpdateProfileForm = ({
   onPressClose,
 }) => {
   const [uri, setUri] = useState(null);
-  const [fullName, setFullName] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
   const [position, setPosition] = useState('');
   useEffect(() => {
-    if (user.displayName) {
-      const fullName = user.displayName.split('!')[0];
-      const position = user.displayName.split('!')[1];
-      if (fullName) {
-        setFullName(fullName);
-      }
-      if (position) {
-        setPosition(position);
-      }
+    if (profile.firstName) {
+      setFirstName(profile.firstName);
+    }
+    if (profile.lastName) {
+      setLastName(profile.lastName);
+    }
+    if (profile.position) {
+      setPosition(profile.position);
     }
   }, []);
   const onPressSubmit = () => {
-    onSubmit({ fullName, position });
+    onSubmit({ firstName, lastName, position });
   };
   const handlePressPickImage = () => {
     const fn = async () => {
@@ -142,14 +142,26 @@ const UpdateProfileForm = ({
       )}
       <View>
         <Text style={styles.labelInput} category="label">
-          Full name
+          First name
         </Text>
         <M v1 />
         <Input
           style={styles.input}
-          placeholder="John Doe"
-          value={fullName}
-          onChangeText={nextValue => setFullName(nextValue)}
+          placeholder="John"
+          value={firstName}
+          onChangeText={nextValue => setFirstName(nextValue)}
+        />
+      </View>
+      <View>
+        <Text style={styles.labelInput} category="label">
+          Last name
+        </Text>
+        <M v1 />
+        <Input
+          style={styles.input}
+          placeholder="Doe"
+          value={lastName}
+          onChangeText={nextValue => setLastName(nextValue)}
         />
       </View>
       <View>
@@ -164,12 +176,14 @@ const UpdateProfileForm = ({
           onChangeText={nextValue => setPosition(nextValue)}
         />
       </View>
+      <M v2 />
       <Button
         style={styles.buttonSubmit}
         status="primary"
         disabled={
           loading ||
-          fullName.length === 0 ||
+          firstName.length === 0 ||
+          lastName.length === 0 ||
           position.length === 0 ||
           progress !== null
         }

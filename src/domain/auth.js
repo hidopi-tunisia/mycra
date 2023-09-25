@@ -1,8 +1,5 @@
 import auth from '@react-native-firebase/auth';
 
-const updateProfile = async ({ displayName, photoURL }) => {
-  return auth().currentUser.updateProfile({ displayName, photoURL });
-};
 const signIn = ({ email, password }) => {
   return auth().signInWithEmailAndPassword(email, password);
 };
@@ -22,7 +19,6 @@ const sendPasswordResetEmail = email => {
   return auth().sendPasswordResetEmail(email);
 };
 export {
-  updateProfile,
   onAuthStateChanged,
   signIn,
   signOut,

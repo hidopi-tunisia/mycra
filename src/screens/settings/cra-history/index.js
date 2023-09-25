@@ -43,7 +43,7 @@ const CRAHistoryScreen = ({ navigation }) => {
         setLoadingMore(false);
       } catch (error) {
         setLoadingMore(false);
-        console.log(error);
+        console.info(error);
         setErrorLoadingMore('Error happened');
       }
     };
