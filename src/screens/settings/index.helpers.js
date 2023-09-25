@@ -14,17 +14,17 @@ export const getStatusBackground = status => {
   return Colors.GRAY_SECONDARY_TEXT;
 };
 
-export const renderAvatar = user => {
-  const xml = generateFromString(user.uid);
+export const renderAvatar = profile => {
+  const xml = generateFromString(profile._id);
   return (
     <View style={styles.containerImage}>
-      {user.photoURL ? (
+      {profile.profilePhoto ? (
         <>
-          <Image style={styles.photo} source={{ uri: user.photoURL }} />
+          <Image style={styles.photo} source={{ uri: profile.profilePhoto }} />
           <View
             style={{
               ...styles.statusPhoto,
-              backgroundColor: getStatusBackground(user.statutCompte),
+              backgroundColor: getStatusBackground(profile.accountStatus),
             }}
           />
         </>
@@ -36,7 +36,7 @@ export const renderAvatar = user => {
           <View
             style={{
               ...styles.statusAvatar,
-              backgroundColor: getStatusBackground(user.statutCompte),
+              backgroundColor: getStatusBackground(profile.accountStatus),
             }}
           />
         </View>

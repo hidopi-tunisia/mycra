@@ -101,8 +101,8 @@ const NoCRAs = ({ projects, onFocus, onBlur }) => {
         });
         setMarkedDates(marked);
         setLoadingFetch(false);
-      } catch (e) {
-        console.log(e);
+      } catch (error) {
+        console.info(error);
       }
     };
     fn();

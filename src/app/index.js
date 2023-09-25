@@ -53,7 +53,7 @@ const App = () => {
         }
         SplashScreen.hide();
       } catch (error) {
-        console.log(error);
+        console.info(error);
       }
     };
     fn();

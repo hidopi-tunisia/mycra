@@ -11,28 +11,23 @@ import {
   TERMS_AND_CONDITIONS_URL,
 } from '@constants';
 import Colors from '@constants/colors';
-import {
-  currentUser,
-  onAuthStateChanged,
-  sendPasswordResetEmail,
-  signOut,
-  updateProfile,
-} from '@domain/auth';
+import { sendPasswordResetEmail, signOut } from '@domain/auth';
+import { upload } from '@domain/buckets';
+import { getProfile, updateProfile } from '@domain/me';
 import { setItem } from '@domain/storage';
 import { useNavigation } from '@react-navigation/native';
 import { Icon, Spinner, Text } from '@ui-kitten/components';
+import { renderFlag } from '@utils/flags';
+import { Locales, i18n } from '@utils/translations';
 import { useEffect, useState } from 'react';
 import { Linking, ScrollView, TouchableOpacity, View } from 'react-native';
 import { s, vs } from 'react-native-size-matters';
 import { renderAvatar } from './index.helpers';
 import styles from './index.styles';
-import { upload } from '@domain/buckets';
-import { renderFlag } from '@utils/flags';
-import { Locales, i18n } from '@utils/translations';
 
 const SettingsScreen = () => {
   const navigation = useNavigation();
-  const [user, setUser] = useState(null);
+  const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
@@ -56,8 +51,8 @@ const SettingsScreen = () => {
       try {
         setLoading(true);
         setError(null);
-        const u = await currentUser();
-        setUser(u);
+        const { data } = await getProfile({ populate: '' });
+        setProfile(data);
         setLoading(false);
       } catch (error) {
         setLoading(false);
@@ -160,17 +155,14 @@ const SettingsScreen = () => {
     };
     fn();
   };
-  const handleSubmitUpdateProfile = ({ fullName, position }) => {
+  const handleSubmitUpdateProfile = ({ firstName, lastName, position }) => {
     const fn = async () => {
       try {
         setLoadingUpdateProfile(true);
-        const displayName = `${fullName}!${position}`;
-        await updateProfile({ displayName });
+        const { data } = await updateProfile({ firstName, lastName, position });
         setLoadingUpdateProfile(false);
         refUpdateProfileBottomSheet.close();
-        onAuthStateChanged(u => {
-          setUser(u);
-        });
+        setProfile(data);
       } catch (error) {
         setLoadingUpdateProfile(false);
         setErrorUpdateProfile(error);
@@ -180,14 +172,12 @@ const SettingsScreen = () => {
     fn();
   };
   const handleUpload = uri => {
-    const onComplete = async photoURL => {
+    const onComplete = async profilePhoto => {
       setProgress(null);
       refUpdateProfileBottomSheet.close();
       setModalSuccessPictureUploadedVisible(true);
-      await updateProfile({ photoURL });
-      onAuthStateChanged(u => {
-        setUser(u);
-      });
+      const { data } = await updateProfile({ profilePhoto });
+      setProfile(data);
     };
     const onProgress = ({ transferred, total }) => {
       setProgress(Math.round((transferred / total) * 100));
@@ -197,7 +187,7 @@ const SettingsScreen = () => {
       console.info(error);
     };
     upload({
-      path: `avatars/${user.uid}`,
+      path: `avatars/${profile._id}`,
       uri,
       onError,
       onProgress,
@@ -207,21 +197,17 @@ const SettingsScreen = () => {
   return (
     <View style={styles.root}>
       <View style={styles.containerTop}>
-        {!loading && user && (
+        {!loading && profile && (
           <>
-            {renderAvatar(user)}
+            {renderAvatar(profile)}
             <M v1 />
             <View style={styles.containerInformation}>
-              {user.displayName && (
-                <View style={styles.containerTexts}>
-                  <Text style={styles.textName}>
-                    {user.displayName.split('!')[0]}
-                  </Text>
-                  <Text style={styles.textPosition}>
-                    {user.displayName.split('!')[1]}
-                  </Text>
-                </View>
-              )}
+              <View style={styles.containerTexts}>
+                <Text style={styles.textName}>
+                  {profile.firstName} {profile.lastName}
+                </Text>
+                <Text style={styles.textPosition}>{profile.position}</Text>
+              </View>
               <M h1 />
               <TouchableOpacity
                 style={styles.containerEdit}
@@ -237,7 +223,7 @@ const SettingsScreen = () => {
           </>
         )}
         {loading && !error && <Spinner status="basic" size="small" />}
-        {!loading && (!user || error) && (
+        {!loading && (!profile || error) && (
           <View style={styles.containerError}>
             {error && <Text style={styles.textError}>{error}</Text>}
           </View>
@@ -332,7 +318,7 @@ const SettingsScreen = () => {
         <UpdateProfileForm
           loading={loadingUpdateProfile}
           error={errorUpdateProfile}
-          user={user}
+          profile={profile}
           progress={progress}
           onPressClose={handlePressCloseUpdateProfile}
           onUpload={handleUpload}

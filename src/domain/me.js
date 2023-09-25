@@ -11,6 +11,15 @@ const getProfile = async ({ populate } = {}) => {
   });
 };
 
+const updateProfile = async payload => {
+  const authorization = await getAuthorization();
+  return axios.put(`${ENDPOINT}/me`, payload, {
+    headers: {
+      authorization,
+    },
+  });
+};
+
 const getCurrentCRAs = async () => {
   const authorization = await getAuthorization();
   return axios.get(`${ENDPOINT}/me/cras/current`, {
@@ -29,7 +38,6 @@ const createCRA = async (projectId, payload) => {
   });
 };
 
-
 const updateCRA = async (craId, payload) => {
   const authorization = await getAuthorization();
   return axios.put(`${ENDPOINT}/me/cras/${craId}`, payload, {
@@ -39,4 +47,4 @@ const updateCRA = async (craId, payload) => {
   });
 };
 
-export { getProfile, getCurrentCRAs, createCRA,updateCRA };
+export { getProfile, updateProfile, getCurrentCRAs, createCRA, updateCRA };
