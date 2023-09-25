@@ -1,23 +1,19 @@
 import Colors from '@constants/colors';
-import { StyleSheet } from 'react-native';
+import { ScaledSheet } from 'react-native-size-matters';
 
-const styles = StyleSheet.create({
+const styles = ScaledSheet.create({
   root: {
     flex: 1,
-    backgroundColor: Colors.GRAY_LIGHT_PRIMARY,
-    paddingBottom: 36,
+    backgroundColor: Colors.BLUE_PRIMARY,
+    paddingBottom: '36@vs',
   },
   top: {
-    backgroundColor: Colors.ORANGE_DARK_PRIMARY,
+    backgroundColor: Colors.BLUE_DARK_PRIMARY,
     height: '40%',
-    borderBottomLeftRadius: 48,
-    borderBottomRightRadius: 48,
+    borderBottomLeftRadius: '48@s',
+    borderBottomRightRadius: '48@s',
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  containerBack: {
-    alignSelf: 'flex-start',
-    marginLeft: 28
   },
   containerDescription: {
     width: '80%',
@@ -40,10 +36,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   shapeLegend: {
-    width: 16,
-    height: 16,
-    borderRadius: 8,
-    borderWidth: 2,
+    width: '12@s',
+    height: '12@vs',
+    borderRadius: '6@msr',
+    borderWidth: '2@msr',
   },
   containerButton: {
     flex: 1,
@@ -52,12 +48,16 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   buttonSubmit: {
-    borderRadius: 24,
+    borderRadius: '24@s',
   },
   textHeading: {
-    fontSize: 28,
+    fontSize: '24@s',
     fontWeight: '900',
     color: Colors.WHITE,
+  },
+  containerProjects: {
+    flexDirection: 'row',
+    alignItems: 'center'
   },
   textDescription: {
     color: Colors.WHITE,
@@ -66,44 +66,38 @@ const styles = StyleSheet.create({
     color: Colors.YELLOW_DARK_PRIMARY,
     textAlign: 'center',
     borderColor: Colors.YELLOW_DARK_PRIMARY,
-    borderWidth: 2,
-    padding: 6,
-    borderRadius: 16,
+    borderWidth: '2@msr',
+    padding: '6@msr',
+    borderRadius: '16@msr',
   },
   middle: {
     backgroundColor: Colors.WHITE,
     height: '60%',
-    borderRadius: 48,
+    borderRadius: '48@msr',
     alignSelf: 'center',
     width: '90%',
-    bottom: 48,
-    borderWidth: 3,
-    borderColor: Colors.ORANGE_DARK_PRIMARY,
+    bottom: '48@vs',
   },
   containerCalendar: {
     backgroundColor: 'transparent',
-    padding: 16,
+    padding: '16@msr',
   },
   containerCalendarHeader: {
-    paddingHorizontal: 16,
+    paddingHorizontal: '12@s',
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
   },
   containerCalendarTitle: {
-    color: Colors.ORANGE_DARK_PRIMARY,
-    fontSize: 22,
+    color: Colors.BLUE_DARK_PRIMARY,
+    fontSize: '18@s',
     fontWeight: '900',
-  },
-  containerCalendarStatus: {
-    fontSize: 14,
-    fontWeight: '700',
   },
   calendarDayWorking: {
     container: {
-      backgroundColor: Colors.ORANGE_PRIMARY,
-      borderWidth: 2,
-      borderColor: Colors.ORANGE_PRIMARY,
+      backgroundColor: Colors.BLUE_PRIMARY,
+      borderWidth: '2@msr',
+      borderColor: Colors.BLUE_PRIMARY,
       justifyContent: 'center',
     },
     text: {
@@ -113,7 +107,7 @@ const styles = StyleSheet.create({
   calendarHalfDay: {
     container: {
       backgroundColor: Colors.WHITE,
-      borderWidth: 2,
+      borderWidth: '2@msr',
       borderColor: Colors.BLUE_PRIMARY,
       justifyContent: 'center',
     },
@@ -130,11 +124,22 @@ const styles = StyleSheet.create({
       color: Colors.WHITE,
     },
   },
+  calendarDayUnavailable: {
+    container: {
+      backgroundColor: Colors.GRAY_DARK_PRIMARY,
+      justifyContent: 'center',
+      borderWidth: '2@msr',
+      borderColor: Colors.GRAY_DARK_PRIMARY,
+    },
+    text: {
+      color: Colors.WHITE,
+    },
+  },
   calendarDayOff: {
     container: {
       backgroundColor: Colors.WHITE,
       justifyContent: 'center',
-      borderWidth: 2,
+      borderWidth: '2@msr',
       borderColor: Colors.RED_PRIMARY,
     },
     text: {
@@ -144,7 +149,7 @@ const styles = StyleSheet.create({
   calendarDayWeekend: {
     container: {
       backgroundColor: Colors.WHITE,
-      borderWidth: 2,
+      borderWidth: '2@msr',
       borderColor: Colors.GREEN_PRIMARY,
       justifyContent: 'center',
     },

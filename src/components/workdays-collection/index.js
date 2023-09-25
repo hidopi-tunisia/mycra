@@ -23,10 +23,10 @@ const WorkdaysCollection = ({ items, workday, onPress, onPressClose }) => (
       </TouchableOpacity>
     </View>
     <M v2 />
-    <Text style={styles.subtitle}>Worked day{!workday && 's'}</Text>
+    <Text style={styles.subtitle}>Working day{!workday && 's'}</Text>
     <M v1 />
     <View style={styles.containerCollection}>
-      {items.worked.map(i => (
+      {items.working.map(i => (
         <Item
           key={i.text}
           text={i.text}
@@ -52,7 +52,7 @@ const WorkdaysCollection = ({ items, workday, onPress, onPressClose }) => (
           selected={
             workday &&
             workday.type === i.type &&
-            workday.payload?.value === i.value
+            workday.meta?.value === i.value
           }
           onPress={() => onPress(i)}
         />
@@ -63,11 +63,12 @@ const WorkdaysCollection = ({ items, workday, onPress, onPressClose }) => (
 );
 
 export const WorkdaysTypes = {
-  WORKED: 'worked',
+  WORKING: 'working',
   HALF: 'half',
   REMOTE: 'remote',
   OFF: 'off',
   WEEKEND: 'weekend',
   HOLIDAY: 'holiday',
+  // UNAVAILABLE: 'unavailable', // TODO: Check this
 };
 export default WorkdaysCollection;

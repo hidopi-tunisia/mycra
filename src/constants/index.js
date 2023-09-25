@@ -1,7 +1,7 @@
 export { default as WORKDAYS_ITEMS } from './workdays-items.json';
 export { default as FIREBASE_CONFIG } from './firebase.config';
 export { default as Colors } from './colors';
-export const ENDPOINT = 'http://192.168.1.12:3001'; // TODO: Change this
+export const ENDPOINT = 'http://192.168.1.3:30000'; // TODO: Change this
 export const TERMS_AND_CONDITIONS_URL =
   'https://en.wikipedia.org/wiki/Terms_of_service';
 export const PRIVACY_POLICY_URL =

@@ -1,9 +1,9 @@
 {
-  "worked": [
+  "working": [
     {
       "text": "Travaillé",
-      "value": "worked",
-      "type": "worked",
+      "value": "working",
+      "type": "working",
       "backgroundColor": "#2196f3",
       "borderColor": "#2196f3",
       "color": "white"

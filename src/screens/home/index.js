@@ -1,532 +1,125 @@
+import { getCurrentCRAs } from '@domain/me';
 import { useEffect, useState } from 'react';
-import { View, TouchableOpacity } from 'react-native';
-import { Button, Icon, Layout, Text } from '@ui-kitten/components';
-import {
-  Calendar,
-  BottomSheet,
-  WorkdaysCollection,
-  WorkdaysTypes,
-  M,
-} from '@components';
-import { WORKDAYS_ITEMS } from '@constants';
-import { getToday, getDaysInMonth } from '@utils/dates';
+import { Image, PermissionsAndroid } from 'react-native';
+import NoProjects from './components/no-projects';
+import RejectedCRAs from './components/rejected-cras';
+import { getProjects, subscribeToConsultantTopic } from './composables';
+import ApprovedCRAs from './components/approved-cras';
+import PendingCRAs from './components/pending-cras';
+import NoCRAs from './components/no-cras';
 import styles from './index.styles';
-import { postCRA } from '@domain/cra';
-import Modal from '@components/modals';
-import { getHolidays } from '@domain/days';
-import Colors from '@constants/colors';
-import moment from 'moment';
+import { Layout } from '@ui-kitten/components';
+import HomeLoading from './components/loading';
 
-import { PermissionsAndroid } from 'react-native';
-import { currentUser } from '@domain/auth';
-import { subscribeToTopic } from '@domain/messaging';
-import { Topics } from '@constants';
-
-const HomeScreen = () => {
-  const [loadingFetch, setLoadingFetch] = useState(false);
-  const [errorFetch, setErrorFetch] = useState(null);
-  const [loadingSubmit, setLoadingSubmit] = useState(false);
-  const [errorSubmit, setErrorSubmit] = useState(null);
-  const [markedDates, setMarkedDates] = useState({});
-  const [selectedCount, setSelectedCount] = useState(null);
-  const [currentMonth, setCurrentMonth] = useState(moment().format('MMMM'));
-  const [holiday, setHoliday] = useState(null);
-  const [weekend, setWeekend] = useState(null);
-  const [modalVisible, setModalVisible] = useState(false);
-  const [modalHolidayVisible, setModalHolidayVisible] = useState(false);
-  const [modalWeekendVisible, setModalWeekendVisible] = useState(false);
-  const [modalHelpVisible, setModalHelpVisible] = useState(false);
+const HomeScreen = ({ onFocus, onBlur }) => {
+  const [loading, setLoading] = useState(false);
+  const [loadingTryAgain, setLoadingTryAgain] = useState(false);
+  const [displayNoProjects, setDisplayNoProjects] = useState(false);
+  const [displayRejectedCRA, setDisplayRejectedCRA] = useState(false);
+  const [displayApprovedCRA, setDisplayApprovedCRA] = useState(false);
+  const [displayPendingCRA, setDisplayPendingCRA] = useState(false);
+  const [displayNoCRA, setDisplayNoCRA] = useState(false);
+  const [projects, setProjects] = useState([]);
+  const [cra, setCRA] = useState([]);
   useEffect(() => {
-    const fn = async () => {
-      try {
-        const u = await currentUser();
-        if (u !== null && u.uid) {
-          await subscribeToTopic(`${Topics.CONSULTANT}~${u.uid}`);
+    subscribeToConsultantTopic();
+  }, []);
+  const fn = async () => {
+    try {
+      setLoading(true);
+      setLoadingTryAgain(true);
+      const ps = await getProjects();
+      setProjects(ps);
+      if (ps.length > 0) {
+        setLoading(false);
+        setLoadingTryAgain(false);
+        const { data } = await getCurrentCRAs();
+        if (data && Array.isArray(data.rejected) && data.rejected.length > 0) {
+          setCRA(data.rejected[0]);
+          setDisplayRejectedCRA(true);
+        } else if (
+          data &&
+          Array.isArray(data.approved) &&
+          data.approved.length > 0
+        ) {
+          setCRA(data.approved[0]);
+          setDisplayApprovedCRA(true);
+        } else if (
+          data &&
+          Array.isArray(data.pending) &&
+          data.pending.length > 0
+        ) {
+          setCRA(data.pending[0]);
+          setDisplayPendingCRA(true);
+        } else {
+          setDisplayNoCRA(true);
         }
-      } catch (error) {
-        console.info(error);
+      } else {
+        setLoading(false);
+        setLoadingTryAgain(false);
+        setDisplayNoProjects(true);
       }
-    };
+    } catch (error) {
+      setLoadingTryAgain(false);
+      setLoading(false);
+      console.info(error);
+    }
+  };
+  useEffect(() => {
     fn();
   }, []);
-  useEffect(() => {
-    const fn = async () => {
-      try {
-        setLoadingFetch(false);
-        setErrorFetch(null);
-        const year = getToday().substring(0, 4);
-        const month = getToday().substring(5, 7);
-        const days = getDaysInMonth(`${year}-${month}`);
-        const { data } = await getHolidays(year);
-        const holidaysDays = data.filter(
-          d => d.date.substring(0, 7) === `${year}-${month}`,
-        );
-        const marked = {};
-        setSelectedCount(days.length);
-        for (let i = 0; i < days.length; i++) {
-          const today = new Date(days[i]).getDay();
-          if (today === 6 || today === 0) {
-            marked[days[i]] = {
-              type: WorkdaysTypes.WEEKEND,
-              customStyles: styles.calendarDayWeekend,
-            };
-          } else {
-            marked[days[i]] = {
-              type: WorkdaysTypes.WORKED,
-              customStyles: styles.calendarDayWorked,
-            };
-          }
-        }
-        for (let i = 0; i < holidaysDays.length; i++) {
-          for (let j = 0; j < Object.keys(marked).length; j++) {
-            if (Object.keys(marked)[j] === holidaysDays[i].date) {
-              marked[Object.keys(marked)[j]] = {
-                ...marked[Object.keys(marked)[j]],
-                type: WorkdaysTypes.HOLIDAY,
-                payload: {
-                  value: holidaysDays[i].nom_jour_ferie,
-                },
-                customStyles: styles.calendarDayHoliday,
-              };
-            }
-          }
-        }
-        setMarkedDates(marked);
-        setLoadingFetch(false);
-      } catch (error) {
-        setLoadingFetch(false);
-        setErrorFetch(error);
-        console.info(error);
-      }
-    };
+  const handleTryAgain = () => {
     fn();
-  }, []);
-  useEffect(() => {
-    const selectedDates = Object.keys(markedDates).filter(
-      d => markedDates[d].type === WorkdaysTypes.WORKED,
-    );
-    setSelectedCount(selectedDates.length);
-  }, [markedDates]);
+  };
   useEffect(() => {
     PermissionsAndroid.request(
       PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS,
     );
   }, []);
-
-  const handleSelected = day => {
-    if (markedDates[day.dateString].type === WorkdaysTypes.HOLIDAY) {
-      setHoliday({
-        date: day.dateString,
-        name: markedDates[day.dateString].payload.value,
-      });
-      setModalHolidayVisible(true);
-    } else if (markedDates[day.dateString].type === WorkdaysTypes.WEEKEND) {
-      setWeekend({
-        date: day.dateString,
-      });
-      setModalWeekendVisible(true);
-    } else {
-      if (
-        markedDates[day.dateString] &&
-        markedDates[day.dateString].type === WorkdaysTypes.OFF
-      ) {
-        setMarkedDates({
-          ...markedDates,
-          [day.dateString]: {
-            type: WorkdaysTypes.WORKED,
-            customStyles: styles.calendarDayWorked,
-          },
-        });
-      } else {
-        setMarkedDates({
-          ...markedDates,
-          [day.dateString]: {
-            type: WorkdaysTypes.OFF,
-            payload: {
-              value: 'CP',
-            },
-            customStyles: styles.calendarDayOff,
-          },
-        });
-      }
-    }
-  };
-  const [workday, setWorkday] = useState(null);
-  const handleLongPress = day => {
-    setWorkday({ ...markedDates[day.dateString], dateString: day.dateString });
-    refBottomSheet.open();
-  };
-  const handlePressPositive = () => {
-    const fn = async () => {
-      try {
-        setLoadingSubmit(false);
-        setErrorSubmit(null);
-        const arr = Object.keys(markedDates).map(k => {
-          if (markedDates[k].type === WorkdaysTypes.WORKED) {
-            return {
-              date: k,
-              type: WorkdaysTypes.WORKED,
-            };
-          } else if (markedDates[k].type === WorkdaysTypes.HALF) {
-            return {
-              date: k,
-              type: WorkdaysTypes.HALF,
-            };
-          } else if (markedDates[k].type === WorkdaysTypes.REMOTE) {
-            return {
-              date: k,
-              type: WorkdaysTypes.REMOTE,
-            };
-          } else if (markedDates[k].type === WorkdaysTypes.OFF) {
-            return {
-              date: k,
-              type: WorkdaysTypes.OFF,
-              raison: markedDates[k].payload.value,
-            };
-          }
-        });
-        const datesTravaillees = arr.filter(
-          e => e && e.type === WorkdaysTypes.WORKED,
-        );
-        const datesDemiTravaillees = arr.filter(
-          e => e && e.type === WorkdaysTypes.HALF,
-        );
-        const datesTeleTravaillees = arr.filter(
-          e => e && e.type === WorkdaysTypes.REMOTE,
-        );
-        const datesNonTravaillees = arr.filter(
-          e => e && e.type === WorkdaysTypes.OFF,
-        );
-        const payload = {
-          datesTravaillees,
-          datesDemiTravaillees,
-          datesTeleTravaillees,
-          datesNonTravaillees,
-        };
-        // const { data } = await postCRA(payload);
-        p(payload);
-        setLoadingSubmit(false);
-        setModalVisible(false);
-      } catch (error) {
-        setLoadingSubmit(false);
-        setErrorSubmit(error);
-        console.info('ERROR');
-        console.info(error);
-        console.info('ERROR');
-      }
-    };
-    fn();
-  };
-  const handlePressNegative = () => {
-    setModalVisible(false);
-  };
-  const handleSubmit = () => {
-    setModalVisible(true);
-  };
-  const handleSelectAll = () => {
-    setWorkday(null);
-    refBottomSheet.open();
-  };
-  const handlePressBottomSheetClose = () => {
-    refBottomSheet.close();
-  };
-  const handlePressHolidayPositive = () => {
-    setHoliday(null);
-    setModalHolidayVisible(false);
-  };
-  const handlePressWeekendPositive = () => {
-    setWeekend(null);
-    setModalWeekendVisible(false);
-  };
-  const [refBottomSheet, setRefBottomSheet] = useState(null);
-  const handleRefBottomSheet = ref => {
-    setRefBottomSheet(ref);
-  };
-  const handlePressWorkdaysItem = item => {
-    if (workday) {
-      if (item.type === WorkdaysTypes.WORKED) {
-        setMarkedDates({
-          ...markedDates,
-          [workday.dateString]: {
-            type: WorkdaysTypes.WORKED,
-            customStyles: styles.calendarDayWorked,
-          },
-        });
-      } else if (item.type === 'half') {
-        setMarkedDates({
-          ...markedDates,
-          [workday.dateString]: {
-            type: WorkdaysTypes.HALF,
-            customStyles: styles.calendarHalfDay,
-          },
-        });
-      } else if (item.type === 'remote') {
-        setMarkedDates({
-          ...markedDates,
-          [workday.dateString]: {
-            type: WorkdaysTypes.REMOTE,
-            customStyles: styles.calendarDayRemote,
-          },
-        });
-      } else if (item.type === 'off') {
-        setMarkedDates({
-          ...markedDates,
-          [workday.dateString]: {
-            type: WorkdaysTypes.OFF,
-            payload: { value: item.value },
-            customStyles: styles.calendarDayOff,
-          },
-        });
-      }
-    } else {
-      let marked = {};
-      Object.keys(markedDates).forEach(d => {
-        if (
-          markedDates[d].type !== WorkdaysTypes.HOLIDAY &&
-          markedDates[d].type !== WorkdaysTypes.WEEKEND
-        ) {
-          if (item.type === WorkdaysTypes.WORKED) {
-            marked[d] = {
-              type: WorkdaysTypes.WORKED,
-              customStyles: styles.calendarDayWorked,
-            };
-          } else if (item.type === WorkdaysTypes.HALF) {
-            marked[d] = {
-              type: WorkdaysTypes.HALF,
-              customStyles: styles.calendarHalfDay,
-            };
-          } else if (item.type === WorkdaysTypes.REMOTE) {
-            marked[d] = {
-              type: WorkdaysTypes.REMOTE,
-              customStyles: styles.calendarDayRemote,
-            };
-          } else if (item.type === WorkdaysTypes.OFF) {
-            marked[d] = {
-              type: WorkdaysTypes.OFF,
-              payload: { value: item.value },
-              customStyles: styles.calendarDayOff,
-            };
-          }
-        }
-      });
-      setMarkedDates({ ...markedDates, ...marked });
-    }
-    setWorkday(null);
-    refBottomSheet.close();
-  };
   return (
-    <Layout style={styles.root}>
-      <View style={styles.top}>
-        <View style={styles.containerDescription}>
-          <View style={styles.containerHeading}>
-            <Text style={styles.textHeading}>My CRA</Text>
-            <TouchableOpacity onPress={() => setModalHelpVisible(true)}>
-              <Icon
-                fill={Colors.WHITE}
-                name="question-mark-circle-outline"
-                width={24}
-                height={24}
-              />
-            </TouchableOpacity>
-          </View>
-          <M v1 />
-          <Text style={styles.textDescription}>
-            Please fill your CRA before the end of the current month.
-          </Text>
-          {/* <Text style={styles.textWarning}>
-            The month is already prefilled.
-          </Text> */}
-        </View>
-      </View>
-      <View style={styles.middle}>
-        <View style={styles.containerCalendar}>
-          <View style={styles.containerCalendarHeader}>
-            <Text style={styles.containerCalendarTitle}>{currentMonth}</Text>
-            <TouchableOpacity onPress={handleSelectAll}>
-              <Icon
-                fill={Colors.GRAY_PRIMARY}
-                name="done-all-outline"
-                width={24}
-                height={24}
-              />
-            </TouchableOpacity>
-          </View>
-          <M v1 />
-          <Calendar
-            markedDates={markedDates}
-            onDayPress={handleSelected}
-            onDayLongPress={handleLongPress}
-          />
-        </View>
-        <View style={styles.containerLegends}>
-          <View style={styles.containerLegend}>
-            <View
-              style={{
-                ...styles.shapeLegend,
-                backgroundColor: Colors.BLUE_PRIMARY,
-                borderColor: Colors.BLUE_PRIMARY,
-              }}
+    <>
+      {loading && !loadingTryAgain ? (
+        <HomeLoading onFocus={onFocus} onBlur={onBlur} />
+      ) : (
+        <>
+          {displayRejectedCRA && cra && (
+            <RejectedCRAs
+              cra={cra}
+              projects={projects}
+              onFocus={onFocus}
+              onBlur={onBlur}
             />
-            <M h1 />
-            <Text>Worked</Text>
-          </View>
-          <View style={styles.containerLegend}>
-            <View
-              style={{
-                ...styles.shapeLegend,
-                backgroundColor: Colors.WHITE,
-                borderColor: Colors.BLUE_PRIMARY,
-              }}
+          )}
+          {displayApprovedCRA && cra && (
+            <ApprovedCRAs
+              cra={cra}
+              projects={projects}
+              onFocus={onFocus}
+              onBlur={onBlur}
             />
-            <M h1 />
-            <Text>Half day</Text>
-          </View>
-          <View style={styles.containerLegend}>
-            <View
-              style={{
-                ...styles.shapeLegend,
-                backgroundColor: Colors.PURPLE_PRIMARY,
-                borderColor: Colors.PURPLE_PRIMARY,
-              }}
+          )}
+          {displayPendingCRA && cra && (
+            <PendingCRAs
+              cra={cra}
+              projects={projects}
+              onFocus={onFocus}
+              onBlur={onBlur}
             />
-            <M h1 />
-            <Text>Remote</Text>
-          </View>
-          <View style={styles.containerLegend}>
-            <View
-              style={{
-                ...styles.shapeLegend,
-                backgroundColor: Colors.WHITE,
-                borderColor: Colors.RED_PRIMARY,
-              }}
+          )}
+          {displayNoCRA && (
+            <NoCRAs projects={projects} onFocus={onFocus} onBlur={onBlur} />
+          )}
+          {displayNoProjects && (
+            <NoProjects
+              loading={loadingTryAgain}
+              onFocus={onFocus}
+              onBlur={onBlur}
+              onPress={handleTryAgain}
             />
-            <M h1 />
-            <Text>Off</Text>
-          </View>
-        </View>
-        <M v2 />
-        <View style={styles.containerButton}>
-          <Button
-            style={styles.buttonSubmit}
-            status="primary"
-            onPress={handleSubmit}>
-            Submit
-          </Button>
-        </View>
-      </View>
-      <Modal
-        title="Submit days?"
-        type="confirm"
-        visible={modalVisible}
-        onPressNegative={handlePressNegative}
-        onPressPositive={handlePressPositive}>
-        <Text>Are you sure to submit {selectedCount} days for this month?</Text>
-      </Modal>
-      <Modal
-        title="Holiday"
-        type="info"
-        visible={modalHolidayVisible}
-        onPressPositive={handlePressHolidayPositive}>
-        {holiday && (
-          <Text>
-            {holiday.date} is a holiday called "{holiday.name}".
-          </Text>
-        )}
-      </Modal>
-      <Modal
-        title="Weekend"
-        type="info"
-        visible={modalWeekendVisible}
-        onPressPositive={handlePressWeekendPositive}>
-        {weekend && <Text>{weekend.date} is a weekend.</Text>}
-      </Modal>
-      <Modal
-        title="Help"
-        type="info"
-        visible={modalHelpVisible}
-        onPressPositive={() => setModalHelpVisible(false)}>
-        <Text>Fill your working days accordingly.</Text>
-        <Text>Long press on a day to view more options.</Text>
-        <M v2 />
-        <Text>Legend:</Text>
-        <View style={styles.containerLegends}>
-          <View style={styles.containerLegend}>
-            <View
-              style={{
-                ...styles.shapeLegend,
-                backgroundColor: Colors.BLUE_PRIMARY,
-                borderColor: Colors.BLUE_PRIMARY,
-              }}
-            />
-            <M h1 />
-            <Text>Worked</Text>
-          </View>
-          <View style={styles.containerLegend}>
-            <View
-              style={{
-                ...styles.shapeLegend,
-                backgroundColor: Colors.WHITE,
-                borderColor: Colors.BLUE_PRIMARY,
-              }}
-            />
-            <M h1 />
-            <Text>Half day</Text>
-          </View>
-          <View style={styles.containerLegend}>
-            <View
-              style={{
-                ...styles.shapeLegend,
-                backgroundColor: Colors.PURPLE_PRIMARY,
-                borderColor: Colors.PURPLE_PRIMARY,
-              }}
-            />
-            <M h1 />
-            <Text>Remote</Text>
-          </View>
-          <View style={styles.containerLegend}>
-            <View
-              style={{
-                ...styles.shapeLegend,
-                backgroundColor: Colors.WHITE,
-                borderColor: Colors.RED_PRIMARY,
-              }}
-            />
-            <M h1 />
-            <Text>Off</Text>
-          </View>
-          <View style={styles.containerLegend}>
-            <View
-              style={{
-                ...styles.shapeLegend,
-                backgroundColor: Colors.WHITE,
-                borderColor: Colors.GREEN_PRIMARY,
-              }}
-            />
-            <M h1 />
-            <Text>Weekend</Text>
-          </View>
-          <View style={styles.containerLegend}>
-            <View
-              style={{
-                ...styles.shapeLegend,
-                backgroundColor: Colors.GREEN_PRIMARY,
-                borderColor: Colors.GREEN_PRIMARY,
-              }}
-            />
-            <M h1 />
-            <Text>Holiday</Text>
-          </View>
-        </View>
-      </Modal>
-      <BottomSheet height={480} onCallbackRef={handleRefBottomSheet}>
-        <WorkdaysCollection
-          items={WORKDAYS_ITEMS}
-          workday={workday}
-          onPress={handlePressWorkdaysItem}
-          onPressClose={handlePressBottomSheetClose}
-        />
-      </BottomSheet>
-    </Layout>
+          )}
+        </>
+      )}
+    </>
   );
 };
 

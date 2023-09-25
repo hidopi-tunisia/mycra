@@ -128,7 +128,7 @@ const CRAHistoryScreen = ({ navigation }) => {
                             }}
                           />
                           <M h1 />
-                          <Text>{item.nbJoursTravailles} Worked</Text>
+                          <Text>{item.nbJoursTravailles} Working</Text>
                         </View>
                       </>
                     )}
