@@ -8,6 +8,8 @@ import { getAllCRAs, getCRAHistory } from '@domain/cra';
 import CRAHistoryItem from '@components/cra-history-item';
 import { getStatusType } from './index.helpers';
 import Colors from '@constants/colors';
+import { getCRAs } from '@domain/me';
+import moment from 'moment';
 
 const CRAHistoryScreen = ({ navigation }) => {
   const [history, setHistory] = useState([]);
@@ -21,12 +23,13 @@ const CRAHistoryScreen = ({ navigation }) => {
     try {
       setLoading(true);
       setError(null);
-      const { data } = await getAllCRAs({ page, limit });
-      setHistory([...history, ...data]);
+      const { data } = await getCRAs({ page, limit, populate: 'project' });
+      setHistory(data);
       setLoading(false);
     } catch (error) {
       setLoading(false);
       setError('Error happened');
+      console.info(error, error?.response?.data);
     }
   };
   useEffect(() => {
@@ -38,8 +41,12 @@ const CRAHistoryScreen = ({ navigation }) => {
         setLoadingMore(true);
         setErrorLoadingMore(null);
         setPage(page + 1);
-        const { data } = await getAllCRAs({ page, limit });
-        setHistory([...history, ...data]);
+        const { data } = await getCRAs({ page, limit, populate: 'project' });
+        setHistory(
+          [...history, ...data].filter(
+            (v, i, a) => a.findIndex(({ _id }) => v._id === _id) === i,
+          ),
+        );
         setLoadingMore(false);
       } catch (error) {
         setLoadingMore(false);
@@ -57,6 +64,21 @@ const CRAHistoryScreen = ({ navigation }) => {
   };
   const handlePressBack = () => {
     navigation.goBack();
+  };
+  const getLastAction = (history, status) => {
+    let a;
+    if (status === 'pending') {
+      a = 'submitted';
+    } else if (status === 'approved') {
+      a = 'approved';
+    } else if (status === 'rejected') {
+      a = 'rejected';
+    }
+    const filtered = history.filter(({ action }) => action === a);
+    const sorted = filtered.sort(
+      (a, b) => new Date(b.meta.at).getTime() - new Date(a.meta.at).getTime(),
+    );
+    return sorted[0];
   };
   return (
     <Layout style={styles.root}>
@@ -105,36 +127,47 @@ const CRAHistoryScreen = ({ navigation }) => {
             renderItem={({ item }) => (
               <CRAHistoryItem
                 key={item._id}
-                title={`${item.mois ? item.mois : ' - '} ${
-                  !isNaN(item.annee) ? item.annee : ' - '
-                } ${
-                  !isNaN(item.nbSemaines)
-                    ? '(' + item.nbSemaines + ' semaines)'
-                    : ''
+                title={`${
+                  item.date?.month
+                    ? moment(item.date?.month + 1, 'M').format('MMMM')
+                    : ' - '
+                } ${!isNaN(item.date?.year) ? item.date?.year : ' - '} ${
+                  item.type ? ' - ' + item.type : ''
                 }`}
-                subtitle={item.status}
+                subtitle={
+                  item.status +
+                  ' - ' +
+                  getLastAction(item.history, item.status)
+                    .meta.at.substring(0, 16)
+                    .replaceAll('T', ' at ')
+                }
                 type={getStatusType(item.status)}
                 onPress={() => handlePress(item._id)}>
+                <View>
+                  <Text>
+                    {item.project.name} - {item?.project?.category}
+                  </Text>
+                </View>
+                <M v1 />
                 <View style={styles.containerLegends}>
-                  {typeof item.nbJoursTravailles === 'number' &&
-                    item.nbJoursTravailles > 0 && (
-                      <>
-                        <View style={styles.containerLegend}>
-                          <View
-                            style={{
-                              ...styles.shapeLegend,
-                              backgroundColor: Colors.BLUE_PRIMARY,
-                              borderColor: Colors.BLUE_PRIMARY,
-                            }}
-                          />
-                          <M h1 />
-                          <Text>{item.nbJoursTravailles} Working</Text>
-                        </View>
-                      </>
-                    )}
-                  {true && (
+                  {Array.isArray(item.working) && item.working.length > 0 && (
                     <>
+                      <View style={styles.containerLegend}>
+                        <View
+                          style={{
+                            ...styles.shapeLegend,
+                            backgroundColor: Colors.BLUE_PRIMARY,
+                            borderColor: Colors.BLUE_PRIMARY,
+                          }}
+                        />
+                        <M h1 />
+                        <Text>{item.working.length} Working</Text>
+                      </View>
                       <M h2 />
+                    </>
+                  )}
+                  {Array.isArray(item.half) && item.half.length > 0 && (
+                    <>
                       <View style={styles.containerLegend}>
                         <View
                           style={{
@@ -144,13 +177,13 @@ const CRAHistoryScreen = ({ navigation }) => {
                           }}
                         />
                         <M h1 />
-                        <Text>3 Half day(s)</Text>
+                        <Text>{item.half.length} half days</Text>
                       </View>
+                      <M h2 />
                     </>
                   )}
-                  {true && (
+                  {Array.isArray(item.remote) && item.remote.length > 0 && (
                     <>
-                      <M h2 />
                       <View style={styles.containerLegend}>
                         <View
                           style={{
@@ -160,27 +193,26 @@ const CRAHistoryScreen = ({ navigation }) => {
                           }}
                         />
                         <M h1 />
-                        <Text>2 Remote</Text>
+                        <Text>{item.remote.length} remote</Text>
+                      </View>
+                      <M h2 />
+                    </>
+                  )}
+                  {Array.isArray(item.off) && item.off.length > 0 && (
+                    <>
+                      <View style={styles.containerLegend}>
+                        <View
+                          style={{
+                            ...styles.shapeLegend,
+                            backgroundColor: Colors.WHITE,
+                            borderColor: Colors.RED_PRIMARY,
+                          }}
+                        />
+                        <M h1 />
+                        <Text>{item.off.length} off</Text>
                       </View>
                     </>
                   )}
-                  {typeof item.nbJoursNonTravailles === 'number' &&
-                    item.nbJoursNonTravailles >= 0 && (
-                      <>
-                        <M h2 />
-                        <View style={styles.containerLegend}>
-                          <View
-                            style={{
-                              ...styles.shapeLegend,
-                              backgroundColor: Colors.WHITE,
-                              borderColor: Colors.RED_PRIMARY,
-                            }}
-                          />
-                          <M h1 />
-                          <Text>3 Off</Text>
-                        </View>
-                      </>
-                    )}
                 </View>
               </CRAHistoryItem>
             )}

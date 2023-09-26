@@ -1,6 +1,8 @@
 import { I18n } from 'i18n-js';
 import en from './en.json';
 import fr from './fr.json';
+import moment from 'moment';
+import 'moment/locale/fr';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const STORAGE_NAME = 'locale';
@@ -26,6 +28,7 @@ i18n.defaultLocale = Locales.FR;
 const prepareInternationalization = async () => {
   try {
     const l = await getStoredLocale();
+    moment.locale(l);
     if (l !== 'null' && l !== null) {
       i18n.locale = l;
     } else {
@@ -39,6 +42,7 @@ const prepareInternationalization = async () => {
 
 i18n.onChange(({ locale }) => {
   setStoredLocale(locale);
+  moment.locale(locale);
 });
 
 prepareInternationalization().then(i => (i18n = i));

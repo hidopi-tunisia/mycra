@@ -38,7 +38,7 @@ export const renderColor = type => {
 const Header = ({ title, subtitle, type }) => (
   <View style={styles.containerHeader}>
     <View style={styles.containerHeaderTitles}>
-      <Text category="h6">{title}</Text>
+      <Text category="h6" style={styles.textTitle}>{title}</Text>
       <Text
         category="s1"
         style={{ ...styles.textSubtitle, color: renderColor(type) }}>

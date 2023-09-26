@@ -47,4 +47,28 @@ const updateCRA = async (craId, payload) => {
   });
 };
 
-export { getProfile, updateProfile, getCurrentCRAs, createCRA, updateCRA };
+const getCRAs = async ({
+  sort = 'desc',
+  page = 0,
+  limit = 12,
+  populate = '',
+} = {}) => {
+  const authorization = await getAuthorization();
+  return axios.get(
+    `${ENDPOINT}/me/cras?sort=${sort}&limit=${limit}&page=${page}&populate=${populate}`,
+    {
+      headers: {
+        authorization,
+      },
+    },
+  );
+};
+
+export {
+  getProfile,
+  updateProfile,
+  getCurrentCRAs,
+  createCRA,
+  updateCRA,
+  getCRAs,
+};

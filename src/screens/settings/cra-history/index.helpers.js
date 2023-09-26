@@ -1,7 +1,7 @@
 export const getStatusType = status => {
-  if (status === 'Validee') {
+  if (status === 'rejected') {
     return 'success';
-  } else if (status === 'Refusee') {
+  } else if (status === 'approved') {
     return 'danger';
   }
   return 'default';

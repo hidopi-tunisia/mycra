@@ -2,11 +2,11 @@ import { ScaledSheet } from 'react-native-size-matters';
 
 const styles = ScaledSheet.create({
   card: {
-    borderRadius: "28@msr",
-    padding: "4@msr",
+    borderRadius: '28@msr',
+    padding: '4@msr',
   },
   containerHeader: {
-    padding: "8@msr",
+    padding: '8@msr',
     flexDirection: 'row',
   },
   content: {
@@ -16,18 +16,22 @@ const styles = ScaledSheet.create({
   containerHeaderTitles: {
     flex: 1,
   },
+  textTitle: {
+    textTransform: 'capitalize',
+  },
   textSubtitle: {
-    fontSize: "11@msr",
+    fontSize: '11@msr',
     fontWeight: '800',
+    textTransform: 'capitalize',
   },
   containerHeaderIcon: {
     justifyContent: 'center',
     alignItems: 'center',
-    width: "40@vs",
+    width: '40@vs',
   },
   containerHeaderIconHolder: {
-    padding: "5@msr",
-    borderRadius: "20@msr",
+    padding: '5@msr',
+    borderRadius: '20@msr',
   },
   containerHeaderTitlesTitle: {
     flexDirection: 'row',

@@ -2,7 +2,7 @@ import axios from 'axios';
 import { ENDPOINT } from '@constants';
 import { getAuthorization } from './auth';
 
-const getCRAHistory = async ({ sort = 'DESC', page = 1, limit = 2 } = {}) => {
+const getCRAHistory = async ({ sort = 'desc', page = 1, limit = 2 } = {}) => {
   // const { uid } = await getAuthorization();
   const authorization = await getAuthorization();
   const uid = '64820b713937a729af5cc814';
@@ -16,7 +16,7 @@ const getCRAHistory = async ({ sort = 'DESC', page = 1, limit = 2 } = {}) => {
   );
 };
 
-const getAllCRAs = async ({ sort = 'DESC', page = 0, limit = 1 } = {}) => {
+const getAllCRAs = async ({ sort = 'desc', page = 0, limit = 1 } = {}) => {
   // const { uid } = await getAuthorization();
   const authorization = await getAuthorization();
   return axios.get(
