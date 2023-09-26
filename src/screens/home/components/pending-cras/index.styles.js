@@ -4,11 +4,11 @@ import { ScaledSheet } from 'react-native-size-matters';
 const styles = ScaledSheet.create({
   root: {
     flex: 1,
-    backgroundColor: Colors.ORANGE_PRIMARY,
+    backgroundColor: Colors.PURPLE_PRIMARY,
     paddingBottom: '36@vs',
   },
   top: {
-    backgroundColor: Colors.ORANGE_DARK_PRIMARY,
+    backgroundColor: Colors.PURPLE_DARK_PRIMARY,
     height: '40%',
     borderBottomLeftRadius: '48@s',
     borderBottomRightRadius: '48@s',
@@ -49,7 +49,7 @@ const styles = ScaledSheet.create({
   },
   buttonSubmit: {
     borderRadius: '24@s',
-    borderColor: Colors.ORANGE_PRIMARY,
+    borderColor: Colors.PURPLE_PRIMARY,
     borderWidth: 2,
   },
   textHeading: {

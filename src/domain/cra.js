@@ -29,13 +29,19 @@ const getAllCRAs = async ({ sort = 'desc', page = 0, limit = 1 } = {}) => {
   );
 };
 
-const getCRA = async id => {
+const getCRA = async (
+  id,
+  { populate = '', count = '' } = { populate: '', count: '' },
+) => {
   const authorization = await getAuthorization();
-  return axios.get(`${ENDPOINT}/cra/get_cra_by_id/${id}`, {
-    headers: {
-      authorization,
+  return axios.get(
+    `${ENDPOINT}/cras/${id}?populate=${populate}&count=${count}`,
+    {
+      headers: {
+        authorization,
+      },
     },
-  });
+  );
 };
 
 export { getCRA, getCRAHistory, getAllCRAs };
