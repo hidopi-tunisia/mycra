@@ -11,6 +11,8 @@ const renderIcon = type => {
       return 'close-circle-outline';
     case 'wraning':
       return 'alert-triangle-outline';
+    case 'info':
+      return 'info-outline';
     case 'default':
       return 'clock-outline';
     default:
@@ -26,6 +28,8 @@ const renderColor = type => {
       return '#F44336cc';
     case 'warning':
       return '#FBC02Dcc';
+    case 'info':
+      return '#03A9F4cc';
     case 'default':
       return '#9E9E9Ecc';
     default:
