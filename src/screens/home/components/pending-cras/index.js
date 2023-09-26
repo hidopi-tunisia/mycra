@@ -34,9 +34,9 @@ const PendingCRAs = ({ cra, projects, onFocus, onBlur }) => {
 
   useFocusEffect(
     useCallback(() => {
-      StatusBar.setBackgroundColor(Colors.ORANGE_DARK_PRIMARY);
-      SystemNavigationBar.setNavigationColor(Colors.ORANGE_PRIMARY, 'light');
-      onFocus(Colors.ORANGE_DARK_PRIMARY);
+      StatusBar.setBackgroundColor(Colors.PURPLE_DARK_PRIMARY);
+      SystemNavigationBar.setNavigationColor(Colors.PURPLE_PRIMARY, 'light');
+      onFocus(Colors.PURPLE_DARK_PRIMARY);
       return () => {
         StatusBar.setBackgroundColor(Colors.BLUE_DARK_PRIMARY);
         SystemNavigationBar.setNavigationColor(Colors.BLUE_PRIMARY, 'light');

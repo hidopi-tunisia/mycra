@@ -1,31 +1,27 @@
-import { useState, useEffect } from 'react';
-import { currentUser, onAuthStateChanged } from '@domain/auth';
-import { TabNavigator } from '@navigators';
-import {
-  NavigationContainer,
-  DefaultTheme,
-  useNavigation,
-  createNavigationContainerRef,
-} from '@react-navigation/native';
-import { ApplicationProvider, IconRegistry } from '@ui-kitten/components';
-import { EvaIconsPack } from '@ui-kitten/eva-icons';
-import { mapping, light as theme } from '@eva-design/eva';
-import { SignInScreen } from '@screens';
-import { StatusBar } from 'react-native';
+import { Topics } from '@constants';
 import Colors from '@constants/colors';
+import { currentUser, onAuthStateChanged } from '@domain/auth';
 import {
   getInitialNotification,
-  getToken,
   onMessage,
-  onNotificationOpenedApp,
-  subscribeToTopic,
+  subscribeToTopic
 } from '@domain/messaging';
-import { getItem, onChange as onStorageChange, setItem } from '@domain/storage';
+import { getItem, isIntroDone, onChange as onStorageChange, setIsIntroDone, setItem } from '@domain/storage';
+import { mapping, light as theme } from '@eva-design/eva';
+import { TabNavigator } from '@navigators';
+import {
+  DefaultTheme,
+  NavigationContainer,
+  createNavigationContainerRef
+} from '@react-navigation/native';
+import { SignInScreen } from '@screens';
 import ApplicationIntroScreen from '@screens/intro';
-import SplashScreen from 'react-native-splash-screen';
-import { Topics } from '@constants';
-import { isIntroDone, setIsIntroDone } from '@domain/storage';
+import { ApplicationProvider, IconRegistry } from '@ui-kitten/components';
+import { EvaIconsPack } from '@ui-kitten/eva-icons';
 import { i18n } from '@utils/translations';
+import { useEffect, useState } from 'react';
+import { StatusBar } from 'react-native';
+import SplashScreen from 'react-native-splash-screen';
 
 const AppTheme = {
   ...DefaultTheme,
@@ -45,7 +41,8 @@ const App = () => {
       try {
         const u = await currentUser();
         if (u !== null && u.uid) {
-          await subscribeToTopic(`${Topics.CONSULTANT}~${u.uid}`);
+          await subscribeToTopic(`${Topics.CONSULTANTS}~${u.uid}`);
+          subscribeToTopic(`${Topics.CONSULTANTS_ALL}`)
         }
         const isDone = await isIntroDone();
         if (isDone !== 'true') {

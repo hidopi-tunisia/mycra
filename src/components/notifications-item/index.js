@@ -9,6 +9,10 @@ const renderIcon = type => {
       return 'checkmark-circle-2-outline';
     case 'danger':
       return 'close-circle-outline';
+    case 'wraning':
+      return 'alert-triangle-outline';
+    case 'info':
+      return 'info-outline';
     case 'default':
       return 'clock-outline';
     default:
@@ -22,6 +26,10 @@ const renderColor = type => {
       return '#4CAF50cc';
     case 'danger':
       return '#F44336cc';
+    case 'warning':
+      return '#FBC02Dcc';
+    case 'info':
+      return '#03A9F4cc';
     case 'default':
       return '#9E9E9Ecc';
     default:
@@ -47,7 +55,12 @@ const Header = ({ title, subtitle, type, isUnseen }) => (
           ...styles.containerHeaderIconHolder,
           backgroundColor: renderColor(type),
         }}>
-        <Icon width={s(18)} height={s(18)} name={renderIcon(type)} fill="white" />
+        <Icon
+          width={s(18)}
+          height={s(18)}
+          name={renderIcon(type)}
+          fill="white"
+        />
       </View>
     </View>
   </View>

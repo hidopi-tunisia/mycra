@@ -1,54 +1,49 @@
-import { useEffect, useState, useCallback } from 'react';
-import { View, TouchableOpacity, StatusBar } from 'react-native';
-import { Button, Icon, Layout, Text } from '@ui-kitten/components';
-import { Calendar, BottomSheet, WorkdaysTypes, M } from '@components';
-import { getDaysInMonth } from '@utils/dates';
-import styles from './index.styles';
+import { Calendar, M, WorkdaysTypes } from '@components';
 import Modal from '@components/modals';
 import Colors from '@constants/colors';
-import moment from 'moment';
-import CRAHistoryDetailsForm from '@components/cra-history-details-form';
-import SystemNavigationBar from 'react-native-system-navigation-bar';
 import {
   useFocusEffect,
   useNavigation,
   useRoute,
 } from '@react-navigation/native';
+import { Button, Icon, Layout, Spinner, Text } from '@ui-kitten/components';
+import moment from 'moment';
+import { useCallback, useEffect, useState } from 'react';
+import {
+  PermissionsAndroid,
+  StatusBar,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import { s } from 'react-native-size-matters';
+import SystemNavigationBar from 'react-native-system-navigation-bar';
+import styles from './index.styles';
+import { getHistoryItem } from '@screens/home/composables';
 import { getCRA } from '@domain/cra';
-import { getStatusType } from '../index.helpers';
-import { renderColor } from '@components/cra-history-item';
 
-const CRAHistoryDetailsScreen = ({ onBlur, onFocus }) => {
+const CRAHistoryDetailsScreen = ({ onFocus, onBlur }) => {
   const {
     params: { id },
   } = useRoute();
-  const navigation = useNavigation();
   const [loadingFetch, setLoadingFetch] = useState(false);
   const [errorFetch, setErrorFetch] = useState(null);
   const [loadingSubmit, setLoadingSubmit] = useState(false);
   const [errorSubmit, setErrorSubmit] = useState(null);
-  const [markedDates, setMarkedDates] = useState(null);
+  const [cra, setCRA] = useState(null);
+  const [markedDates, setMarkedDates] = useState({});
   const [selectedCount, setSelectedCount] = useState(null);
-  const [initialDate, setInitialDate] = useState(null);
-  const [currentDay, setCurrentDay] = useState(null);
-  const [status, setStatus] = useState(null);
+  const [currentMonth, setCurrentMonth] = useState(moment().format('MMMM'));
   const [holiday, setHoliday] = useState(null);
   const [weekend, setWeekend] = useState(null);
-  const [off, setOff] = useState(null);
-  const [currentMonth, setCurrentMonth] = useState(null);
-  const [currentYear, setCurrentYear] = useState(null);
-  const [modalHelpVisible, setModalHelpVisible] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
   const [modalHolidayVisible, setModalHolidayVisible] = useState(false);
   const [modalWeekendVisible, setModalWeekendVisible] = useState(false);
-  const [modalOffVisible, setModalOffVisible] = useState(false);
+  const [modalHelpVisible, setModalHelpVisible] = useState(false);
 
   useFocusEffect(
     useCallback(() => {
       StatusBar.setBackgroundColor(Colors.ORANGE_DARK_PRIMARY);
-      SystemNavigationBar.setNavigationColor(
-        Colors.ORANGE_DARK_PRIMARY,
-        'light',
-      );
+      SystemNavigationBar.setNavigationColor(Colors.ORANGE_PRIMARY, 'light');
       onFocus(Colors.ORANGE_DARK_PRIMARY);
       return () => {
         StatusBar.setBackgroundColor(Colors.BLUE_DARK_PRIMARY);
@@ -62,85 +57,104 @@ const CRAHistoryDetailsScreen = ({ onBlur, onFocus }) => {
       try {
         setLoadingFetch(false);
         setErrorFetch(null);
-        const { data } = await getCRA(id);
-        const year = data.date_debut_du_mois.substring(0, 4);
-        const month = data.date_debut_du_mois.substring(5, 7);
-        const day = data.date_debut_du_mois.substring(8, 10);
-        setStatus(data.status);
-        setCurrentYear(year);
-        setCurrentMonth(moment(`${year}-${month}-${day}`).format('MMMM'));
-        setInitialDate(`${year}-${month}-${day}`);
-        const days = getDaysInMonth(`${year}-${month}`);
-        const marked = {};
-        setSelectedCount(days.length);
-        for (let i = 0; i < days.length; i++) {
-          const today = new Date(days[i]).getDay();
-          if (today === 6 || today === 0) {
-            marked[days[i]] = {
-              type: WorkdaysTypes.WEEKEND,
-              customStyles: styles.calendarDayWeekend,
-            };
-          }
-        }
-        const { joursTravailles, datesNonTravaillees } = data;
-        if (Array.isArray(joursTravailles) && joursTravailles.length > 0) {
-          joursTravailles.forEach(j => {
-            if (j.travaille) {
-              const date = moment(j.date).format('YYYY-MM-DD');
-              marked[date] = {
-                type: WorkdaysTypes.WORKING,
-                customStyles: styles.calendarDayWorking,
-                disableTouchEvent: true,
-              };
-            } else if (j.nomJourFerieDuMois) {
-              const date = moment(j.date).format('YYYY-MM-DD');
-              marked[date] = {
-                type: WorkdaysTypes.HOLIDAY,
-                customStyles: styles.calendarDayHoliday,
-                payload: {
-                  value: j.nomJourFerieDuMois,
-                },
-              };
-            }
-          });
-        }
-        if (
-          Array.isArray(datesNonTravaillees) &&
-          datesNonTravaillees.length > 0
-        ) {
-          datesNonTravaillees.forEach(d => {
-            const date = moment(d.date).format('YYYY-MM-DD');
-            marked[date] = {
-              type: WorkdaysTypes.OFF,
-              customStyles: styles.calendarDayOff,
-              payload: {
-                value: d.raison,
-              },
-            };
-          });
-        }
-        setMarkedDates(marked);
+        const { data } = await getCRA(id, { populate: 'project' });
+        setCRA(data);
         setLoadingFetch(false);
+        const marked = {};
+        const { working, half, remote, off, weekends, holidays } = data;
+        working.forEach(element => {
+          marked[element.date] = {
+            type: WorkdaysTypes.WORKING,
+            customStyles: styles.calendarDayWorking,
+            disableTouchEvent: true,
+          };
+        });
+        working.forEach(element => {
+          marked[element.date] = {
+            type: WorkdaysTypes.WORKING,
+            customStyles: styles.calendarDayWorking,
+            disableTouchEvent: true,
+          };
+        });
+        half.forEach(element => {
+          marked[element.date] = {
+            type: WorkdaysTypes.HALF,
+            customStyles: styles.calendarHalfDay,
+            disableTouchEvent: true,
+          };
+        });
+        remote.forEach(element => {
+          marked[element.date] = {
+            type: WorkdaysTypes.REMOTE,
+            customStyles: styles.calendarDayRemote,
+            disableTouchEvent: true,
+          };
+        });
+        off.forEach(element => {
+          marked[element.date] = {
+            type: WorkdaysTypes.OFF,
+            customStyles: styles.calendarDayOff,
+            meta: {
+              value: element.meta.value,
+            },
+            disableTouchEvent: true,
+          };
+        });
+        weekends.forEach(element => {
+          marked[element.date] = {
+            type: WorkdaysTypes.WEEKEND,
+            customStyles: styles.calendarDayWeekend,
+          };
+        });
+        holidays.forEach(element => {
+          marked[element.date] = {
+            type: WorkdaysTypes.HOLIDAY,
+            meta: {
+              value: element.name,
+            },
+            customStyles: styles.calendarDayHoliday,
+          };
+        });
+        setMarkedDates(marked);
       } catch (error) {
         setLoadingFetch(false);
         setErrorFetch(error);
-        console.info(error);
+        console.log(error);
       }
     };
     fn();
   }, []);
+  useEffect(() => {
+    const selectedDates = Object.keys(markedDates).filter(
+      d => markedDates[d].type === WorkdaysTypes.WORKING,
+    );
+    setSelectedCount(selectedDates.length);
+  }, [markedDates]);
+  useEffect(() => {
+    PermissionsAndroid.request(
+      PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS,
+    );
+  }, []);
+
+  const handleSelected = day => {
+    if (markedDates[day.dateString].type === WorkdaysTypes.HOLIDAY) {
+      setHoliday({
+        date: day.dateString,
+        name: markedDates[day.dateString].meta.value,
+      });
+      setModalHolidayVisible(true);
+    } else if (markedDates[day.dateString].type === WorkdaysTypes.WEEKEND) {
+      setWeekend({
+        date: day.dateString,
+      });
+      setModalWeekendVisible(true);
+    }
+  };
+  const handlePressPositive = () => {
+    setModalVisible(false);
+  };
   const handleSubmit = () => {
     setModalVisible(true);
-  };
-  const [refBottomSheet, setRefBottomSheet] = useState(null);
-  const handleReportIssue = () => {
-    refBottomSheet.open();
-  };
-  const handleRefBottomSheet = ref => {
-    setRefBottomSheet(ref);
-  };
-  const handlePressClose = () => {
-    refBottomSheet.close();
   };
   const handlePressHolidayPositive = () => {
     setHoliday(null);
@@ -150,52 +164,21 @@ const CRAHistoryDetailsScreen = ({ onBlur, onFocus }) => {
     setWeekend(null);
     setModalWeekendVisible(false);
   };
-  const handlePressOffPositive = () => {
-    setOff(null);
-    setModalOffVisible(false);
-  };
-  const handleSelected = day => {
-    if (markedDates[day.dateString].type === WorkdaysTypes.HOLIDAY) {
-      setHoliday({
-        date: day.dateString,
-        name: markedDates[day.dateString].payload.value,
-      });
-      setModalHolidayVisible(true);
-    } else if (markedDates[day.dateString].type === WorkdaysTypes.WEEKEND) {
-      setWeekend({
-        date: day.dateString,
-      });
-      setModalWeekendVisible(true);
-    } else if (
-      markedDates[day.dateString] &&
-      markedDates[day.dateString].type === WorkdaysTypes.OFF
-    ) {
-      setOff({
-        date: day.dateString,
-        reason: markedDates[day.dateString].payload.value,
-      });
-      setModalOffVisible(true);
+  const getModalTitle = s => {
+    if (s === 'submitted') {
+      return 'Waiting for approval';
+    } else if (s === 'rejected') {
+      return 'Rejected';
+    } else if (s === 'approved') {
+      return 'Approved';
     }
   };
-  const handlePressBack = () => {
-    navigation.goBack();
-  };
-  return (
+  return !loadingFetch && cra ? (
     <Layout style={styles.root}>
       <View style={styles.top}>
-        <TouchableOpacity
-          onPress={handlePressBack}
-          style={styles.containerBack}>
-          <Icon
-            width={36}
-            height={36}
-            name="chevron-left-outline"
-            fill={Colors.WHITE}
-          />
-        </TouchableOpacity>
         <View style={styles.containerDescription}>
           <View style={styles.containerHeading}>
-            <Text style={styles.textHeading}>History</Text>
+            <Text style={styles.textHeading}>My CRA</Text>
             <TouchableOpacity onPress={() => setModalHelpVisible(true)}>
               <Icon
                 fill={Colors.WHITE}
@@ -206,44 +189,32 @@ const CRAHistoryDetailsScreen = ({ onBlur, onFocus }) => {
             </TouchableOpacity>
           </View>
           <M v1 />
-          <Text style={styles.textDescription}>
-            Thank you for filling the data.
-          </Text>
-          {/* <Text style={styles.textWarning}>
-            The month is already prefilled.
-          </Text> */}
+          {cra.project && (
+            <TouchableOpacity>
+              <View style={styles.containerProjects}>
+                <Text style={styles.textDescription}>
+                  Project: {cra.project.name}
+                </Text>
+              </View>
+            </TouchableOpacity>
+          )}
         </View>
       </View>
       <View style={styles.middle}>
         <View style={styles.containerCalendar}>
           <View style={styles.containerCalendarHeader}>
-            <Text style={styles.containerCalendarTitle}>
-              {currentMonth} {currentYear}
-            </Text>
-            <Text
-              style={{
-                ...styles.containerCalendarStatus,
-                color: renderColor(getStatusType(status)),
-              }}>
-              {status}
-            </Text>
+            <Text style={styles.containerCalendarTitle}>{currentMonth}</Text>
           </View>
           <M v1 />
-          {initialDate && markedDates && (
-            <Calendar
-              initialDate={initialDate}
-              markedDates={markedDates}
-              onDayPress={handleSelected}
-            />
-          )}
+          <Calendar markedDates={markedDates} onDayPress={handleSelected} />
         </View>
         <View style={styles.containerLegends}>
           <View style={styles.containerLegend}>
             <View
               style={{
                 ...styles.shapeLegend,
-                backgroundColor: Colors.ORANGE_PRIMARY,
-                borderColor: Colors.ORANGE_PRIMARY,
+                backgroundColor: Colors.BLUE_PRIMARY,
+                borderColor: Colors.BLUE_PRIMARY,
               }}
             />
             <M h1 />
@@ -254,7 +225,7 @@ const CRAHistoryDetailsScreen = ({ onBlur, onFocus }) => {
               style={{
                 ...styles.shapeLegend,
                 backgroundColor: Colors.WHITE,
-                borderColor: Colors.ORANGE_PRIMARY,
+                borderColor: Colors.BLUE_PRIMARY,
               }}
             />
             <M h1 />
@@ -271,6 +242,17 @@ const CRAHistoryDetailsScreen = ({ onBlur, onFocus }) => {
             <M h1 />
             <Text>Remote</Text>
           </View>
+          {/* <View style={styles.containerLegend}>
+        <View
+          style={{
+            ...styles.shapeLegend,
+            backgroundColor: Colors.WHITE,
+            borderColor: Colors.GRAY_DARK_PRIMARY,
+          }}
+        />
+        <M h1 />
+        <Text>Unavailable</Text>
+      </View> -- TODO: Unavailable */}
           <View style={styles.containerLegend}>
             <View
               style={{
@@ -286,19 +268,170 @@ const CRAHistoryDetailsScreen = ({ onBlur, onFocus }) => {
         <M v2 />
         <View style={styles.containerButton}>
           <Button
-            status="warning"
             style={styles.buttonSubmit}
-            onPress={handleReportIssue}>
-            Report an issue
+            status="control"
+            onPress={handleSubmit}>
+            CRA is pending
           </Button>
         </View>
       </View>
+      <Modal
+        title={getModalTitle(cra.status)}
+        type="confirm"
+        visible={modalVisible}
+        onPressPositive={handlePressPositive}>
+        {cra.status === 'pending' && (
+          <Text>
+            CRA submitted
+            {getHistoryItem(cra.history, 'submitted') &&
+            getHistoryItem(cra.history, 'submitted').at
+              ? ` at ${getHistoryItem(cra.history, 'submitted').at.substring(
+                  0,
+                  10,
+                )} ${getHistoryItem(cra.history, 'submitted').at.substring(
+                  11,
+                  16,
+                )}`
+              : ''}
+          </Text>
+        )}
+        {cra.status === 'rejected' && (
+          <Text>
+            CRA rejected
+            {getHistoryItem(cra.history, 'rejected') &&
+            getHistoryItem(cra.history, 'rejected').at
+              ? ` at ${getHistoryItem(cra.history, 'rejected').at.substring(
+                  0,
+                  10,
+                )} ${getHistoryItem(cra.history, 'rejected').at.substring(
+                  11,
+                  16,
+                )}`
+              : ''}
+          </Text>
+        )}
+        {cra.status === 'approved' && (
+          <Text>
+            CRA approved
+            {getHistoryItem(cra.history, 'approved') &&
+            getHistoryItem(cra.history, 'approved').at
+              ? ` at ${getHistoryItem(cra.history, 'approved').at.substring(
+                  0,
+                  10,
+                )} ${getHistoryItem(cra.history, 'approved').at.substring(
+                  11,
+                  16,
+                )}`
+              : ''}
+          </Text>
+        )}
+        <M v2 />
+        <Text>Days summary:</Text>
+        <View style={styles.containerLegends}>
+          <View style={styles.containerLegend}>
+            <View
+              style={{
+                ...styles.shapeLegend,
+                backgroundColor: Colors.BLUE_PRIMARY,
+                borderColor: Colors.BLUE_PRIMARY,
+              }}
+            />
+            <M h1 />
+            <Text>Working ({cra.working?.length})</Text>
+          </View>
+          <View style={styles.containerLegend}>
+            <View
+              style={{
+                ...styles.shapeLegend,
+                backgroundColor: Colors.WHITE,
+                borderColor: Colors.BLUE_PRIMARY,
+              }}
+            />
+            <M h1 />
+            <Text>Half ({cra.half?.length})</Text>
+          </View>
+          <View style={styles.containerLegend}>
+            <View
+              style={{
+                ...styles.shapeLegend,
+                backgroundColor: Colors.PURPLE_PRIMARY,
+                borderColor: Colors.PURPLE_PRIMARY,
+              }}
+            />
+            <M h1 />
+            <Text>Remote ({cra.remote?.length})</Text>
+          </View>
+          {/* <View style={styles.containerLegend}>
+        <View
+          style={{
+            ...styles.shapeLegend,
+            backgroundColor: Colors.GRAY_DARK_PRIMARY,
+            borderColor: Colors.GRAY_DARK_PRIMARY,
+          }}
+        />
+        <M h1 />
+        <Text>Unavailable</Text>
+      </View> --  TODO: Unavailable */}
+          <View style={styles.containerLegend}>
+            <View
+              style={{
+                ...styles.shapeLegend,
+                backgroundColor: Colors.WHITE,
+                borderColor: Colors.RED_PRIMARY,
+              }}
+            />
+            <M h1 />
+            <Text>Off ({cra.off?.length})</Text>
+          </View>
+          <View style={styles.containerLegend}>
+            <View
+              style={{
+                ...styles.shapeLegend,
+                backgroundColor: Colors.WHITE,
+                borderColor: Colors.GREEN_PRIMARY,
+              }}
+            />
+            <M h1 />
+            <Text>Weekends ({cra.weekends?.length})</Text>
+          </View>
+          <View style={styles.containerLegend}>
+            <View
+              style={{
+                ...styles.shapeLegend,
+                backgroundColor: Colors.GREEN_PRIMARY,
+                borderColor: Colors.GREEN_PRIMARY,
+              }}
+            />
+            <M h1 />
+            <Text>Holiday ({cra.holidays?.length})</Text>
+          </View>
+        </View>
+      </Modal>
+      <Modal
+        title="Holiday"
+        type="info"
+        visible={modalHolidayVisible}
+        onPressPositive={handlePressHolidayPositive}>
+        {holiday && (
+          <Text>
+            {holiday.date} is a holiday called "{holiday.name}".
+          </Text>
+        )}
+      </Modal>
+      <Modal
+        title="Weekend"
+        type="info"
+        visible={modalWeekendVisible}
+        onPressPositive={handlePressWeekendPositive}>
+        {weekend && <Text>{weekend.date} is a weekend.</Text>}
+      </Modal>
       <Modal
         title="Help"
         type="info"
         visible={modalHelpVisible}
         onPressPositive={() => setModalHelpVisible(false)}>
-        <Text>Thank you for filling the data.</Text>
+        <Text>Fill your working days accordingly.</Text>
+        <Text>Long press on a day to view more options.</Text>
         <M v2 />
         <Text>Legend:</Text>
         <View style={styles.containerLegends}>
@@ -306,8 +439,8 @@ const CRAHistoryDetailsScreen = ({ onBlur, onFocus }) => {
             <View
               style={{
                 ...styles.shapeLegend,
-                backgroundColor: Colors.ORANGE_PRIMARY,
-                borderColor: Colors.ORANGE_PRIMARY,
+                backgroundColor: Colors.BLUE_PRIMARY,
+                borderColor: Colors.BLUE_PRIMARY,
               }}
             />
             <M h1 />
@@ -318,7 +451,7 @@ const CRAHistoryDetailsScreen = ({ onBlur, onFocus }) => {
               style={{
                 ...styles.shapeLegend,
                 backgroundColor: Colors.WHITE,
-                borderColor: Colors.ORANGE_PRIMARY,
+                borderColor: Colors.BLUE_PRIMARY,
               }}
             />
             <M h1 />
@@ -335,6 +468,17 @@ const CRAHistoryDetailsScreen = ({ onBlur, onFocus }) => {
             <M h1 />
             <Text>Remote</Text>
           </View>
+          {/* <View style={styles.containerLegend}>
+        <View
+          style={{
+            ...styles.shapeLegend,
+            backgroundColor: Colors.GRAY_DARK_PRIMARY,
+            borderColor: Colors.GRAY_DARK_PRIMARY,
+          }}
+        />
+        <M h1 />
+        <Text>Unavailable</Text>
+      </View> --  TODO: Unavailable */}
           <View style={styles.containerLegend}>
             <View
               style={{
@@ -370,41 +514,10 @@ const CRAHistoryDetailsScreen = ({ onBlur, onFocus }) => {
           </View>
         </View>
       </Modal>
-      <Modal
-        title="Holiday"
-        type="info"
-        visible={modalHolidayVisible}
-        onPressPositive={handlePressHolidayPositive}>
-        {holiday && (
-          <Text>
-            {holiday.date} is a holiday called "{holiday.name}".
-          </Text>
-        )}
-      </Modal>
-      <Modal
-        title="Weekend"
-        type="info"
-        visible={modalWeekendVisible}
-        onPressPositive={handlePressWeekendPositive}>
-        {weekend && <Text>{weekend.date} is a weekend.</Text>}
-      </Modal>
-      <Modal
-        title="Off"
-        type="info"
-        visible={modalOffVisible}
-        onPressPositive={handlePressOffPositive}>
-        {off && (
-          <Text>
-            The reason you were absent in {off.date} is ({off.reason}).
-          </Text>
-        )}
-      </Modal>
-      <BottomSheet height={300} onCallbackRef={handleRefBottomSheet}>
-        <CRAHistoryDetailsForm
-          onPressClose={handlePressClose}
-          onSubmit={handleSubmit}
-        />
-      </BottomSheet>
+    </Layout>
+  ) : (
+    <Layout style={styles.containerLoader}>
+      <Spinner status="warning" size="medium" />
     </Layout>
   );
 };

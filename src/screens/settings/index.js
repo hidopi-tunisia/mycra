@@ -18,12 +18,12 @@ import { setItem } from '@domain/storage';
 import { useNavigation } from '@react-navigation/native';
 import { Icon, Spinner, Text } from '@ui-kitten/components';
 import { renderFlag } from '@utils/flags';
-import { Locales, i18n } from '@utils/translations';
 import { useEffect, useState } from 'react';
 import { Linking, ScrollView, TouchableOpacity, View } from 'react-native';
 import { s, vs } from 'react-native-size-matters';
 import { renderAvatar } from './index.helpers';
 import styles from './index.styles';
+import { Locales, i18n } from '@utils/translations';
 
 const SettingsScreen = () => {
   const navigation = useNavigation();
@@ -232,8 +232,8 @@ const SettingsScreen = () => {
       <View style={styles.bottom}>
         <ScrollView showsVerticalScrollIndicator={false} style={styles.card}>
           <SettingsItem
-            title="CRA History"
-            description="View your past CRAs"
+            title={i18n.t('Settings.items.CRA History:title')}
+            description={i18n.t('Settings.items.CRA History:description')}
             icon="clock-outline"
             onPress={handleCRAHistory}
           />

@@ -1,15 +1,13 @@
 import { getCurrentCRAs } from '@domain/me';
 import { useEffect, useState } from 'react';
-import { Image, PermissionsAndroid } from 'react-native';
+import { PermissionsAndroid } from 'react-native';
+import ApprovedCRAs from './components/approved-cras';
+import HomeLoading from './components/loading';
+import NoCRAs from './components/no-cras';
 import NoProjects from './components/no-projects';
+import PendingCRAs from './components/pending-cras';
 import RejectedCRAs from './components/rejected-cras';
 import { getProjects, subscribeToConsultantTopic } from './composables';
-import ApprovedCRAs from './components/approved-cras';
-import PendingCRAs from './components/pending-cras';
-import NoCRAs from './components/no-cras';
-import styles from './index.styles';
-import { Layout } from '@ui-kitten/components';
-import HomeLoading from './components/loading';
 
 const HomeScreen = ({ onFocus, onBlur }) => {
   const [loading, setLoading] = useState(false);
@@ -28,6 +26,11 @@ const HomeScreen = ({ onFocus, onBlur }) => {
     try {
       setLoading(true);
       setLoadingTryAgain(true);
+      setDisplayNoProjects(false);
+      setDisplayApprovedCRA(false)
+      setDisplayRejectedCRA(false)
+      setDisplayPendingCRA(false)
+      setDisplayNoCRA(false)
       const ps = await getProjects();
       setProjects(ps);
       if (ps.length > 0) {
@@ -62,7 +65,10 @@ const HomeScreen = ({ onFocus, onBlur }) => {
     } catch (error) {
       setLoadingTryAgain(false);
       setLoading(false);
-      console.info(error);
+      if (error?.response?.data?.name === 'NoCurrentProjects') {
+        setDisplayNoProjects(true);
+      }
+      console.info(error, error?.response?.data);
     }
   };
   useEffect(() => {

@@ -475,7 +475,7 @@ const RejectedCRAs = ({ cra, projects, onFocus, onBlur }) => {
             ? ` at ${
                 (cra.history,
                 getHistoryItem(cra.history, 'rejected').at.substring(0, 10))
-              } ${getHistoryItem(cra.history, 'rejected').substring(11, 16)}`
+              } ${getHistoryItem(cra.history, 'rejected').at.substring(11, 16)}`
             : ''}
         </Text>
         {getHistoryItem(cra.history, 'rejected') &&

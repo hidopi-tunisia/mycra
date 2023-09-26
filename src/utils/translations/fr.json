@@ -7,5 +7,11 @@
     "forgot password?": "Mot de passe oublié ?",
     "btn_sign in": "Se connecter",
     "version:": "Version :"
+  },
+  "Settings": {
+    "items": {
+      "CRA History:title": "Historique des CRAs",
+      "CRA History:description": "Consulter votre anciens CRAs"
+    }
   }
 }

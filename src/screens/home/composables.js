@@ -25,7 +25,8 @@ const subscribeToConsultantTopic = async () => {
   try {
     const u = await currentUser();
     if (u !== null && u.uid) {
-      await subscribeToTopic(`${Topics.CONSULTANT}~${u.uid}`);
+      await subscribeToTopic(`${Topics.CONSULTANTS}~${u.uid}`);
+      subscribeToTopic(`${Topics.CONSULTANTS_ALL}`)
     }
   } catch (error) {
     console.info(error);
