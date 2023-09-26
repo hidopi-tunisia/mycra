@@ -164,6 +164,15 @@ const CRAHistoryDetailsScreen = ({ onFocus, onBlur }) => {
     setWeekend(null);
     setModalWeekendVisible(false);
   };
+  const getModalTitle = s => {
+    if (s === 'submitted') {
+      return 'Waiting for approval';
+    } else if (s === 'rejected') {
+      return 'Rejected';
+    } else if (s === 'approved') {
+      return 'Approved';
+    }
+  };
   return !loadingFetch && cra ? (
     <Layout style={styles.root}>
       <View style={styles.top}>
@@ -180,11 +189,15 @@ const CRAHistoryDetailsScreen = ({ onFocus, onBlur }) => {
             </TouchableOpacity>
           </View>
           <M v1 />
-          {cra.project && <TouchableOpacity>
-            <View style={styles.containerProjects}>
-              <Text style={styles.textDescription}>Project: {cra.project.name}</Text>
-            </View>
-          </TouchableOpacity>}
+          {cra.project && (
+            <TouchableOpacity>
+              <View style={styles.containerProjects}>
+                <Text style={styles.textDescription}>
+                  Project: {cra.project.name}
+                </Text>
+              </View>
+            </TouchableOpacity>
+          )}
         </View>
       </View>
       <View style={styles.middle}>
@@ -263,23 +276,55 @@ const CRAHistoryDetailsScreen = ({ onFocus, onBlur }) => {
         </View>
       </View>
       <Modal
-        title="Waiting for approval"
+        title={getModalTitle(cra.status)}
         type="confirm"
         visible={modalVisible}
         onPressPositive={handlePressPositive}>
-        <Text>
-          CRA submitted
-          {getHistoryItem(cra.history, 'submitted') &&
-          getHistoryItem(cra.history, 'submitted').at
-            ? ` at ${getHistoryItem(cra.history, 'submitted').at.substring(
-                0,
-                10,
-              )} ${getHistoryItem(cra.history, 'submitted').at.substring(
-                11,
-                16,
-              )}`
-            : ''}
-        </Text>
+        {cra.status === 'pending' && (
+          <Text>
+            CRA submitted
+            {getHistoryItem(cra.history, 'submitted') &&
+            getHistoryItem(cra.history, 'submitted').at
+              ? ` at ${getHistoryItem(cra.history, 'submitted').at.substring(
+                  0,
+                  10,
+                )} ${getHistoryItem(cra.history, 'submitted').at.substring(
+                  11,
+                  16,
+                )}`
+              : ''}
+          </Text>
+        )}
+        {cra.status === 'rejected' && (
+          <Text>
+            CRA rejected
+            {getHistoryItem(cra.history, 'rejected') &&
+            getHistoryItem(cra.history, 'rejected').at
+              ? ` at ${getHistoryItem(cra.history, 'rejected').at.substring(
+                  0,
+                  10,
+                )} ${getHistoryItem(cra.history, 'rejected').at.substring(
+                  11,
+                  16,
+                )}`
+              : ''}
+          </Text>
+        )}
+        {cra.status === 'approved' && (
+          <Text>
+            CRA approved
+            {getHistoryItem(cra.history, 'approved') &&
+            getHistoryItem(cra.history, 'approved').at
+              ? ` at ${getHistoryItem(cra.history, 'approved').at.substring(
+                  0,
+                  10,
+                )} ${getHistoryItem(cra.history, 'approved').at.substring(
+                  11,
+                  16,
+                )}`
+              : ''}
+          </Text>
+        )}
         <M v2 />
         <Text>Days summary:</Text>
         <View style={styles.containerLegends}>
