@@ -100,7 +100,7 @@ const styles = ScaledSheet.create({
     color: Colors.BLUE_DARK_PRIMARY,
     fontSize: '18@s',
     fontWeight: '900',
-    textTransform: 'capitalize',
+    textTransform: 'capitalize'
   },
   calendarDayWorking: {
     container: {
