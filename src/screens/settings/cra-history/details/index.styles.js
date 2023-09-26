@@ -24,6 +24,11 @@ const styles = ScaledSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
   },
+  containerBack: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   containerLegends: {
     width: '90%',
     alignSelf: 'center',
@@ -56,6 +61,7 @@ const styles = ScaledSheet.create({
     fontSize: '24@s',
     fontWeight: '900',
     color: Colors.WHITE,
+    textAlignVertical: 'center',
   },
   containerProjects: {
     flexDirection: 'row',
@@ -87,13 +93,14 @@ const styles = ScaledSheet.create({
   containerCalendarHeader: {
     paddingHorizontal: '12@s',
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     alignItems: 'center',
   },
   containerCalendarTitle: {
     color: Colors.BLUE_DARK_PRIMARY,
     fontSize: '18@s',
     fontWeight: '900',
+    textTransform: 'capitalize'
   },
   calendarDayWorking: {
     container: {
@@ -171,7 +178,7 @@ const styles = ScaledSheet.create({
   containerLoader: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
 });
 

@@ -21,7 +21,7 @@ import styles from './index.styles';
 import { getHistoryItem } from '@screens/home/composables';
 import { getCRA } from '@domain/cra';
 
-const CRAHistoryDetailsScreen = ({ onFocus, onBlur }) => {
+const CRAHistoryDetailsScreen = ({ navigation, onFocus, onBlur }) => {
   const {
     params: { id },
   } = useRoute();
@@ -33,6 +33,7 @@ const CRAHistoryDetailsScreen = ({ onFocus, onBlur }) => {
   const [markedDates, setMarkedDates] = useState({});
   const [selectedCount, setSelectedCount] = useState(null);
   const [currentMonth, setCurrentMonth] = useState(moment().format('MMMM'));
+  const [currentYear, setCurrentYear] = useState(moment().format('YYYY'));
   const [holiday, setHoliday] = useState(null);
   const [weekend, setWeekend] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
@@ -173,13 +174,26 @@ const CRAHistoryDetailsScreen = ({ onFocus, onBlur }) => {
       return 'Approved';
     }
   };
+  const handlePressBack = () => {
+    navigation.goBack();
+  };
   return !loadingFetch && cra ? (
     <Layout style={styles.root}>
       <View style={styles.top}>
         <View style={styles.containerDescription}>
           <View style={styles.containerHeading}>
-            <Text style={styles.textHeading}>My CRA</Text>
-            <TouchableOpacity onPress={() => setModalHelpVisible(true)}>
+            <TouchableOpacity onPress={handlePressBack}>
+              <View style={styles.containerBack}>
+                <Icon
+                  fill={Colors.WHITE}
+                  name="chevron-left"
+                  width={36}
+                  height={36}
+                />
+                <Text style={styles.textHeading}>History</Text>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={handlePressBack}>
               <Icon
                 fill={Colors.WHITE}
                 name="question-mark-circle-outline"
@@ -203,7 +217,7 @@ const CRAHistoryDetailsScreen = ({ onFocus, onBlur }) => {
       <View style={styles.middle}>
         <View style={styles.containerCalendar}>
           <View style={styles.containerCalendarHeader}>
-            <Text style={styles.containerCalendarTitle}>{currentMonth}</Text>
+            <Text style={styles.containerCalendarTitle}>{currentMonth} {currentYear}</Text>
           </View>
           <M v1 />
           <Calendar markedDates={markedDates} onDayPress={handleSelected} />
@@ -430,8 +444,7 @@ const CRAHistoryDetailsScreen = ({ onFocus, onBlur }) => {
         type="info"
         visible={modalHelpVisible}
         onPressPositive={() => setModalHelpVisible(false)}>
-        <Text>Fill your working days accordingly.</Text>
-        <Text>Long press on a day to view more options.</Text>
+        <Text>This is a already submitted CRA.</Text>
         <M v2 />
         <Text>Legend:</Text>
         <View style={styles.containerLegends}>
