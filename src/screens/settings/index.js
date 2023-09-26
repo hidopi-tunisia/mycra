@@ -232,8 +232,8 @@ const SettingsScreen = () => {
       <View style={styles.bottom}>
         <ScrollView showsVerticalScrollIndicator={false} style={styles.card}>
           <SettingsItem
-            title={i18n.t("Settings.items.CRA History:title")}
-            description={i18n.t("Settings.items.CRA History:description")}
+            title={i18n.t('Settings.items.CRA History:title')}
+            description={i18n.t('Settings.items.CRA History:description')}
             icon="clock-outline"
             onPress={handleCRAHistory}
           />

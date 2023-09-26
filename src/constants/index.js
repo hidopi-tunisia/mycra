@@ -12,6 +12,7 @@ export const SUPPORT_EMAIL = 'support@acme.com';
 export const APP_VERSION = '1.0.0';
 
 export const Topics = {
-  CONSULTANT: "consultant"
+  CONSULTANTS: "consultants",
+  CONSULTANTS_ALL: "consultants_all"
 };
 export const INTRO_DONE = 'intro_done';

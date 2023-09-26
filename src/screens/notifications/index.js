@@ -1,12 +1,11 @@
-import { useState, useEffect, useRef } from 'react';
-import { View, TouchableOpacity, Button, FlatList } from 'react-native';
-import { Divider, Layout, Text } from '@ui-kitten/components';
-import { NotificationsItem, BottomSheet, M } from '@components';
-import styles from './index.styles';
-import Fab from '@components/fab';
+import { BottomSheet, M, NotificationsItem } from '@components';
 import AlertForm from '@components/alert-form';
+import Fab from '@components/fab';
 import { getItem, setItem } from '@domain/storage';
-import { i18n } from '@utils/translations';
+import { Layout, Text } from '@ui-kitten/components';
+import { useRef, useState } from 'react';
+import { FlatList, TouchableOpacity, View } from 'react-native';
+import styles from './index.styles';
 
 const NotificationsScreen = ({ notifications }) => {
   const [refBottomSheet, setRefBottomSheet] = useState(null);
@@ -73,7 +72,7 @@ const NotificationsScreen = ({ notifications }) => {
                     .toISOString()
                     .substring(0, 16)
                     .replaceAll('T', ' at ')}
-                  type="danger"
+                  type={item?.data?.severity}
                   content={item?.data?.body}
                   isUnseen={item.isUnseen}
                   onPress={() => handlePressItem(item.messageId)}
