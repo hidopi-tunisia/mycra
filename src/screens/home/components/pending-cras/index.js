@@ -15,6 +15,7 @@ import { s } from 'react-native-size-matters';
 import SystemNavigationBar from 'react-native-system-navigation-bar';
 import styles from './index.styles';
 import { getHistoryItem } from '@screens/home/composables';
+import { i18n } from '@utils/translations';
 
 const PendingCRAs = ({ cra, projects, onFocus, onBlur }) => {
   const [loadingFetch, setLoadingFetch] = useState(false);
@@ -161,7 +162,7 @@ const PendingCRAs = ({ cra, projects, onFocus, onBlur }) => {
           <TouchableOpacity disabled={projects.length < 2}>
             <View style={styles.containerProjects}>
               <Text style={styles.textDescription}>
-                Project - {selectedProject.name}
+                {i18n.t('Home.pending-cras.Project')} - {selectedProject.name}
               </Text>
               <M h1 />
               {projects.length > 1 && (
@@ -194,7 +195,7 @@ const PendingCRAs = ({ cra, projects, onFocus, onBlur }) => {
               }}
             />
             <M h1 />
-            <Text>Working</Text>
+            <Text>{i18n.t('Home.pending-cras.Working')}</Text>
           </View>
           <View style={styles.containerLegend}>
             <View
@@ -205,7 +206,7 @@ const PendingCRAs = ({ cra, projects, onFocus, onBlur }) => {
               }}
             />
             <M h1 />
-            <Text>Half day</Text>
+            <Text>{i18n.t('Home.pending-cras.Half day')}</Text>
           </View>
           <View style={styles.containerLegend}>
             <View
@@ -216,7 +217,7 @@ const PendingCRAs = ({ cra, projects, onFocus, onBlur }) => {
               }}
             />
             <M h1 />
-            <Text>Remote</Text>
+            <Text>{i18n.t('Home.pending-cras.Remote')}</Text>
           </View>
           {/* <View style={styles.containerLegend}>
             <View
@@ -227,7 +228,7 @@ const PendingCRAs = ({ cra, projects, onFocus, onBlur }) => {
               }}
             />
             <M h1 />
-            <Text>Unavailable</Text>
+            <Text>{i18n.t('Home.pending-cras.Unavailable')}</Text>
           </View> -- TODO: Unavailable */}
           <View style={styles.containerLegend}>
             <View
@@ -238,7 +239,7 @@ const PendingCRAs = ({ cra, projects, onFocus, onBlur }) => {
               }}
             />
             <M h1 />
-            <Text>Off</Text>
+            <Text>{i18n.t('Home.pending-cras.Off')}</Text>
           </View>
         </View>
         <M v2 />
@@ -247,7 +248,7 @@ const PendingCRAs = ({ cra, projects, onFocus, onBlur }) => {
             style={styles.buttonSubmit}
             status="control"
             onPress={handleSubmit}>
-            CRA is pending
+            {i18n.t('Home.pending-cras.Off')}
           </Button>
         </View>
       </View>
@@ -257,7 +258,7 @@ const PendingCRAs = ({ cra, projects, onFocus, onBlur }) => {
         visible={modalVisible}
         onPressPositive={handlePressPositive}>
         <Text>
-          CRA submitted
+          {i18n.t('Home.pending-cras.modal.info')}
           {getHistoryItem(cra.history, 'submitted') &&
           getHistoryItem(cra.history, 'submitted').at
             ? ` at ${getHistoryItem(cra.history, 'submitted').at.substring(
@@ -270,7 +271,7 @@ const PendingCRAs = ({ cra, projects, onFocus, onBlur }) => {
             : ''}
         </Text>
         <M v2 />
-        <Text>Days summary:</Text>
+        <Text>{i18n.t('Home.pending-cras.modal.summary')}</Text>
         <View style={styles.containerLegends}>
           <View style={styles.containerLegend}>
             <View
@@ -281,7 +282,9 @@ const PendingCRAs = ({ cra, projects, onFocus, onBlur }) => {
               }}
             />
             <M h1 />
-            <Text>Working ({cra.working?.length})</Text>
+            <Text>
+              {i18n.t('Home.pending-cras.Working')} ({cra.working?.length})
+            </Text>
           </View>
           <View style={styles.containerLegend}>
             <View
@@ -292,7 +295,9 @@ const PendingCRAs = ({ cra, projects, onFocus, onBlur }) => {
               }}
             />
             <M h1 />
-            <Text>Half ({cra.half?.length})</Text>
+            <Text>
+              {i18n.t('Home.pending-cras.Half day')} ({cra.half?.length})
+            </Text>
           </View>
           <View style={styles.containerLegend}>
             <View
@@ -303,7 +308,9 @@ const PendingCRAs = ({ cra, projects, onFocus, onBlur }) => {
               }}
             />
             <M h1 />
-            <Text>Remote ({cra.remote?.length})</Text>
+            <Text>
+              {i18n.t('Home.pending-cras.Remote')} ({cra.remote?.length})
+            </Text>
           </View>
           {/* <View style={styles.containerLegend}>
             <View
@@ -314,7 +321,7 @@ const PendingCRAs = ({ cra, projects, onFocus, onBlur }) => {
               }}
             />
             <M h1 />
-            <Text>Unavailable</Text>
+            <Text>{i18n.t('Home.pending-cras.Unavailable')}</Text>
           </View> --  TODO: Unavailable */}
           <View style={styles.containerLegend}>
             <View
@@ -325,7 +332,9 @@ const PendingCRAs = ({ cra, projects, onFocus, onBlur }) => {
               }}
             />
             <M h1 />
-            <Text>Off ({cra.off?.length})</Text>
+            <Text>
+              {i18n.t('Home.pending-cras.Off')} ({cra.off?.length})
+            </Text>
           </View>
           <View style={styles.containerLegend}>
             <View
@@ -336,7 +345,9 @@ const PendingCRAs = ({ cra, projects, onFocus, onBlur }) => {
               }}
             />
             <M h1 />
-            <Text>Weekends ({cra.weekends?.length})</Text>
+            <Text>
+              {i18n.t('Home.pending-cras.Weekends')} ({cra.weekends?.length})
+            </Text>
           </View>
           <View style={styles.containerLegend}>
             <View
@@ -347,37 +358,48 @@ const PendingCRAs = ({ cra, projects, onFocus, onBlur }) => {
               }}
             />
             <M h1 />
-            <Text>Holiday ({cra.holidays?.length})</Text>
+            <Text>
+              {i18n.t('Home.pending-cras.Holiday')} ({cra.holidays?.length})
+            </Text>
           </View>
         </View>
       </Modal>
       <Modal
-        title="Holiday"
+        title={i18n.t('Home.pending-cras.modalHoliday.title')}
         type="info"
         visible={modalHolidayVisible}
         onPressPositive={handlePressHolidayPositive}>
         {holiday && (
           <Text>
-            {holiday.date} is a holiday called "{holiday.name}".
+            {i18n.t('Home.no-cra.modalHoliday.confirmation', {
+              date: holiday.date,
+              name: holiday.name,
+            })}
           </Text>
         )}
       </Modal>
       <Modal
-        title="Weekend"
+        title={i18n.t('Home.no-cra.modalWeekend.title')}
         type="info"
         visible={modalWeekendVisible}
         onPressPositive={handlePressWeekendPositive}>
-        {weekend && <Text>{weekend.date} is a weekend.</Text>}
+        {weekend && (
+          <Text>
+            {i18n.t('Home.no-cra.modalWeekend.confirmation', {
+              date: weekend.date,
+            })}
+          </Text>
+        )}
       </Modal>
       <Modal
-        title="Help"
+        title={i18n.t('Home.pending-cras.modalHelp.title')}
         type="info"
         visible={modalHelpVisible}
         onPressPositive={() => setModalHelpVisible(false)}>
-        <Text>Fill your working days accordingly.</Text>
-        <Text>Long press on a day to view more options.</Text>
+        <Text>{i18n.t('Home.pending-cras.modalHelp.description-1')}</Text>
+        <Text>{i18n.t('Home.pending-cras.modalHelp.description-2')}</Text>
         <M v2 />
-        <Text>Legend:</Text>
+        <Text>{i18n.t('Home.pending-cras.modalHelp.legend')}</Text>
         <View style={styles.containerLegends}>
           <View style={styles.containerLegend}>
             <View
@@ -388,7 +410,7 @@ const PendingCRAs = ({ cra, projects, onFocus, onBlur }) => {
               }}
             />
             <M h1 />
-            <Text>Working</Text>
+            <Text>{i18n.t('Home.pending-cras.modalHelp.Working')}</Text>
           </View>
           <View style={styles.containerLegend}>
             <View
@@ -399,7 +421,7 @@ const PendingCRAs = ({ cra, projects, onFocus, onBlur }) => {
               }}
             />
             <M h1 />
-            <Text>Half day</Text>
+            <Text>{i18n.t('Home.pending-cras.modalHelp.Half day')}</Text>
           </View>
           <View style={styles.containerLegend}>
             <View
@@ -410,7 +432,7 @@ const PendingCRAs = ({ cra, projects, onFocus, onBlur }) => {
               }}
             />
             <M h1 />
-            <Text>Remote</Text>
+            <Text>{i18n.t('Home.pending-cras.modalHelp.Remote')}</Text>
           </View>
           {/* <View style={styles.containerLegend}>
             <View
@@ -421,7 +443,7 @@ const PendingCRAs = ({ cra, projects, onFocus, onBlur }) => {
               }}
             />
             <M h1 />
-            <Text>Unavailable</Text>
+            <Text>{i18n.t('Home.pending-cras.modalHelp.Unavailable')}</Text>
           </View> --  TODO: Unavailable */}
           <View style={styles.containerLegend}>
             <View
@@ -432,7 +454,7 @@ const PendingCRAs = ({ cra, projects, onFocus, onBlur }) => {
               }}
             />
             <M h1 />
-            <Text>Off</Text>
+            <Text>{i18n.t('Home.pending-cras.modalHelp.Off')}</Text>
           </View>
           <View style={styles.containerLegend}>
             <View
@@ -443,7 +465,7 @@ const PendingCRAs = ({ cra, projects, onFocus, onBlur }) => {
               }}
             />
             <M h1 />
-            <Text>Weekend</Text>
+            <Text>{i18n.t('Home.pending-cras.modalHelp.Weekend')}</Text>
           </View>
           <View style={styles.containerLegend}>
             <View
@@ -454,7 +476,7 @@ const PendingCRAs = ({ cra, projects, onFocus, onBlur }) => {
               }}
             />
             <M h1 />
-            <Text>Holiday</Text>
+            <Text>{i18n.t('Home.pending-cras.modalHelp.Holiday')}</Text>
           </View>
         </View>
       </Modal>

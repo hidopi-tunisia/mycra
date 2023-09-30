@@ -446,7 +446,7 @@ const NoCRAs = ({ projects, onFocus, onBlur }) => {
               }}
             />
             <M h1 />
-            <Text>{i18n.t('Home.no-cra.Unavailable')}</Text>
+            <Text>{i18n.t('Home.no-cra.Off')}</Text>
           </View>
         </View>
         <M v2 />
@@ -476,7 +476,10 @@ const NoCRAs = ({ projects, onFocus, onBlur }) => {
         onPressPositive={handlePressHolidayPositive}>
         {holiday && (
           <Text>
-            {i18n.t('Home.no-cra.modalHoliday.confirmation', { date: holiday.date, name: holiday.name })}
+            {i18n.t('Home.no-cra.modalHoliday.confirmation', {
+              date: holiday.date,
+              name: holiday.name,
+            })}
           </Text>
         )}
       </Modal>
@@ -485,7 +488,13 @@ const NoCRAs = ({ projects, onFocus, onBlur }) => {
         type="info"
         visible={modalWeekendVisible}
         onPressPositive={handlePressWeekendPositive}>
-        {weekend && <Text>{i18n.t('Home.no-cra.modalWeekend.confirmation', { date: weekend.date })}</Text>}
+        {weekend && (
+          <Text>
+            {i18n.t('Home.no-cra.modalWeekend.confirmation', {
+              date: weekend.date,
+            })}
+          </Text>
+        )}
       </Modal>
       <Modal
         title={i18n.t('Home.no-cra.modalHelp.title')}

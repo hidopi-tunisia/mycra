@@ -100,6 +100,43 @@
         "Weekend": "Weekend",
         "Holiday": "Holiday"
       }
+    },
+    "pending-cras": {
+      "Project": "Project",
+      "Working": "Working",
+      "Half day": "Half day",
+      "Remote": "Remote",
+      "Unavailable": "Unavailable",
+      "Off": "Off",
+      "Weekends": "Weekends",
+      "Holiday": "Holiday",
+      "btn_submit": "CRA is pending",
+      "modal": {
+        "title": "Waiting for approval",
+        "info": "CRA submitted",
+        "summary": "Days summary:"
+      },
+      "modalHoliday": {
+        "title": "Holiday",
+        "confirmation": "%{date} is a holiday called \"%{name}\"."
+      },
+      "modalWeekend": {
+        "title": "Weekend",
+        "confirmation": "%{date} is a weekend."
+      },
+      "modalHelp": {
+        "title": "Help",
+        "description-1": "Fill your working days accordingly.",
+        "description-2": "Long press on a day to view more options.",
+        "legend": "Legend:",
+        "Working": "Working",
+        "Half day": "Half day",
+        "Remote": "Remote",
+        "Unavailable": "Unavailable",
+        "Off": "Off",
+        "Weekend": "Weekend",
+        "Holiday": "Holiday"
+      }
     }
   },
   "Notifications": {
