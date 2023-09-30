@@ -147,36 +147,42 @@ const UpdateProfileForm = ({
       )}
       <View>
         <Text style={styles.labelInput} category="label">
-          {i18n.t('Settings.modals.update-profile.First name')}
+          {i18n.t('Settings.modals.update-profile.First name:label')}
         </Text>
         <M v1 />
         <Input
           style={styles.input}
-          placeholder="John"
+          placeholder={i18n.t(
+            'Settings.modals.update-profile.First name:placeholder',
+          )}
           value={firstName}
           onChangeText={nextValue => setFirstName(nextValue)}
         />
       </View>
       <View>
         <Text style={styles.labelInput} category="label">
-          {i18n.t('Settings.modals.update-profile.Last name')}
+          {i18n.t('Settings.modals.update-profile.Last name:label')}
         </Text>
         <M v1 />
         <Input
           style={styles.input}
-          placeholder="Doe"
+          placeholder={i18n.t(
+            'Settings.modals.update-profile.Last name:placeholder',
+          )}
           value={lastName}
           onChangeText={nextValue => setLastName(nextValue)}
         />
       </View>
       <View>
         <Text style={styles.labelInput} category="label">
-          {i18n.t('Settings.modals.update-profile.Position')}
+          {i18n.t('Settings.modals.update-profile.Position:label')}
         </Text>
         <M v1 />
         <Input
           style={styles.input}
-          placeholder="Web developer"
+          placeholder={i18n.t(
+            'Settings.modals.update-profile.Position:placeholder',
+          )}
           value={position}
           onChangeText={nextValue => setPosition(nextValue)}
         />
@@ -196,7 +202,7 @@ const UpdateProfileForm = ({
         {loading ? (
           <Spinner status="basic" size="small" />
         ) : (
-          i18n.t('Settings.modals.update-profile.Submit')
+          i18n.t('Settings.modals.update-profile.btn_submit')
         )}
       </Button>
       {error && (
