@@ -58,14 +58,14 @@ const NoCurrentCRAs = ({ onPress }) => {
         </View>
       </View>
       <Modal
-        title={i18n.t('Home.no-cra.modalHelp.title')}
+        title={i18n.t('Home.no-current-cras.modalHelp.title')}
         type="info"
         visible={modalHelpVisible}
         onPressPositive={() => setModalHelpVisible(false)}>
-        <Text>{i18n.t('Home.no-cra.modalHelp.description-1')}</Text>
-        <Text>{i18n.t('Home.no-cra.modalHelp.description-2')}</Text>
+        <Text>{i18n.t('Home.no-current-cras.modalHelp.description-1')}</Text>
+        <Text>{i18n.t('Home.no-current-cras.modalHelp.description-2')}</Text>
         <M v2 />
-        <Text>{i18n.t('Home.no-cra.modalHelp.legend')}</Text>
+        <Text>{i18n.t('Home.no-current-cras.modalHelp.legend')}</Text>
         <View style={styles.containerLegends}>
           <View style={styles.containerLegend}>
             <View
@@ -76,7 +76,7 @@ const NoCurrentCRAs = ({ onPress }) => {
               }}
             />
             <M h1 />
-            <Text>{i18n.t('Home.no-cra.modalHelp.Working')}</Text>
+            <Text>{i18n.t('Home.no-current-cras.modalHelp.Working')}</Text>
           </View>
           <View style={styles.containerLegend}>
             <View
@@ -87,7 +87,7 @@ const NoCurrentCRAs = ({ onPress }) => {
               }}
             />
             <M h1 />
-            <Text>{i18n.t('Home.no-cra.modalHelp.Half day')}</Text>
+            <Text>{i18n.t('Home.no-current-cras.modalHelp.Half day')}</Text>
           </View>
           <View style={styles.containerLegend}>
             <View
@@ -98,7 +98,7 @@ const NoCurrentCRAs = ({ onPress }) => {
               }}
             />
             <M h1 />
-            <Text>{i18n.t('Home.no-cra.modalHelp.Remote')}</Text>
+            <Text>{i18n.t('Home.no-current-cras.modalHelp.Remote')}</Text>
           </View>
           {/* <View style={styles.containerLegend}>
             <View
@@ -109,7 +109,7 @@ const NoCurrentCRAs = ({ onPress }) => {
               }}
             />
             <M h1 />
-            <Text>{i18n.t('Home.no-cra.modalHelp.Unavailable')}</Text>
+            <Text>{i18n.t('Home.no-current-cras.modalHelp.Unavailable')}</Text>
           </View> --  TODO: Unavailable */}
           <View style={styles.containerLegend}>
             <View
@@ -120,7 +120,7 @@ const NoCurrentCRAs = ({ onPress }) => {
               }}
             />
             <M h1 />
-            <Text>{i18n.t('Home.no-cra.modalHelp.Off')}</Text>
+            <Text>{i18n.t('Home.no-current-cras.modalHelp.Off')}</Text>
           </View>
           <View style={styles.containerLegend}>
             <View
@@ -131,7 +131,7 @@ const NoCurrentCRAs = ({ onPress }) => {
               }}
             />
             <M h1 />
-            <Text>{i18n.t('Home.no-cra.modalHelp.Weekend')}</Text>
+            <Text>{i18n.t('Home.no-current-cras.modalHelp.Weekend')}</Text>
           </View>
           <View style={styles.containerLegend}>
             <View
@@ -142,7 +142,7 @@ const NoCurrentCRAs = ({ onPress }) => {
               }}
             />
             <M h1 />
-            <Text>{i18n.t('Home.no-cra.modalHelp.Holiday')}</Text>
+            <Text>{i18n.t('Home.no-current-cras.modalHelp.Holiday')}</Text>
           </View>
         </View>
       </Modal>

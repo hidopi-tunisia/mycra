@@ -371,7 +371,7 @@ const PendingCRAs = ({ cra, projects, onFocus, onBlur }) => {
         onPressPositive={handlePressHolidayPositive}>
         {holiday && (
           <Text>
-            {i18n.t('Home.no-cra.modalHoliday.confirmation', {
+            {i18n.t('Home.pending-cras.modalHoliday.confirmation', {
               date: holiday.date,
               name: holiday.name,
             })}
@@ -379,13 +379,13 @@ const PendingCRAs = ({ cra, projects, onFocus, onBlur }) => {
         )}
       </Modal>
       <Modal
-        title={i18n.t('Home.no-cra.modalWeekend.title')}
+        title={i18n.t('Home.pending-cras.modalWeekend.title')}
         type="info"
         visible={modalWeekendVisible}
         onPressPositive={handlePressWeekendPositive}>
         {weekend && (
           <Text>
-            {i18n.t('Home.no-cra.modalWeekend.confirmation', {
+            {i18n.t('Home.pending-cras.modalWeekend.confirmation', {
               date: weekend.date,
             })}
           </Text>
