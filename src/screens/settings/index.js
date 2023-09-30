@@ -56,7 +56,7 @@ const SettingsScreen = () => {
         setLoading(false);
       } catch (error) {
         setLoading(false);
-        setError('Error happened');
+        setError(i18n.t('Settings.errors.Error happened'));
         console.info(error);
       }
     };
@@ -85,9 +85,11 @@ const SettingsScreen = () => {
   };
   const handleReport = () => {
     const fn = async () => {
-      await Linking.openURL(
-        `mailto:${SUPPORT_EMAIL}?subject=Reporting issue in version (${APP_VERSION}) &body=Hello, I would like to report an issue in the application.`,
-      );
+      const link = i18n.t('Settings.mailto', {
+        email: SUPPORT_EMAIL,
+        version: APP_VERSION,
+      });
+      await Linking.openURL(link);
     };
     fn();
   };
@@ -141,15 +143,15 @@ const SettingsScreen = () => {
         console.info(error);
         setLoadingResetPassword(false);
         if (error && error.code === 'auth/invalid-email') {
-          setErrorResetPassword('Invalid email');
+          setErrorResetPassword(i18n.t('Settings.errors.Invalid Email'));
         } else if (error && error.code === 'auth/missing-password') {
-          setErrorResetPassword('Missing password');
+          setErrorResetPassword(i18n.t('Settings.errors.Missing password'));
         } else if (error && error.code === 'auth/wrong-password') {
-          setErrorResetPassword('Wrong password');
+          setErrorResetPassword(i18n.t('Settings.errors.Wrong password'));
         } else if (error && error.code === 'auth/user-not-found') {
-          setErrorResetPassword('Incorrect email');
+          setErrorResetPassword(i18n.t('Settings.errors.Incorrect email'));
         } else {
-          setErrorResetPassword('Error happened');
+          setErrorResetPassword(i18n.t('Settings.errors.Error happened'));
         }
       }
     };
@@ -238,38 +240,40 @@ const SettingsScreen = () => {
             onPress={handleCRAHistory}
           />
           <SettingsItem
-            title="Reset password"
-            description="Start a reset password challange"
+            title={i18n.t('Settings.items.Reset password:title')}
+            description={i18n.t('Settings.items.Reset password:description')}
             icon="lock-outline"
             onPress={handleResetPassword}
           />
           <SettingsItem
-            title="Terms and conditions"
-            description="View the terms and conditions on our website"
+            title={i18n.t('Settings.items.Terms and conditions:title')}
+            description={i18n.t(
+              'Settings.items.Terms and conditions:description',
+            )}
             icon="checkmark-circle-2-outline"
             onPress={handleTerms}
           />
           <SettingsItem
-            title="Privacy policy"
-            description="View our privacy and policy on our website"
+            title={i18n.t('Settings.items.Privacy policy:title')}
+            description={i18n.t('Settings.items.Privacy policy:description')}
             icon="eye-off-outline"
             onPress={handlePrivacy}
           />
           <SettingsItem
-            title="Help"
-            description="View our help on our website"
+            title={i18n.t('Settings.items.Help:title')}
+            description={i18n.t('Settings.items.Help:description')}
             icon="question-mark-circle-outline"
             onPress={handleHelp}
           />
           <SettingsItem
-            title="Report an issue"
-            description="Send us an email about an issue in the application"
+            title={i18n.t('Settings.items.Report an issue:title')}
+            description={i18n.t('Settings.items.Report an issue:description')}
             icon="alert-triangle-outline"
             onPress={handleReport}
           />
           <SettingsItem
-            title="Sign out"
-            description="Sign out and navigate back to the sign in screen"
+            title={i18n.t('Settings.items.Sign out:title')}
+            description={i18n.t('Settings.items.Sign out:description')}
             icon="log-out-outline"
             onPress={handleSignOut}
           />
@@ -305,12 +309,12 @@ const SettingsScreen = () => {
       </View>
       <M v4 />
       <Modal
-        title="Sign out?"
+        title={i18n.t('Settings.modal.title')}
         type="confirm"
         visible={modalVisible}
         onPressNegative={handlePressNegative}
         onPressPositive={handlePressPositive}>
-        <Text>Are you sure to sign out?</Text>
+        <Text>{i18n.t('Settings.modal.description')}</Text>
       </Modal>
       <BottomSheet
         height={vs(360)}
@@ -336,18 +340,20 @@ const SettingsScreen = () => {
         />
       </BottomSheet>
       <Modal
-        title="Email sent"
+        title={i18n.t('Settings.modalResetPassword.title')}
         type="info"
         visible={modalResetPasswordVisible}
         onPressPositive={() => setModalResetPasswordVisible(false)}>
-        <Text>Please check your email to reset your password.</Text>
+        <Text>{i18n.t('Settings.modalResetPassword.description')}</Text>
       </Modal>
       <Modal
-        title="Picture uploaded"
+        title={i18n.t('Settings.modalSuccessPictureUploaded.title')}
         type="success"
         visible={modalSuccessPictureUploadedVisible}
         onPressPositive={handlePressSuccessPictureUploadedPositive}>
-        <Text>The avatar picture has been uploaded successfully.</Text>
+        <Text>
+          {i18n.t('Settings.modalSuccessPictureUploaded.description')}
+        </Text>
       </Modal>
     </View>
   );

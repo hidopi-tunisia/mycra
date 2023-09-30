@@ -23,12 +23,6 @@
       "description": "Please check your email to reset your password."
     }
   },
-  "Settings": {
-    "items": {
-      "CRA History:title": "CRA History",
-      "CRA History:description": "View your past CRAs"
-    }
-  },
   "Home": {
     "no-cra": {
       "Project": "Project",
@@ -73,6 +67,47 @@
       "title": "New alert",
       "placeholder": "Type your alert!",
       "btn_submit": "Submit"
+    }
+  },
+  "Settings": {
+    "report:mailto": "mailto:%{SUPPORT_EMAIL}?subject=Reporting issue in version (%{APP_VERSION}) &body=Hello, I would like to report an issue in the application.",
+    "items": {
+      "CRA History:title": "CRA History",
+      "CRA History:description": "View your past CRAs",
+      "Reset password:title": "Reset password",
+      "Reset password:description": "Start a reset password challange",
+      "Terms and conditions:title": "Terms and conditions",
+      "Terms and conditions:description": "View the terms and conditions on our website",
+      "Privacy policy:title": "Privacy policy",
+      "Privacy policy:description": "View our privacy and policy on our website",
+      "Help:title": "Help",
+      "Help:description": "View our help on our website",
+      "Report an issue:title": "Report an issue",
+      "Report an issue:description": "Send us an email about an issue in the application",
+      "Sign out:title": "Sign out",
+      "Sign out:description": "Sign out and navigate back to the sign in screen"
+    },
+    "modals": {
+      "update-profile": {
+        "title": "Update profile",
+        "upload-avatar": "Upload avatar picture",
+        "Upload": "Upload",
+        "Reset": "Reset",
+        "First name:label": "First name",
+        "First name:placeholder": "John",
+        "Last name:label": "Last name",
+        "Last name:placeholder": "Doe",
+        "Position:label": "Position",
+        "Position:placeholder": "Web developer",
+        "btn_submit": "Submit"
+      }
+    },
+    "errors": {
+      "Invalid email": "Invalid email",
+      "Missing password": "Missing password",
+      "Wrong password": "Wrong password",
+      "Incorrect email": "Incorrect email",
+      "Error happened": "Error happened"
     }
   },
   "shared:workdays-collection": {

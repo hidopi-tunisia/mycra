@@ -6,6 +6,7 @@ import { M } from '@components';
 import Colors from '@constants/colors';
 import { launchImageLibrary } from 'react-native-image-picker';
 import { s } from 'react-native-size-matters';
+import { i18n } from '@utils/translations';
 
 const UpdateProfileForm = ({
   profile,
@@ -57,7 +58,7 @@ const UpdateProfileForm = ({
     <View style={styles.container}>
       <View style={styles.containerTitle}>
         <Text style={styles.label} category="label">
-          Update profile
+          {i18n.t('Settings.modals.update-profile.title')}
         </Text>
         <TouchableOpacity onPress={onPressClose}>
           <Icon
@@ -69,7 +70,7 @@ const UpdateProfileForm = ({
         </TouchableOpacity>
       </View>
       <Text style={styles.labelInput} category="label">
-        Upload avatar picture
+        {i18n.t('Settings.modals.update-profile.upload-avatar')}
       </Text>
       {uri ? (
         <View style={styles.containerUpload}>
@@ -107,7 +108,9 @@ const UpdateProfileForm = ({
                   {progress}%
                 </Text>
               ) : (
-                <Text style={{ color: Colors.BLUE_DARK_PRIMARY }}>Upload</Text>
+                <Text style={{ color: Colors.BLUE_DARK_PRIMARY }}>
+                  {i18n.t('Settings.modals.update-profile.Upload')}
+                </Text>
               )}
             </View>
           </TouchableOpacity>
@@ -122,7 +125,9 @@ const UpdateProfileForm = ({
                 height={s(22)}
               />
               <M v1 />
-              <Text style={{ color: Colors.RED_DARK_PRIMARY }}>Reset</Text>
+              <Text style={{ color: Colors.RED_DARK_PRIMARY }}>
+                {i18n.t('Settings.modals.update-profile.Reset')}
+              </Text>
             </View>
           </TouchableOpacity>
         </View>
@@ -142,7 +147,7 @@ const UpdateProfileForm = ({
       )}
       <View>
         <Text style={styles.labelInput} category="label">
-          First name
+          {i18n.t('Settings.modals.update-profile.First name')}
         </Text>
         <M v1 />
         <Input
@@ -154,7 +159,7 @@ const UpdateProfileForm = ({
       </View>
       <View>
         <Text style={styles.labelInput} category="label">
-          Last name
+          {i18n.t('Settings.modals.update-profile.Last name')}
         </Text>
         <M v1 />
         <Input
@@ -166,7 +171,7 @@ const UpdateProfileForm = ({
       </View>
       <View>
         <Text style={styles.labelInput} category="label">
-          Position
+          {i18n.t('Settings.modals.update-profile.Position')}
         </Text>
         <M v1 />
         <Input
@@ -188,7 +193,11 @@ const UpdateProfileForm = ({
           progress !== null
         }
         onPress={onPressSubmit}>
-        {loading ? <Spinner status="basic" size="small" /> : 'Submit'}
+        {loading ? (
+          <Spinner status="basic" size="small" />
+        ) : (
+          i18n.t('Settings.modals.update-profile.Submit')
+        )}
       </Button>
       {error && (
         <View style={styles.containerError}>
