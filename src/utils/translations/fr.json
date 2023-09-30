@@ -4,6 +4,11 @@
     "skip": "Passer",
     "begin": "Commencer"
   },
+  "tab": {
+    "Home": "Accueil",
+    "Notifications": "Notifications",
+    "Settings": "Paramètres"
+  },
   "Sign In": {
     "title": "Bienvenu",
     "subtitle": "Merci de se connecter avec votre compte",

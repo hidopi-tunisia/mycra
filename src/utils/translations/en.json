@@ -4,6 +4,11 @@
     "skip": "Skip",
     "begin": "Begin"
   },
+  "tab": {
+    "Home": "Home",
+    "Notifications": "Notifications",
+    "Settings": "Settings"
+  },
   "Sign In": {
     "title": "Welcome",
     "subtitle": "Please sign in using your account",

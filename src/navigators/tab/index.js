@@ -12,6 +12,7 @@ import { Icon } from '@ui-kitten/components';
 import { Text, TouchableOpacity, View } from 'react-native';
 import styles from './index.styles';
 import { useState } from 'react';
+import { i18n } from '@utils/translations';
 
 const Tab = createBottomTabNavigator();
 const Settings = createStackNavigator();
@@ -112,11 +113,11 @@ const MyTabBar = ({
 const TabNavigators = ({ initialRoute = 'TabHome', notifications }) => {
   const [focusedColor, setFocusedColor] = useState(Colors.BLUE_PRIMARY);
   const handleFocus = (color = Colors.BLUE_PRIMARY) => {
-    setFocusedColor(color)
-  }
+    setFocusedColor(color);
+  };
   const handleBlur = (color = Colors.BLUE_PRIMARY) => {
-    setFocusedColor(color)
-  }
+    setFocusedColor(color);
+  };
 
   return (
     <Tab.Navigator
@@ -132,21 +133,15 @@ const TabNavigators = ({ initialRoute = 'TabHome', notifications }) => {
       <Tab.Screen
         name="TabHome"
         options={{
-          tabBarLabel: 'Home',
+          tabBarLabel: i18n.t("tab.Home"),
           tabBarIcon: HomeIcon,
         }}>
-        {p => (
-          <HomeScreen
-            {...p}
-            onFocus={handleFocus}
-            onBlur={handleBlur}
-          />
-        )}
+        {p => <HomeScreen {...p} onFocus={handleFocus} onBlur={handleBlur} />}
       </Tab.Screen>
       <Tab.Screen
         name="TabNotifications"
         options={{
-          tabBarLabel: 'Notifications',
+          tabBarLabel: i18n.t("tab.Notifications"),
           tabBarIcon: NotificationsIcon,
         }}
         children={props => (
@@ -156,7 +151,7 @@ const TabNavigators = ({ initialRoute = 'TabHome', notifications }) => {
       <Tab.Screen
         name="TabSettings"
         options={{
-          tabBarLabel: 'Settings',
+          tabBarLabel: i18n.t("tab.Settings"),
           tabBarIcon: SettingsIcon,
         }}>
         {props => (
