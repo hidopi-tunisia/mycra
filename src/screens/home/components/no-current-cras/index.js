@@ -5,6 +5,7 @@ import Modal from '@components/modals';
 import styles from './index.styles';
 import Colors from '@constants/colors';
 import { M } from '@components/index';
+import { i18n } from '@utils/translations';
 
 const NoCurrentCRAs = ({ onPress }) => {
   const [modalHelpVisible, setModalHelpVisible] = useState(false);
@@ -25,7 +26,7 @@ const NoCurrentCRAs = ({ onPress }) => {
           </View>
           <M v1 />
           <Text style={styles.textDescription}>
-            NO CURRENT CRAS
+            {i18n.t('Home.no-current-cras.description')}
           </Text>
           {/* <Text style={styles.textWarning}>
             The month is already prefilled.
@@ -41,28 +42,30 @@ const NoCurrentCRAs = ({ onPress }) => {
         </View>
         <M v4 />
         <View style={styles.containerTexts}>
-          <Text style={styles.textTitle}>No projects</Text>
+          <Text style={styles.textTitle}>
+            {i18n.t('Home.no-current-cras.text:title')}
+          </Text>
           <M v2 />
           <Text style={styles.textInfo}>
-            You are not assigned to any project at the moment.
+            {i18n.t('Home.no-current-cras.text:info')}
           </Text>
         </View>
         <M v4 />
         <View>
           <Button style={styles.button} status="basic" onPress={onPress}>
-            Try again
+            {i18n.t('Home.no-current-cras.btn_retry')}
           </Button>
         </View>
       </View>
       <Modal
-        title="Help"
+        title={i18n.t('Home.no-cra.modalHelp.title')}
         type="info"
         visible={modalHelpVisible}
         onPressPositive={() => setModalHelpVisible(false)}>
-        <Text>Fill your working days accordingly.</Text>
-        <Text>Long press on a day to view more options.</Text>
+        <Text>{i18n.t('Home.no-cra.modalHelp.description-1')}</Text>
+        <Text>{i18n.t('Home.no-cra.modalHelp.description-2')}</Text>
         <M v2 />
-        <Text>Legend:</Text>
+        <Text>{i18n.t('Home.no-cra.modalHelp.legend')}</Text>
         <View style={styles.containerLegends}>
           <View style={styles.containerLegend}>
             <View
@@ -73,7 +76,7 @@ const NoCurrentCRAs = ({ onPress }) => {
               }}
             />
             <M h1 />
-            <Text>Working</Text>
+            <Text>{i18n.t('Home.no-cra.modalHelp.Working')}</Text>
           </View>
           <View style={styles.containerLegend}>
             <View
@@ -84,7 +87,7 @@ const NoCurrentCRAs = ({ onPress }) => {
               }}
             />
             <M h1 />
-            <Text>Half day</Text>
+            <Text>{i18n.t('Home.no-cra.modalHelp.Half day')}</Text>
           </View>
           <View style={styles.containerLegend}>
             <View
@@ -95,8 +98,19 @@ const NoCurrentCRAs = ({ onPress }) => {
               }}
             />
             <M h1 />
-            <Text>Remote</Text>
+            <Text>{i18n.t('Home.no-cra.modalHelp.Remote')}</Text>
           </View>
+          {/* <View style={styles.containerLegend}>
+            <View
+              style={{
+                ...styles.shapeLegend,
+                backgroundColor: Colors.GRAY_DARK_PRIMARY,
+                borderColor: Colors.GRAY_DARK_PRIMARY,
+              }}
+            />
+            <M h1 />
+            <Text>{i18n.t('Home.no-cra.modalHelp.Unavailable')}</Text>
+          </View> --  TODO: Unavailable */}
           <View style={styles.containerLegend}>
             <View
               style={{
@@ -106,7 +120,7 @@ const NoCurrentCRAs = ({ onPress }) => {
               }}
             />
             <M h1 />
-            <Text>Off</Text>
+            <Text>{i18n.t('Home.no-cra.modalHelp.Off')}</Text>
           </View>
           <View style={styles.containerLegend}>
             <View
@@ -117,7 +131,7 @@ const NoCurrentCRAs = ({ onPress }) => {
               }}
             />
             <M h1 />
-            <Text>Weekend</Text>
+            <Text>{i18n.t('Home.no-cra.modalHelp.Weekend')}</Text>
           </View>
           <View style={styles.containerLegend}>
             <View
@@ -128,7 +142,7 @@ const NoCurrentCRAs = ({ onPress }) => {
               }}
             />
             <M h1 />
-            <Text>Holiday</Text>
+            <Text>{i18n.t('Home.no-cra.modalHelp.Holiday')}</Text>
           </View>
         </View>
       </Modal>
