@@ -5,6 +5,7 @@ import styles from './index.styles';
 import { M } from '@components';
 import Colors from '@constants/colors';
 import { s } from 'react-native-size-matters';
+import { i18n } from '@utils/translations';
 
 const AlertForm = ({ onSubmit, onPressClose }) => {
   const [text, setText] = useState('');
@@ -25,9 +26,7 @@ const AlertForm = ({ onSubmit, onPressClose }) => {
   return (
     <View style={styles.container}>
       <View style={styles.containerTitle}>
-        <Text style={styles.title}>
-          New alert
-        </Text>
+        <Text style={styles.title}>{i18n.t('Notifications.form.title')}</Text>
         <TouchableOpacity onPress={onPressClose}>
           <Icon
             fill={Colors.GRAY_PRIMARY}
@@ -40,7 +39,7 @@ const AlertForm = ({ onSubmit, onPressClose }) => {
       <M v1 />
       <TextInput
         style={styles.input}
-        placeholder="Type your alert!"
+        placeholder={i18n.t('Notifications.form.placeholder')}
         placeholderTextColor={Colors.GRAY_PRIMARY}
         value={text}
         multiline
@@ -100,7 +99,11 @@ const AlertForm = ({ onSubmit, onPressClose }) => {
         status="primary"
         disabled={loading || !text}
         onPress={handlePressSubmit}>
-        {loading ? <Spinner status="basic" size="small" /> : 'Submit'}
+        {loading ? (
+          <Spinner status="basic" size="small" />
+        ) : (
+          i18n.t('Notifications.form.btn_submit')
+        )}
       </Button>
     </View>
   );

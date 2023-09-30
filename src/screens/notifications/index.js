@@ -6,6 +6,7 @@ import { Layout, Text } from '@ui-kitten/components';
 import { useRef, useState } from 'react';
 import { FlatList, TouchableOpacity, View } from 'react-native';
 import styles from './index.styles';
+import { i18n } from '@utils/translations';
 
 const NotificationsScreen = ({ notifications }) => {
   const [refBottomSheet, setRefBottomSheet] = useState(null);
@@ -44,15 +45,21 @@ const NotificationsScreen = ({ notifications }) => {
       <Layout style={styles.root}>
         <View style={styles.top}>
           <Text style={styles.textTitle} category="h1">
-            Notifications
+            {i18n.t('Notifications.Notifications')}
           </Text>
           <View style={styles.containerButtonsTop}>
             <TouchableOpacity style={styles.buttonTop}>
-              <Text style={styles.textButtonTop}>Alerts</Text>
+              <Text style={styles.textButtonTop}>
+                {' '}
+                {i18n.t('Notifications.Alerts')}
+              </Text>
             </TouchableOpacity>
             <View style={styles.verticalDivider} />
             <TouchableOpacity style={styles.buttonTop}>
-              <Text style={styles.textButtonTop}>Notifications</Text>
+              <Text style={styles.textButtonTop}>
+                {' '}
+                {i18n.t('Notifications.Notifications')}
+              </Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -84,7 +91,7 @@ const NotificationsScreen = ({ notifications }) => {
             />
           ) : (
             <View style={styles.cardEmpty}>
-              <Text>No notifications</Text>
+              <Text>{i18n.t('Notifications.No notifications')}</Text>
             </View>
           )}
         </View>

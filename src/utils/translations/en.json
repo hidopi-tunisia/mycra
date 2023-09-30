@@ -65,6 +65,16 @@
       }
     }
   },
+  "Notifications": {
+    "Notifications": "Notifications",
+    "Alerts": "Alerts",
+    "No notifications": "No notifications",
+    "form": {
+      "title": "New alert",
+      "placeholder": "Type your alert!",
+      "btn_submit": "Submit"
+    }
+  },
   "shared:workdays-collection": {
     "title": "Describe",
     "title-all": "Describe all working days",
