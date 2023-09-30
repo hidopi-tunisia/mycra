@@ -13,5 +13,25 @@
       "CRA History:title": "Historique des CRAs",
       "CRA History:description": "Consulter votre anciens CRAs"
     }
+  },
+  "shared:workday-items": {
+    "working": "Travaillé",
+    "half": "Demi-journée",
+    "remote": "Télétravail",
+    "PL": "CP",
+    "Absence": "Absence",
+    "Sick leave": "Arrêt maladie",
+    "Authorized unpaid leave": "Absence autorisée non rémunérée",
+    "Unauthorized unpaid leave": "Absence non autorisée non rémunérée",
+    "Moving": "Déménagement",
+    "Prenatal medical examination": "Examen médical prénatal",
+    "Child's marriage": "Mariage enfant",
+    "Marriage-PACS": "Mariage-Pacs",
+    "Maternity": "Maternité",
+    "Birth": "Naissance",
+    "Paternity": "Paternité",
+    "Childcare": "Soins enfants",
+    "Work-related accident-commute": "Accident de travail-trajet",
+    "Other": "Autre"
   }
 }

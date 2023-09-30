@@ -1,7 +1,7 @@
 {
   "working": [
     {
-      "text": "Travaillé",
+      "text": "Working",
       "value": "working",
       "type": "working",
       "backgroundColor": "#2196f3",
@@ -9,7 +9,7 @@
       "color": "white"
     },
     {
-      "text": "Demi-journée",
+      "text": "Half-day",
       "value": "half",
       "type": "half",
       "backgroundColor": "white",
@@ -17,7 +17,7 @@
       "color": "#2196f3"
     },
     {
-      "text": "Télétravail",
+      "text": "Remote",
       "value": "remote",
       "type": "remote",
       "backgroundColor": "#9C27B0",
@@ -27,8 +27,8 @@
   ],
   "off": [
     {
-      "text": "Congé payé",
-      "value": "CP",
+      "text": "Paid leave",
+      "value": "PL",
       "type": "off",
       "backgroundColor": "transparent",
       "borderColor": "#F44336",
@@ -43,104 +43,104 @@
       "color": "#F44336"
     },
     {
-      "text": "Arrêt maladie",
-      "value": "Arrêt maladie",
+      "text": "Sick leave",
+      "value": "Sick leave",
       "type": "off",
       "backgroundColor": "transparent",
       "borderColor": "#F44336",
       "color": "#F44336"
     },
     {
-      "text": "Absence autorisée non rémunérée",
-      "value": "Absence autorisée non rémunérée",
+      "text": "Authorized unpaid leave",
+      "value": "Authorized unpaid leave",
       "type": "off",
       "backgroundColor": "transparent",
       "borderColor": "#F44336",
       "color": "#F44336"
     },
     {
-      "text": "Absence non autorisée non rémunérée",
-      "value": "Absence non autorisée non rémunérée",
+      "text": "Unauthorized unpaid leave",
+      "value": "Unauthorized unpaid leave",
       "type": "off",
       "backgroundColor": "transparent",
       "borderColor": "#F44336",
       "color": "#F44336"
     },
     {
-      "text": "Déménagement",
-      "value": "Déménagement",
+      "text": "Moving",
+      "value": "Moving",
       "type": "off",
       "backgroundColor": "transparent",
       "borderColor": "#F44336",
       "color": "#F44336"
     },
     {
-      "text": "Examen médical prénatal",
-      "value": "Examen médical prénatal",
+      "text": "Prenatal medical examination",
+      "value": "Prenatal medical examination",
       "type": "off",
       "backgroundColor": "transparent",
       "borderColor": "#F44336",
       "color": "#F44336"
     },
     {
-      "text": "Mariage enfant",
-      "value": "Mariage enfant",
+      "text": "Child's marriage",
+      "value": "Child's marriage",
       "type": "off",
       "backgroundColor": "transparent",
       "borderColor": "#F44336",
       "color": "#F44336"
     },
     {
-      "text": "Mariage-Pacs",
-      "value": "Mariage-Pacs",
+      "text": "Marriage-PACS",
+      "value": "Marriage-PACS",
       "type": "off",
       "backgroundColor": "transparent",
       "borderColor": "#F44336",
       "color": "#F44336"
     },
     {
-      "text": "Maternité",
-      "value": "Maternité",
+      "text": "Maternity",
+      "value": "Maternity",
       "type": "off",
       "backgroundColor": "transparent",
       "borderColor": "#F44336",
       "color": "#F44336"
     },
     {
-      "text": "Naissance",
-      "value": "Naissance",
+      "text": "Birth",
+      "value": "Birth",
       "type": "off",
       "backgroundColor": "transparent",
       "borderColor": "#F44336",
       "color": "#F44336"
     },
     {
-      "text": "Paternité",
-      "value": "Paternité",
+      "text": "Paternity",
+      "value": "Paternity",
       "type": "off",
       "backgroundColor": "transparent",
       "borderColor": "#F44336",
       "color": "#F44336"
     },
     {
-      "text": "Soins enfants",
-      "value": "Soins enfants",
+      "text": "Childcare",
+      "value": "Childcare",
       "type": "off",
       "backgroundColor": "transparent",
       "borderColor": "#F44336",
       "color": "#F44336"
     },
     {
-      "text": "Accident de travail-trajet",
-      "value": "Accident de travail-trajet",
+      "text": "Work-related accident-commute",
+      "value": "Work-related accident-commute",
       "type": "off",
       "backgroundColor": "transparent",
       "borderColor": "#F44336",
       "color": "#F44336"
     },
     {
-      "text": "Autre",
-      "value": "Autre",
+      "text": "Other",
+      "value": "Other",
       "type": "off",
       "backgroundColor": "transparent",
       "borderColor": "#F44336",

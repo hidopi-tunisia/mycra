@@ -5,6 +5,7 @@ import Item from './item';
 import { M } from '@components';
 import Colors from '@constants/colors';
 import { s } from 'react-native-size-matters';
+import { Locales, i18n } from '@utils/translations';
 
 const WorkdaysCollection = ({ items, workday, onPress, onPressClose }) => (
   <ScrollView style={{ ...styles.container }}>
@@ -29,7 +30,7 @@ const WorkdaysCollection = ({ items, workday, onPress, onPressClose }) => (
       {items.working.map(i => (
         <Item
           key={i.text}
-          text={i.text}
+          text={i18n.t(`shared:workday-items.${i.value}`)}
           color={i.color}
           backgroundColor={i.backgroundColor}
           borderColor={i.borderColor}
@@ -45,7 +46,7 @@ const WorkdaysCollection = ({ items, workday, onPress, onPressClose }) => (
       {items.off.map(i => (
         <Item
           key={i.text}
-          text={i.text}
+          text={i18n.t(`shared:workday-items.${i.value}`)}
           color={i.color}
           backgroundColor={i.backgroundColor}
           borderColor={i.borderColor}
