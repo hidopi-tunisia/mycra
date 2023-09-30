@@ -11,7 +11,17 @@
     "password": "Password",
     "forgot password?": "Forgot password?",
     "btn_sign in": "Sign in",
-    "version:": "Version:"
+    "version:": "Version:",
+    "help": {
+      "title": "Help",
+      "description-1": "Your manager created an account for you. Please check your email to create your new password.",
+      "description-2": "If you find any problem please contact your supervisor.",
+      "btn_ok": "OK"
+    },
+    "Email sent": {
+      "title": "Email sent",
+      "description": "Please check your email to reset your password."
+    }
   },
   "Settings": {
     "items": {
@@ -38,5 +48,11 @@
     "Childcare": "Childcare",
     "Work-related accident-commute": "Work-related accident-commute",
     "Other": "Other"
+  },
+  "shared:reset-password": {
+    "title": "Reset password",
+    "description": "Please provide your email so will send you an email to reset your password.",
+    "email": "Email",
+    "btn_submit": "Submit"
   }
 }

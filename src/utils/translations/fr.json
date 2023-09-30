@@ -11,7 +11,17 @@
     "password": "Mot de passe",
     "forgot password?": "Mot de passe oublié ?",
     "btn_sign in": "Se connecter",
-    "version:": "Version :"
+    "version:": "Version :",
+    "help": {
+      "title": "Aide",
+      "description-1": "Votre responsable a créé un compte pour vous. Veuillez vérifier votre e-mail pour créer votre nouveau mot de passe.",
+      "description-2": "Si vous rencontrez un problème, veuillez contacter votre superviseur.",
+      "btn_ok": "OK"
+    },
+    "Email sent": {
+      "title": "Email envoyé",
+      "description": "Veuillez vérifier votre e-mail pour réinitialiser votre mot de passe."
+    }
   },
   "Settings": {
     "items": {
@@ -38,5 +48,11 @@
     "Childcare": "Soins enfants",
     "Work-related accident-commute": "Accident de travail-trajet",
     "Other": "Autre"
+  },
+  "shared:reset-password": {
+    "title": "Réinitialiser mot de passe",
+    "description": "Veuillez fournir votre adresse e-mail afin que nous puissions vous envoyer un e-mail pour réinitialiser votre mot de passe.",
+    "email": "Email",
+    "btn_submit": "Soumettre"
   }
 }
