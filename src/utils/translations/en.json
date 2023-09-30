@@ -62,6 +62,25 @@
         "Weekend": "Weekend",
         "Holiday": "Holiday"
       }
+    },
+    "no-projects": {
+      "description": "Please fill your CRA before the end of the current month.",
+      "text:title": "No projects",
+      "text:info": "You are not assigned to any project at the moment.",
+      "btn_retry": "Try again",
+      "modalHelp": {
+        "title": "Help",
+        "description-1": "Fill your working days accordingly.",
+        "description-2": "Long press on a day to view more options.",
+        "legend": "Legend:",
+        "Working": "Working",
+        "Half day": "Half day",
+        "Remote": "Remote",
+        "Unavailable": "Unavailable",
+        "Off": "Off",
+        "Weekend": "Weekend",
+        "Holiday": "Holiday"
+      }
     }
   },
   "Notifications": {
