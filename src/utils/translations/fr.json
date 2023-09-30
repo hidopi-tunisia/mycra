@@ -1,4 +1,9 @@
 {
+  "Intro": {
+    "next": "Suivant",
+    "skip": "Passer",
+    "begin": "Commencer"
+  },
   "Sign In": {
     "title": "Bienvenu",
     "subtitle": "Merci de se connecter avec votre compte",

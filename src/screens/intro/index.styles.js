@@ -1,7 +1,7 @@
 import Colors from '@constants/colors';
-import { StyleSheet } from 'react-native';
+import { ScaledSheet } from 'react-native-size-matters';
 
-const styles = StyleSheet.create({
+const styles = ScaledSheet.create({
   root: {
     flex: 1,
     backgroundColor: Colors.WHITE,
@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
   containerImage: {
     flex: 2,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   image: {
     flex: 1,
@@ -27,8 +27,8 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    width: "80%",
-    alignSelf: "center"
+    width: '80%',
+    alignSelf: 'center',
   },
   title: {
     fontSize: 19,
@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
   textSkipButton: {
     fontFamily: 'Poppins-Medium',
     color: Colors.BLACK + '87',
-    fontSize: 14,
+    fontSize: '12@msr',
   },
   containerDoneButton: {
     height: 42,
@@ -86,7 +86,36 @@ const styles = StyleSheet.create({
   textDoneButton: {
     fontFamily: 'Poppins-Medium',
     color: Colors.WHITE,
-    fontSize: 14,
+    fontSize: '12@msr',
+  },
+  containerVersion: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  containerVersion: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  textVersion: {
+    alignSelf: 'center',
+    color: Colors.GRAY_PRIMARY,
+    fontSize: "10@msr"
+  },
+  containerInternationalization: {
+    flexDirection: 'row',
+  },
+  containerFlag: {
+    width: "20@s",
+    height: "20@s",
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  textInternationalization: {
+    alignSelf: 'center',
+    color: Colors.GRAY_PRIMARY,
+    textTransform: 'uppercase',
+    fontSize: "10@msr"
   },
 });
 

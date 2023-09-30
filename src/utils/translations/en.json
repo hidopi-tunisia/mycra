@@ -1,4 +1,9 @@
 {
+  "Intro": {
+    "next": "Next",
+    "skip": "Skip",
+    "begin": "Begin"
+  },
   "Sign In": {
     "title": "Welcome",
     "subtitle": "Please sign in using your account",

@@ -273,6 +273,72 @@ const SettingsScreen = () => {
             icon="log-out-outline"
             onPress={handleSignOut}
           />
+          <SettingsItem
+            title="Sign out"
+            description="Sign out and navigate back to the sign in screen"
+            icon="log-out-outline"
+            onPress={handleSignOut}
+          />
+          <SettingsItem
+            title="Sign out"
+            description="Sign out and navigate back to the sign in screen"
+            icon="log-out-outline"
+            onPress={handleSignOut}
+          />
+          <SettingsItem
+            title="Sign out"
+            description="Sign out and navigate back to the sign in screen"
+            icon="log-out-outline"
+            onPress={handleSignOut}
+          />
+          <SettingsItem
+            title="Sign out"
+            description="Sign out and navigate back to the sign in screen"
+            icon="log-out-outline"
+            onPress={handleSignOut}
+          />
+          <SettingsItem
+            title="Sign out"
+            description="Sign out and navigate back to the sign in screen"
+            icon="log-out-outline"
+            onPress={handleSignOut}
+          />
+          <SettingsItem
+            title="Sign out"
+            description="Sign out and navigate back to the sign in screen"
+            icon="log-out-outline"
+            onPress={handleSignOut}
+          />
+          <SettingsItem
+            title="Sign out"
+            description="Sign out and navigate back to the sign in screen"
+            icon="log-out-outline"
+            onPress={handleSignOut}
+          />
+          <SettingsItem
+            title="Sign out"
+            description="Sign out and navigate back to the sign in screen"
+            icon="log-out-outline"
+            onPress={handleSignOut}
+          />
+          <SettingsItem
+            title="Sign out"
+            description="Sign out and navigate back to the sign in screen"
+            icon="log-out-outline"
+            onPress={handleSignOut}
+          />
+          <SettingsItem
+            title="Sign out"
+            description="Sign out and navigate back to the sign in screen"
+            icon="log-out-outline"
+            onPress={handleSignOut}
+          />
+          <SettingsItem
+            title="Sign out"
+            description="Sign out and navigate back to the sign in screen"
+            icon="log-out-outline"
+            onPress={handleSignOut}
+          />
           <M v4 />
           <View style={styles.containerVersion}>
             <Text style={styles.textVersion}>
