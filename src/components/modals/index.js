@@ -3,6 +3,7 @@ import { FancyAlert } from 'react-native-expo-fancy-alerts';
 import { Icon, Button, Text } from '@ui-kitten/components';
 import { M } from '../index';
 import { renderColor, renderIcon } from './index.helpers';
+import { i18n } from '@utils/translations';
 
 import styles from './index.styles';
 import { s } from 'react-native-size-matters';
@@ -10,9 +11,9 @@ import { s } from 'react-native-size-matters';
 const Modal = ({
   visible = false,
   type = 'default',
-  title = 'Message',
-  positiveText = 'OK',
-  negativeText = 'Cancel',
+  title = i18n.t('shared:modals.message'),
+  positiveText = i18n.t('shared:modals.btn_ok'),
+  negativeText = i18n.t('shared:modals.btn_cancel'),
   onPressPositive,
   onPressNegative,
   children,
@@ -22,7 +23,12 @@ const Modal = ({
     icon={
       <View
         style={{ ...styles.containerIcon, backgroundColor: renderColor(type) }}>
-        <Icon width={s(18)} height={s(18)} name={renderIcon(type)} fill="white" />
+        <Icon
+          width={s(18)}
+          height={s(18)}
+          name={renderIcon(type)}
+          fill="white"
+        />
       </View>
     }
     style={styles.root}>

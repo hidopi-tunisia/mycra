@@ -10,6 +10,7 @@ import { WORKDAYS_ITEMS } from '@constants';
 import Colors from '@constants/colors';
 import { createCRA } from '@domain/me';
 import { getHolidays, getWeekends } from '@domain/miscs';
+import { useFocusEffect } from '@react-navigation/native';
 import { Button, Icon, Layout, Text } from '@ui-kitten/components';
 import moment from 'moment';
 import { useCallback, useEffect, useState } from 'react';
@@ -20,10 +21,9 @@ import {
   View,
 } from 'react-native';
 import { s } from 'react-native-size-matters';
-import { subscribeToConsultantTopic } from '../../composables';
-import styles from './index.styles';
-import { useFocusEffect } from '@react-navigation/native';
 import SystemNavigationBar from 'react-native-system-navigation-bar';
+import styles from './index.styles';
+import { i18n } from '@utils/translations';
 
 const NoCRAs = ({ projects, onFocus, onBlur }) => {
   const [loadingFetch, setLoadingFetch] = useState(false);
@@ -357,7 +357,7 @@ const NoCRAs = ({ projects, onFocus, onBlur }) => {
           <TouchableOpacity disabled={projects.length < 2}>
             <View style={styles.containerProjects}>
               <Text style={styles.textDescription}>
-                Project - {selectedProject.name}
+                {i18n.t('Home.no-cra.Project')} - {selectedProject.name}
               </Text>
               <M h1 />
               {projects.length > 1 && (
@@ -402,7 +402,7 @@ const NoCRAs = ({ projects, onFocus, onBlur }) => {
               }}
             />
             <M h1 />
-            <Text>Working</Text>
+            <Text>{i18n.t('Home.no-cra.Working')}</Text>
           </View>
           <View style={styles.containerLegend}>
             <View
@@ -413,7 +413,7 @@ const NoCRAs = ({ projects, onFocus, onBlur }) => {
               }}
             />
             <M h1 />
-            <Text>Half day</Text>
+            <Text>{i18n.t('Home.no-cra.Half day')}</Text>
           </View>
           <View style={styles.containerLegend}>
             <View
@@ -424,7 +424,7 @@ const NoCRAs = ({ projects, onFocus, onBlur }) => {
               }}
             />
             <M h1 />
-            <Text>Remote</Text>
+            <Text>{i18n.t('Home.no-cra.Remote')}</Text>
           </View>
           {/* <View style={styles.containerLegend}>
             <View
@@ -435,7 +435,7 @@ const NoCRAs = ({ projects, onFocus, onBlur }) => {
               }}
             />
             <M h1 />
-            <Text>Unavailable</Text>
+            <Text>{i18n.t("Home.no-cra.Unavailable")}</Text>
           </View> -- TODO: Unavailable */}
           <View style={styles.containerLegend}>
             <View
@@ -446,7 +446,7 @@ const NoCRAs = ({ projects, onFocus, onBlur }) => {
               }}
             />
             <M h1 />
-            <Text>Off</Text>
+            <Text>{i18n.t('Home.no-cra.Unavailable')}</Text>
           </View>
         </View>
         <M v2 />
@@ -455,45 +455,47 @@ const NoCRAs = ({ projects, onFocus, onBlur }) => {
             style={styles.buttonSubmit}
             status="primary"
             onPress={handleSubmit}>
-            Submit
+            {i18n.t('Home.no-cra.btn_submit')}
           </Button>
         </View>
       </View>
       <Modal
-        title="Submit days?"
+        title={i18n.t('Home.no-cra.modal.title')}
         type="confirm"
         visible={modalVisible}
         onPressNegative={handlePressNegative}
         onPressPositive={handlePressPositive}>
-        <Text>Are you sure to submit {selectedCount} days for this month?</Text>
+        <Text>
+          {i18n.t('Home.no-cra.modal.confirmation', { count: selectedCount })}
+        </Text>
       </Modal>
       <Modal
-        title="Holiday"
+        title={i18n.t('Home.no-cra.modalHoliday.title')}
         type="info"
         visible={modalHolidayVisible}
         onPressPositive={handlePressHolidayPositive}>
         {holiday && (
           <Text>
-            {holiday.date} is a holiday called "{holiday.name}".
+            {i18n.t('Home.no-cra.modalHoliday.confirmation', { date: holiday.date, name: holiday.name })}
           </Text>
         )}
       </Modal>
       <Modal
-        title="Weekend"
+        title={i18n.t('Home.no-cra.modalWeekend.title')}
         type="info"
         visible={modalWeekendVisible}
         onPressPositive={handlePressWeekendPositive}>
-        {weekend && <Text>{weekend.date} is a weekend.</Text>}
+        {weekend && <Text>{i18n.t('Home.no-cra.modalWeekend.confirmation', { date: weekend.date })}</Text>}
       </Modal>
       <Modal
-        title="Help"
+        title={i18n.t('Home.no-cra.modalHelp.title')}
         type="info"
         visible={modalHelpVisible}
         onPressPositive={() => setModalHelpVisible(false)}>
-        <Text>Fill your working days accordingly.</Text>
-        <Text>Long press on a day to view more options.</Text>
+        <Text>{i18n.t('Home.no-cra.modalHelp.description-1')}</Text>
+        <Text>{i18n.t('Home.no-cra.modalHelp.description-2')}</Text>
         <M v2 />
-        <Text>Legend:</Text>
+        <Text>{i18n.t('Home.no-cra.modalHelp.legend')}</Text>
         <View style={styles.containerLegends}>
           <View style={styles.containerLegend}>
             <View
@@ -504,7 +506,7 @@ const NoCRAs = ({ projects, onFocus, onBlur }) => {
               }}
             />
             <M h1 />
-            <Text>Working</Text>
+            <Text>{i18n.t('Home.no-cra.modalHelp.Working')}</Text>
           </View>
           <View style={styles.containerLegend}>
             <View
@@ -515,7 +517,7 @@ const NoCRAs = ({ projects, onFocus, onBlur }) => {
               }}
             />
             <M h1 />
-            <Text>Half day</Text>
+            <Text>{i18n.t('Home.no-cra.modalHelp.Half day')}</Text>
           </View>
           <View style={styles.containerLegend}>
             <View
@@ -526,7 +528,7 @@ const NoCRAs = ({ projects, onFocus, onBlur }) => {
               }}
             />
             <M h1 />
-            <Text>Remote</Text>
+            <Text>{i18n.t('Home.no-cra.modalHelp.Remote')}</Text>
           </View>
           {/* <View style={styles.containerLegend}>
             <View
@@ -537,7 +539,7 @@ const NoCRAs = ({ projects, onFocus, onBlur }) => {
               }}
             />
             <M h1 />
-            <Text>Unavailable</Text>
+            <Text>{i18n.t('Home.no-cra.modalHelp.Unavailable')}</Text>
           </View> --  TODO: Unavailable */}
           <View style={styles.containerLegend}>
             <View
@@ -548,7 +550,7 @@ const NoCRAs = ({ projects, onFocus, onBlur }) => {
               }}
             />
             <M h1 />
-            <Text>Off</Text>
+            <Text>{i18n.t('Home.no-cra.modalHelp.Off')}</Text>
           </View>
           <View style={styles.containerLegend}>
             <View
@@ -559,7 +561,7 @@ const NoCRAs = ({ projects, onFocus, onBlur }) => {
               }}
             />
             <M h1 />
-            <Text>Weekend</Text>
+            <Text>{i18n.t('Home.no-cra.modalHelp.Weekend')}</Text>
           </View>
           <View style={styles.containerLegend}>
             <View
@@ -570,7 +572,7 @@ const NoCRAs = ({ projects, onFocus, onBlur }) => {
               }}
             />
             <M h1 />
-            <Text>Holiday</Text>
+            <Text>{i18n.t('Home.no-cra.modalHelp.Holiday')}</Text>
           </View>
         </View>
       </Modal>

@@ -29,6 +29,52 @@
       "CRA History:description": "View your past CRAs"
     }
   },
+  "Home": {
+    "no-cra": {
+      "Project": "Project",
+      "Working": "Working",
+      "Half day": "Half day",
+      "Remote": "Remote",
+      "Unavailable": "Unavailable",
+      "Off": "Off",
+      "btn_submit": "Submit",
+      "modal": {
+        "title": "Submit days?",
+        "confirmation": "Are you sure to submit %{count} days for this month?"
+      },
+      "modalHoliday": {
+        "title": "Holiday",
+        "confirmation": "%{date} is a holiday called \"%{name}\"."
+      },
+      "modalWeekend": {
+        "title": "Weekend",
+        "confirmation": "%{date} is a weekend."
+      },
+      "modalHelp": {
+        "title": "Help",
+        "description-1": "Fill your working days accordingly.",
+        "description-2": "Long press on a day to view more options.",
+        "legend": "Legend:",
+        "Working": "Working",
+        "Half day": "Half day",
+        "Remote": "Remote",
+        "Unavailable": "Unavailable",
+        "Off": "Off",
+        "Weekend": "Weekend",
+        "Holiday": "Holiday"
+      }
+    }
+  },
+  "shared:workdays-collection": {
+    "title": "Describe",
+    "title-all": "Describe all working days",
+    "working-day": "Working day",
+    "days-off": {
+      "zero": "Days off",
+      "one": "Day off",
+      "other": "Days off"
+    }
+  },
   "shared:workday-items": {
     "working": "Working",
     "half": "Half-day",
@@ -54,5 +100,10 @@
     "description": "Please provide your email so will send you an email to reset your password.",
     "email": "Email",
     "btn_submit": "Submit"
+  },
+  "shared:modals": {
+    "title": "Message",
+    "btn_ok": "OK",
+    "btn_cancel": "Cancel"
   }
 }
