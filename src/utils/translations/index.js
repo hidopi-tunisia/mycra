@@ -33,6 +33,7 @@ if (Object.values(Locales).includes(locale.substring(0, 2))) {
   defaultLocale = locale;
 }
 i18n.defaultLocale = defaultLocale;
+moment.locale(locale);
 const prepareInternationalization = async () => {
   try {
     const l = await getStoredLocale();
