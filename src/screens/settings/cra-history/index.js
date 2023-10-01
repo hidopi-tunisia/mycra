@@ -1,15 +1,14 @@
-import { useNavigation } from '@react-navigation/native';
-import { useState, useEffect } from 'react';
-import { View, TouchableOpacity, FlatList } from 'react-native';
-import { Layout, Text, Spinner, Icon } from '@ui-kitten/components';
 import { M } from '@components';
-import styles from './index.styles';
-import { getAllCRAs, getCRAHistory } from '@domain/cra';
 import CRAHistoryItem from '@components/cra-history-item';
-import { getStatusType } from './index.helpers';
 import Colors from '@constants/colors';
 import { getCRAs } from '@domain/me';
+import { Icon, Layout, Spinner, Text } from '@ui-kitten/components';
+import { i18n } from '@utils/translations';
 import moment from 'moment';
+import { useEffect, useState } from 'react';
+import { FlatList, TouchableOpacity, View } from 'react-native';
+import { getStatusType } from './index.helpers';
+import styles from './index.styles';
 
 const CRAHistoryScreen = ({ navigation }) => {
   const [history, setHistory] = useState([]);
@@ -28,7 +27,7 @@ const CRAHistoryScreen = ({ navigation }) => {
       setLoading(false);
     } catch (error) {
       setLoading(false);
-      setError('Error happened');
+      setError(i18n.t("CRA History.errors.Error happened"));
       console.info(error, error?.response?.data);
     }
   };
@@ -51,7 +50,7 @@ const CRAHistoryScreen = ({ navigation }) => {
       } catch (error) {
         setLoadingMore(false);
         console.info(error);
-        setErrorLoadingMore('Error happened');
+        setErrorLoadingMore(i18n.t("CRA History.errors.Error happened"));
       }
     };
     fn();
@@ -95,7 +94,7 @@ const CRAHistoryScreen = ({ navigation }) => {
             />
           </TouchableOpacity>
           <Text style={styles.textHeader} category="h1">
-            CRA History
+            {i18n.t('CRA History.title')}
           </Text>
         </View>
         <M v2 />
@@ -119,7 +118,9 @@ const CRAHistoryScreen = ({ navigation }) => {
                   <TouchableOpacity
                     onPress={handlePressLoadMore}
                     style={styles.containerLoadMore}>
-                    <Text style={styles.textLoadMore}>Load more...</Text>
+                    <Text style={styles.textLoadMore}>
+                      {i18n.t('CRA History.load-more')}
+                    </Text>
                   </TouchableOpacity>
                 )}
               </>
@@ -161,7 +162,9 @@ const CRAHistoryScreen = ({ navigation }) => {
                           }}
                         />
                         <M h1 />
-                        <Text>{item.working.length} Working</Text>
+                        <Text>
+                          {item.working.length} {i18n.t('CRA History.working')}
+                        </Text>
                       </View>
                       <M h2 />
                     </>
@@ -177,7 +180,7 @@ const CRAHistoryScreen = ({ navigation }) => {
                           }}
                         />
                         <M h1 />
-                        <Text>{item.half.length} half days</Text>
+                        <Text>{item.half.length} {i18n.t('CRA History.half')}</Text>
                       </View>
                       <M h2 />
                     </>
@@ -193,7 +196,7 @@ const CRAHistoryScreen = ({ navigation }) => {
                           }}
                         />
                         <M h1 />
-                        <Text>{item.remote.length} remote</Text>
+                        <Text>{item.remote.length} {i18n.t('CRA History.remote')}</Text>
                       </View>
                       <M h2 />
                     </>
@@ -209,7 +212,7 @@ const CRAHistoryScreen = ({ navigation }) => {
                           }}
                         />
                         <M h1 />
-                        <Text>{item.off.length} off</Text>
+                        <Text>{item.off.length} {i18n.t('CRA History.off')}</Text>
                       </View>
                     </>
                   )}
@@ -220,7 +223,7 @@ const CRAHistoryScreen = ({ navigation }) => {
         )}
         {!loading && !error && history.length === 0 && (
           <View style={styles.cardEmpty}>
-            <Text>No history</Text>
+            <Text>{i18n.t('CRA History.Working')}</Text>
           </View>
         )}
         {loading && (
@@ -235,7 +238,7 @@ const CRAHistoryScreen = ({ navigation }) => {
             </View>
             <M v1 />
             <TouchableOpacity onPress={handePressRetry}>
-              <Text style={styles.textRetry}>Try again</Text>
+              <Text style={styles.textRetry}>{i18n.t('CRA History.retry')}</Text>
             </TouchableOpacity>
           </View>
         )}

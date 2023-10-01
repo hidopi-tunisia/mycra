@@ -137,6 +137,80 @@
         "Weekend": "Weekend",
         "Holiday": "Holiday"
       }
+    },
+    "approved-cras": {
+      "Project": "Project",
+      "Working": "Working",
+      "Half day": "Half day",
+      "Remote": "Remote",
+      "Unavailable": "Unavailable",
+      "Off": "Off",
+      "Weekends": "Weekends",
+      "Holiday": "Holiday",
+      "btn_submit": "CRA is pending",
+      "modal": {
+        "title": "Approved",
+        "info": "CRA approved",
+        "summary": "Days summary:"
+      },
+      "modalHoliday": {
+        "title": "Holiday",
+        "confirmation": "%{date} is a holiday called \"%{name}\"."
+      },
+      "modalWeekend": {
+        "title": "Weekend",
+        "confirmation": "%{date} is a weekend."
+      },
+      "modalHelp": {
+        "title": "Help",
+        "description-1": "Fill your working days accordingly.",
+        "description-2": "Long press on a day to view more options.",
+        "legend": "Legend:",
+        "Working": "Working",
+        "Half day": "Half day",
+        "Remote": "Remote",
+        "Unavailable": "Unavailable",
+        "Off": "Off",
+        "Weekend": "Weekend",
+        "Holiday": "Holiday"
+      }
+    },
+    "rejected-cras": {
+      "Project": "Project",
+      "Working": "Working",
+      "Half day": "Half day",
+      "Remote": "Remote",
+      "Unavailable": "Unavailable",
+      "Off": "Off",
+      "Weekends": "Weekends",
+      "Holiday": "Holiday",
+      "btn_submit": "CRA is pending",
+      "modal": {
+        "title": "Rejected",
+        "info": "CRA rejected",
+        "summary": "Days summary:"
+      },
+      "modalHoliday": {
+        "title": "Holiday",
+        "confirmation": "%{date} is a holiday called \"%{name}\"."
+      },
+      "modalWeekend": {
+        "title": "Weekend",
+        "confirmation": "%{date} is a weekend."
+      },
+      "modalHelp": {
+        "title": "Help",
+        "description-1": "Fill your working days accordingly.",
+        "description-2": "Long press on a day to view more options.",
+        "legend": "Legend:",
+        "Working": "Working",
+        "Half day": "Half day",
+        "Remote": "Remote",
+        "Unavailable": "Unavailable",
+        "Off": "Off",
+        "Weekend": "Weekend",
+        "Holiday": "Holiday"
+      }
     }
   },
   "Notifications": {
@@ -187,6 +261,19 @@
       "Missing password": "Missing password",
       "Wrong password": "Wrong password",
       "Incorrect email": "Incorrect email",
+      "Error happened": "Error happened"
+    }
+  },
+  "CRA History": {
+    "title": "CRA History",
+    "load-more": "Load more...",
+    "working": "working",
+    "half": "half",
+    "remote": "remote",
+    "off": "off",
+    "no-history": "No history",
+    "retry": "Try again",
+    "errors": {
       "Error happened": "Error happened"
     }
   },
