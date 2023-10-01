@@ -99,7 +99,7 @@ const styles = ScaledSheet.create({
   },
   button: {
     borderRadius: '24@s',
-    width: "100@s"
+    width: "120@s"
   },
   calendarDayWorking: {
     container: {
