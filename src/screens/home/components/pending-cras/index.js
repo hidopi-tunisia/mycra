@@ -253,7 +253,7 @@ const PendingCRAs = ({ cra, projects, onFocus, onBlur }) => {
         </View>
       </View>
       <Modal
-        title="Waiting for approval"
+        title={i18n.t('Home.pending-cras.modal.title')}
         type="confirm"
         visible={modalVisible}
         onPressPositive={handlePressPositive}>
