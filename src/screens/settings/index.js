@@ -318,7 +318,7 @@ const SettingsScreen = () => {
         <Text>{i18n.t('Settings.modal.description')}</Text>
       </Modal>
       <BottomSheet
-        height={vs(360)}
+        height={vs(420)}
         onCallbackRef={handleRefUpdateProfileBottomSheet}>
         <UpdateProfileForm
           loading={loadingUpdateProfile}
@@ -331,12 +331,12 @@ const SettingsScreen = () => {
         />
       </BottomSheet>
       <BottomSheet
-        height={vs(240)}
+        height={vs(280)}
         onCallbackRef={handleRefResetPasswordBottomSheet}>
         <ResetPasswordForm
           loading={loadingResetPassword}
           error={errorResetPassword}
-          onPressClose={handlePressCloseUpdateProfile}
+          onPressClose={handlePressCloseResetPassword}
           onSubmit={handleSubmitResetPassword}
         />
       </BottomSheet>
