@@ -10,9 +10,9 @@
     "Settings": "Paramètres"
   },
   "Sign In": {
-    "title": "Bienvenu",
-    "subtitle": "Merci de se connecter avec votre compte",
-    "email": "Email",
+    "title": "Bienvenue",
+    "subtitle": "Veuillez vous connecter avec votre compte",
+    "email": "E-mail",
     "password": "Mot de passe",
     "forgot password?": "Mot de passe oublié ?",
     "btn_sign in": "Se connecter",
@@ -24,40 +24,335 @@
       "btn_ok": "OK"
     },
     "Email sent": {
-      "title": "Email envoyé",
+      "title": "E-mail envoyé",
       "description": "Veuillez vérifier votre e-mail pour réinitialiser votre mot de passe."
     }
   },
+  "Home": {
+    "no-cra": {
+      "Project": "Projet",
+      "Working": "Travail",
+      "Half day": "Demi-journée",
+      "Remote": "À distance",
+      "Unavailable": "Indisponible",
+      "Off": "Congé",
+      "btn_submit": "Soumettre",
+      "modal": {
+        "title": "Soumettre les jours ?",
+        "confirmation": "Êtes-vous sûr de soumettre %{count} jours pour ce mois-ci ?"
+      },
+      "modalHoliday": {
+        "title": "Jour férié",
+        "confirmation": "%{date} est un jour férié appelé \"%{name}\"."
+      },
+      "modalWeekend": {
+        "title": "Week-end",
+        "confirmation": "%{date} est un week-end."
+      },
+      "modalHelp": {
+        "title": "Aide",
+        "description-1": "Remplissez vos jours de travail en conséquence.",
+        "description-2": "Appuyez longuement sur un jour pour voir plus d'options.",
+        "legend": "Légende :",
+        "Working": "Travail",
+        "Half day": "Demi-journée",
+        "Remote": "À distance",
+        "Unavailable": "Indisponible",
+        "Off": "Congé",
+        "Weekend": "Week-end",
+        "Holiday": "Jour férié"
+      }
+    },
+    "no-projects": {
+      "description": "Veuillez remplir votre CRA avant la fin du mois en cours.",
+      "text:title": "Pas de projets",
+      "text:info": "Vous n'êtes affecté à aucun projet pour le moment.",
+      "btn_retry": "Réessayer",
+      "modalHelp": {
+        "title": "Aide",
+        "description-1": "Remplissez vos jours de travail en conséquence.",
+        "description-2": "Appuyez longuement sur un jour pour voir plus d'options.",
+        "legend": "Légende :",
+        "Working": "Travail",
+        "Half day": "Demi-journée",
+        "Remote": "À distance",
+        "Unavailable": "Indisponible",
+        "Off": "Congé",
+        "Weekend": "Week-end",
+        "Holiday": "Jour férié"
+      }
+    },
+    "no-current-cras": {
+      "description": "AUCUN CRA EN COURS",
+      "text:title": "Pas de projets",
+      "text:info": "Vous n'êtes affecté à aucun projet pour le moment.",
+      "btn_retry": "Réessayer",
+      "modalHelp": {
+        "title": "Aide",
+        "description-1": "Remplissez vos jours de travail en conséquence.",
+        "description-2": "Appuyez longuement sur un jour pour voir plus d'options.",
+        "legend": "Légende :",
+        "Working": "Travail",
+        "Half day": "Demi-journée",
+        "Remote": "À distance",
+        "Unavailable": "Indisponible",
+        "Off": "Congé",
+        "Weekend": "Week-end",
+        "Holiday": "Jour férié"
+      }
+    },
+    "pending-cras": {
+      "Project": "Projet",
+      "Working": "Travail",
+      "Half day": "Demi-journée",
+      "Remote": "À distance",
+      "Unavailable": "Indisponible",
+      "Off": "Congé",
+      "Weekends": "Week-ends",
+      "Holiday": "Jour férié",
+      "btn_submit": "CRA en attente",
+      "modal": {
+        "title": "En attente d'approbation",
+        "info": "CRA soumis",
+        "summary": "Résumé des jours :"
+      },
+      "modalHoliday": {
+        "title": "Jour férié",
+        "confirmation": "%{date} est un jour férié appelé \"%{name}\"."
+      },
+      "modalWeekend": {
+        "title": "Week-end",
+        "confirmation": "%{date} est un week-end."
+      },
+      "modalHelp": {
+        "title": "Aide",
+        "description-1": "Remplissez vos jours de travail en conséquence.",
+        "description-2": "Appuyez longuement sur un jour pour voir plus d'options.",
+        "legend": "Légende :",
+        "Working": "Travail",
+        "Half day": "Demi-journée",
+        "Remote": "À distance",
+        "Unavailable": "Indisponible",
+        "Off": "Congé",
+        "Weekend": "Week-end",
+        "Holiday": "Jour férié"
+      }
+    },
+    "approved-cras": {
+      "Project": "Projet",
+      "Working": "Travail",
+      "Half day": "Demi-journée",
+      "Remote": "À distance",
+      "Unavailable": "Indisponible",
+      "Off": "Congé",
+      "Weekends": "Week-ends",
+      "Holiday": "Jour férié",
+      "btn_submit": "CRA en attente",
+      "modal": {
+        "title": "Approuvé",
+        "info": "CRA approuvé",
+        "summary": "Résumé des jours :"
+      },
+      "modalHoliday": {
+        "title": "Jour férié",
+        "confirmation": "%{date} est un jour férié appelé \"%{name}\"."
+      },
+      "modalWeekend": {
+        "title": "Week-end",
+        "confirmation": "%{date} est un week-end."
+      },
+      "modalHelp": {
+        "title": "Aide",
+        "description-1": "Remplissez vos jours de travail en conséquence.",
+        "description-2": "Appuyez longuement sur un jour pour voir plus d'options.",
+        "legend": "Légende :",
+        "Working": "Travail",
+        "Half day": "Demi-journée",
+        "Remote": "À distance",
+        "Unavailable": "Indisponible",
+        "Off": "Congé",
+        "Weekend": "Week-end",
+        "Holiday": "Jour férié"
+      }
+    },
+    "rejected-cras": {
+      "Project": "Projet",
+      "Working": "Travail",
+      "Half day": "Demi-journée",
+      "Remote": "À distance",
+      "Unavailable": "Indisponible",
+      "Off": "Congé",
+      "Weekends": "Week-ends",
+      "Holiday": "Jour férié",
+      "btn_submit": "CRA en attente",
+      "modal": {
+        "title": "Rejeté",
+        "info": "CRA rejeté",
+        "summary": "Résumé des jours :"
+      },
+      "modalHoliday": {
+        "title": "Jour férié",
+        "confirmation": "%{date} est un jour férié appelé \"%{name}\"."
+      },
+      "modalWeekend": {
+        "title": "Week-end",
+        "confirmation": "%{date} est un week-end."
+      },
+      "modalHelp": {
+        "title": "Aide",
+        "description-1": "Remplissez vos jours de travail en conséquence.",
+        "description-2": "Appuyez longuement sur un jour pour voir plus d'options.",
+        "legend": "Légende :",
+        "Working": "Travail",
+        "Half day": "Demi-journée",
+        "Remote": "À distance",
+        "Unavailable": "Indisponible",
+        "Off": "Congé",
+        "Weekend": "Week-end",
+        "Holiday": "Jour férié"
+      }
+    }
+  },
+  "Notifications": {
+    "Notifications": "Notifications",
+    "Alerts": "Alertes",
+    "No notifications": "Aucune notification",
+    "form": {
+      "title": "Nouvelle alerte",
+      "placeholder": "Tapez votre alerte !",
+      "btn_submit": "Soumettre"
+    }
+  },
   "Settings": {
+    "report:mailto": "mailto:%{SUPPORT_EMAIL}?subject=Signalement d'un problème dans la version (%{APP_VERSION}) &body=Bonjour, je voudrais signaler un problème dans l'application.",
     "items": {
-      "CRA History:title": "Historique des CRAs",
-      "CRA History:description": "Consulter votre anciens CRAs"
+      "CRA History:title": "Historique du CRA",
+      "CRA History:description": "Consultez vos CRA passés",
+      "Reset password:title": "Réinitialiser le mot de passe",
+      "Reset password:description": "Commencez une réinitialisation du mot de passe",
+      "Terms and conditions:title": "Conditions générales",
+      "Terms and conditions:description": "Consultez les conditions générales sur notre site Web",
+      "Privacy policy:title": "Politique de confidentialité",
+      "Privacy policy:description": "Consultez notre politique de confidentialité sur notre site Web",
+      "Help:title": "Aide",
+      "Help:description": "Consultez notre aide sur notre site Web",
+      "Report an issue:title": "Signaler un problème",
+      "Report an issue:description": "Envoyez-nous un e-mail concernant un problème dans l'application",
+      "Sign out:title": "Se déconnecter",
+      "Sign out:description": "Déconnectez-vous et revenez à l'écran de connexion"
+    },
+    "modals": {
+      "update-profile": {
+        "title": "Mettre à jour le profil",
+        "upload-avatar": "Télécharger une photo d'avatar",
+        "Upload": "Télécharger",
+        "Reset": "Réinitialiser",
+        "First name:label": "Prénom",
+        "First name:placeholder": "John",
+        "Last name:label": "Nom de famille",
+        "Last name:placeholder": "Doe",
+        "Position:label": "Poste",
+        "Position:placeholder": "Développeur Web",
+        "btn_submit": "Soumettre"
+      }
+    },
+    "errors": {
+      "Invalid email": "E-mail invalide",
+      "Missing password": "Mot de passe manquant",
+      "Wrong password": "Mauvais mot de passe",
+      "Incorrect email": "E-mail incorrect",
+      "Error happened": "Une erreur s'est produite"
+    }
+  },
+  "CRA History": {
+    "title": "Historique du CRA",
+    "load-more": "Charger plus...",
+    "working": "travail",
+    "half": "demi",
+    "remote": "à distance",
+    "off": "congé",
+    "no-history": "Pas d'historique",
+    "retry": "Réessayer",
+    "errors": {
+      "Error happened": "Une erreur s'est produite"
+    }
+  },
+  "CRA Details": {
+    "Project": "Projet",
+    "Working": "Travail",
+    "Half day": "Demi-journée",
+    "Remote": "À distance",
+    "Unavailable": "Indisponible",
+    "Off": "Congé",
+    "Weekends": "Week-ends",
+    "Holiday": "Jour férié",
+    "btn_submit": "CRA en attente",
+    "modal": {
+      "title": "En attente d'approbation",
+      "info": "CRA soumis",
+      "summary": "Résumé des jours :"
+    },
+    "modalHoliday": {
+      "title": "Jour férié",
+      "confirmation": "%{date} est un jour férié appelé \"%{name}\"."
+    },
+    "modalWeekend": {
+      "title": "Week-end",
+      "confirmation": "%{date} est un week-end."
+    },
+    "modalHelp": {
+      "title": "Aide",
+      "description-1": "Remplissez vos jours de travail en conséquence.",
+      "description-2": "Appuyez longuement sur un jour pour voir plus d'options.",
+      "legend": "Légende :",
+      "Working": "Travail",
+      "Half day": "Demi-journée",
+      "Remote": "À distance",
+      "Unavailable": "Indisponible",
+      "Off": "Congé",
+      "Weekend": "Week-end",
+      "Holiday": "Jour férié"
+    }
+  },
+  "shared:workdays-collection": {
+    "title": "Décrire",
+    "title-all": "Décrire tous les jours de travail",
+    "working-day": "Jour de travail",
+    "days-off": {
+      "zero": "Jours de congé",
+      "one": "Jour de congé",
+      "other": "Jours de congé"
     }
   },
   "shared:workday-items": {
-    "working": "Travaillé",
+    "working": "Travail",
     "half": "Demi-journée",
-    "remote": "Télétravail",
-    "PL": "CP",
+    "remote": "À distance",
+    "PL": "PL",
     "Absence": "Absence",
-    "Sick leave": "Arrêt maladie",
-    "Authorized unpaid leave": "Absence autorisée non rémunérée",
-    "Unauthorized unpaid leave": "Absence non autorisée non rémunérée",
+    "Sick leave": "Congé maladie",
+    "Authorized unpaid leave": "Congé autorisé non rémunéré",
+    "Unauthorized unpaid leave": "Congé non autorisé non rémunéré",
     "Moving": "Déménagement",
     "Prenatal medical examination": "Examen médical prénatal",
-    "Child's marriage": "Mariage enfant",
-    "Marriage-PACS": "Mariage-Pacs",
+    "Child's marriage": "Mariage de l'enfant",
+    "Marriage-PACS": "Mariage-PACS",
     "Maternity": "Maternité",
     "Birth": "Naissance",
     "Paternity": "Paternité",
-    "Childcare": "Soins enfants",
+    "Childcare": "Garde d'enfants",
     "Work-related accident-commute": "Accident de travail-trajet",
     "Other": "Autre"
   },
   "shared:reset-password": {
-    "title": "Réinitialiser mot de passe",
-    "description": "Veuillez fournir votre adresse e-mail afin que nous puissions vous envoyer un e-mail pour réinitialiser votre mot de passe.",
-    "email": "Email",
+    "title": "Réinitialiser le mot de passe",
+    "description": "Veuillez fournir votre e-mail afin que nous puissions vous envoyer un e-mail pour réinitialiser votre mot de passe.",
+    "email": "E-mail",
     "btn_submit": "Soumettre"
+  },
+  "shared:modals": {
+    "title": "Message",
+    "btn_ok": "OK",
+    "btn_cancel": "Annuler"
   }
 }
