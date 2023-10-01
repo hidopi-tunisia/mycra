@@ -16,6 +16,7 @@ import { s } from 'react-native-size-matters';
 import SystemNavigationBar from 'react-native-system-navigation-bar';
 import styles from './index.styles';
 import { getHistoryItem } from '@screens/home/composables';
+import { i18n } from '@utils/translations';
 
 const ApprovedCRAs = ({ cra, projects, onFocus, onBlur }) => {
   const [loadingFetch, setLoadingFetch] = useState(false);

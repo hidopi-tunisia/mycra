@@ -177,6 +177,7 @@
     },
     "rejected-cras": {
       "Project": "Project",
+      "Rejected": "Rejected",
       "Working": "Working",
       "Half day": "Half day",
       "Remote": "Remote",

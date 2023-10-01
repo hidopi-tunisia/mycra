@@ -177,6 +177,7 @@
     },
     "rejected-cras": {
       "Project": "Projet",
+      "Rejected": "Rejected",
       "Working": "Travail",
       "Half day": "Demi-journée",
       "Remote": "À distance",
@@ -270,7 +271,7 @@
     "working": "travail",
     "half": "demi",
     "remote": "à distance",
-    "Off": "Absent",
+    "off": "Absent",
     "no-history": "Pas d'historique",
     "retry": "Réessayer",
     "errors": {
