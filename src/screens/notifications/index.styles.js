@@ -1,7 +1,5 @@
-import { Dimensions } from 'react-native';
 import Colors from '@constants/colors';
 import { ScaledSheet } from 'react-native-size-matters';
-const { height } = Dimensions.get('window');
 
 const styles = ScaledSheet.create({
   root: {

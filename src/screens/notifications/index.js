@@ -93,7 +93,7 @@ const NotificationsScreen = ({ notifications }) => {
             </View>
           )}
         </View>
-        <View style={styles.bottom}></View>
+        <View style={styles.bottom} />
         <Fab onPress={handlePressFab} />
         <BottomSheet height={360} onCallbackRef={handleRefBottomSheet}>
           <AlertForm onPressClose={handlePressClose} onSubmit={handleSubmit} />

@@ -106,11 +106,18 @@ const styles = ScaledSheet.create({
     fontSize: '10@msr',
     marginTop: '4@msr',
   },
-  bottom: {
+  middle: {
     borderRadius: '24@msr',
     padding: '8@msr',
     justifyContent: 'center',
     marginTop: '-28@msr',
+    flex: 1,
+  },
+  bottom: {
+    borderRadius: '24@msr',
+    padding: '8@msr',
+    justifyContent: 'center',
+    height: '74@msr',
   },
   card: {
     backgroundColor: Colors.WHITE,
@@ -129,14 +136,14 @@ const styles = ScaledSheet.create({
   textVersion: {
     alignSelf: 'center',
     color: Colors.GRAY_PRIMARY,
-    fontSize: "10@msr"
+    fontSize: '10@msr',
   },
   containerInternationalization: {
     flexDirection: 'row',
   },
   containerFlag: {
-    width: "20@s",
-    height: "20@s",
+    width: '20@s',
+    height: '20@s',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -144,7 +151,7 @@ const styles = ScaledSheet.create({
     alignSelf: 'center',
     color: Colors.GRAY_PRIMARY,
     textTransform: 'uppercase',
-    fontSize: "10@msr"
+    fontSize: '10@msr',
   },
   containerError: {
     backgroundColor: `${Colors.RED_DARK_PRIMARY}66`,
