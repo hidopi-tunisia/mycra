@@ -161,7 +161,7 @@ const ApprovedCRAs = ({ cra, projects, onFocus, onBlur }) => {
           <TouchableOpacity disabled={projects.length < 2}>
             <View style={styles.containerProjects}>
               <Text style={styles.textDescription}>
-                Project - {selectedProject.name}
+                {i18n.t('Home.approved-cras.Working')} - {selectedProject.name}
               </Text>
               <M h1 />
               {projects.length > 1 && (
@@ -194,7 +194,7 @@ const ApprovedCRAs = ({ cra, projects, onFocus, onBlur }) => {
               }}
             />
             <M h1 />
-            <Text>Working</Text>
+            <Text>{i18n.t('Home.approved-cras.Working')}</Text>
           </View>
           <View style={styles.containerLegend}>
             <View
@@ -205,7 +205,7 @@ const ApprovedCRAs = ({ cra, projects, onFocus, onBlur }) => {
               }}
             />
             <M h1 />
-            <Text>Half day</Text>
+            <Text>{i18n.t('Home.approved-cras.Working')}</Text>
           </View>
           <View style={styles.containerLegend}>
             <View
@@ -216,7 +216,7 @@ const ApprovedCRAs = ({ cra, projects, onFocus, onBlur }) => {
               }}
             />
             <M h1 />
-            <Text>Remote</Text>
+            <Text>{i18n.t('Home.approved-cras.Working')}</Text>
           </View>
           {/* <View style={styles.containerLegend}>
             <View
@@ -227,7 +227,7 @@ const ApprovedCRAs = ({ cra, projects, onFocus, onBlur }) => {
               }}
             />
             <M h1 />
-            <Text>Unavailable</Text>
+            <Text>{i18n.t('Home.approved-cras.Working')}</Text>
           </View> -- TODO: Unavailable */}
           <View style={styles.containerLegend}>
             <View
@@ -238,7 +238,7 @@ const ApprovedCRAs = ({ cra, projects, onFocus, onBlur }) => {
               }}
             />
             <M h1 />
-            <Text>Off</Text>
+            <Text>{i18n.t('Home.approved-cras.Working')}</Text>
           </View>
         </View>
         <M v2 />
@@ -247,57 +247,77 @@ const ApprovedCRAs = ({ cra, projects, onFocus, onBlur }) => {
             style={styles.buttonSubmit}
             status="control"
             onPress={handleSubmit}>
-            Approved CRA
+            {i18n.t('Home.approved-cras.btn_submit')}
           </Button>
         </View>
       </View>
       <Modal
-        title="Approved"
+        title={i18n.t('Home.approved-cras.modal.title')}
         type="confirm"
         visible={modalVisible}
         onPressPositive={handlePressPositive}>
         <Text>
-          CRA approved
-          {getHistoryItem(cra.history, 'approved') && getHistoryItem(cra.history, 'approved').at
+          {i18n.t('Home.approved-cras.modalHoliday.info')}
+          {getHistoryItem(cra.history, 'approved') &&
+          getHistoryItem(cra.history, 'approved').at
             ? ` at ${getHistoryItem(cra.history, 'approved').at.substring(
                 0,
                 10,
-              )} ${getHistoryItem(cra.history, 'approved').at.substring(11, 16)}`
+              )} ${getHistoryItem(cra.history, 'approved').at.substring(
+                11,
+                16,
+              )}`
             : ''}
         </Text>
         {getHistoryItem(cra.history, 'approved') &&
           getHistoryItem(cra.history, 'approved').by &&
           getHistoryItem(cra.history, 'approved').by.motive && (
-            <Text>Motive: {getHistoryItem(cra.history, 'approved').by.motive}</Text>
+            <Text>
+              {i18n.t('Home.approved-cras.modalHoliday.confirmation', {
+                date: holiday.date,
+                name: holiday.name,
+              })}{' '}
+              {getHistoryItem(cra.history, 'approved').by.motive}
+            </Text>
           )}
       </Modal>
       <Modal
-        title="Holiday"
+        title={i18n.t('Home.approved-cras.modalHoliday.title')}
         type="info"
         visible={modalHolidayVisible}
         onPressPositive={handlePressHolidayPositive}>
         {holiday && (
           <Text>
-            {holiday.date} is a holiday called "{holiday.name}".
+            {i18n.t('Home.approved-cras.modalHoliday.confirmation', {
+              date: holiday.date,
+              name: holiday.name,
+            })}
           </Text>
         )}
       </Modal>
       <Modal
-        title="Weekend"
+        title={i18n.t('Home.approved-cras.modalWeekend.title')}
         type="info"
         visible={modalWeekendVisible}
         onPressPositive={handlePressWeekendPositive}>
-        {weekend && <Text>{weekend.date} is a weekend.</Text>}
+        {weekend && (
+          <Text>
+            {i18n.t('Home.approved-cras.modalWeekend.confirmation', {
+              date: weekend.date,
+            })}
+          </Text>
+        )}
       </Modal>
+
       <Modal
-        title="Help"
+        title={i18n.t('Home.approved-cras.modalHelp.title')}
         type="info"
         visible={modalHelpVisible}
         onPressPositive={() => setModalHelpVisible(false)}>
-        <Text>Fill your working days accordingly.</Text>
-        <Text>Long press on a day to view more options.</Text>
+        <Text>{i18n.t('Home.approved-cras.modalHelp.description-1')}</Text>
+        <Text>{i18n.t('Home.approved-cras.modalHelp.description-2')}</Text>
         <M v2 />
-        <Text>Legend:</Text>
+        <Text>{i18n.t('Home.approved-cras.modalHelp.legend')}</Text>
         <View style={styles.containerLegends}>
           <View style={styles.containerLegend}>
             <View
@@ -308,7 +328,7 @@ const ApprovedCRAs = ({ cra, projects, onFocus, onBlur }) => {
               }}
             />
             <M h1 />
-            <Text>Working</Text>
+            <Text>{i18n.t('Home.approved-cras.modalHelp.Working')}</Text>
           </View>
           <View style={styles.containerLegend}>
             <View
@@ -319,7 +339,7 @@ const ApprovedCRAs = ({ cra, projects, onFocus, onBlur }) => {
               }}
             />
             <M h1 />
-            <Text>Half day</Text>
+            <Text>{i18n.t('Home.approved-cras.modalHelp.Half day')}</Text>
           </View>
           <View style={styles.containerLegend}>
             <View
@@ -330,7 +350,7 @@ const ApprovedCRAs = ({ cra, projects, onFocus, onBlur }) => {
               }}
             />
             <M h1 />
-            <Text>Remote</Text>
+            <Text>{i18n.t('Home.approved-cras.modalHelp.Remote')}</Text>
           </View>
           {/* <View style={styles.containerLegend}>
             <View
@@ -341,7 +361,7 @@ const ApprovedCRAs = ({ cra, projects, onFocus, onBlur }) => {
               }}
             />
             <M h1 />
-            <Text>Unavailable</Text>
+            <Text>{i18n.t('Home.approved-cras.modalHelp.Unavailable')}</Text>
           </View> --  TODO: Unavailable */}
           <View style={styles.containerLegend}>
             <View
@@ -352,7 +372,7 @@ const ApprovedCRAs = ({ cra, projects, onFocus, onBlur }) => {
               }}
             />
             <M h1 />
-            <Text>Off</Text>
+            <Text>{i18n.t('Home.approved-cras.modalHelp.Off')}</Text>
           </View>
           <View style={styles.containerLegend}>
             <View
@@ -363,7 +383,7 @@ const ApprovedCRAs = ({ cra, projects, onFocus, onBlur }) => {
               }}
             />
             <M h1 />
-            <Text>Weekend</Text>
+            <Text>{i18n.t('Home.approved-cras.modalHelp.Weekend')}</Text>
           </View>
           <View style={styles.containerLegend}>
             <View
@@ -374,7 +394,7 @@ const ApprovedCRAs = ({ cra, projects, onFocus, onBlur }) => {
               }}
             />
             <M h1 />
-            <Text>Holiday</Text>
+            <Text>{i18n.t('Home.approved-cras.modalHelp.Holiday')}</Text>
           </View>
         </View>
       </Modal>

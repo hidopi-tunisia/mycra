@@ -11,9 +11,9 @@ const WorkdaysCollection = ({ items, workday, onPress, onPressClose }) => (
   <ScrollView style={{ ...styles.container }}>
     <View style={styles.containerTitle}>
       {workday && (
-        <Text style={styles.title}>Describe {workday.dateString}</Text>
+        <Text style={styles.title}>{i18n.t('shared:workdays-collection.title')} {workday.dateString}</Text>
       )}
-      {!workday && <Text style={styles.title}>Describe all working days</Text>}
+      {!workday && <Text style={styles.title}>{i18n.t('shared:workdays-collection.title-all')}</Text>}
       <TouchableOpacity onPress={onPressClose}>
         <Icon
           fill={Colors.GRAY_PRIMARY}
@@ -24,7 +24,7 @@ const WorkdaysCollection = ({ items, workday, onPress, onPressClose }) => (
       </TouchableOpacity>
     </View>
     <M v2 />
-    <Text style={styles.subtitle}>Working day{!workday && 's'}</Text>
+    <Text style={styles.subtitle}>{i18n.t('shared:workdays-collection.working-day')}{!workday && 's'}</Text>
     <M v1 />
     <View style={styles.containerCollection}>
       {items.working.map(i => (

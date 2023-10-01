@@ -6,6 +6,7 @@ import { M } from '@components';
 import Colors from '@constants/colors';
 import { currentUser } from '@domain/auth';
 import { s } from 'react-native-size-matters';
+import { i18n } from '@utils/translations';
 
 const ResetPasswordForm = ({ loading, error, onSubmit, onPressClose }) => {
   const [email, setEmail] = useState('');
@@ -27,7 +28,7 @@ const ResetPasswordForm = ({ loading, error, onSubmit, onPressClose }) => {
     <View style={styles.container}>
       <View style={styles.containerTitle}>
         <Text style={styles.label} category="label">
-          Reset password
+          {i18n.t('shared:reset-password.title')}
         </Text>
         <TouchableOpacity onPress={onPressClose}>
           <Icon
@@ -38,13 +39,10 @@ const ResetPasswordForm = ({ loading, error, onSubmit, onPressClose }) => {
           />
         </TouchableOpacity>
       </View>
-      <Text>
-        Please provide your email so will send you an email to reset your
-        password.
-      </Text>
+      <Text>{i18n.t('shared:reset-password.description')}</Text>
       <View>
         <Text style={styles.labelInput} category="label">
-          Email
+          {i18n.t('shared:reset-password.email')}
         </Text>
         <M v1 />
         <Input
@@ -59,7 +57,11 @@ const ResetPasswordForm = ({ loading, error, onSubmit, onPressClose }) => {
         status="primary"
         disabled={loading || email.length === 0}
         onPress={() => onSubmit(email)}>
-        {loading ? <Spinner status="basic" size="small" /> : 'Submit'}
+        {loading ? (
+          <Spinner status="basic" size="small" />
+        ) : (
+          i18n.t('shared:reset-password.btn_submit')
+        )}
       </Button>
       {error && (
         <View style={styles.containerError}>

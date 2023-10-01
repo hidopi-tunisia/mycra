@@ -356,7 +356,7 @@ const RejectedCRAs = ({ cra, projects, onFocus, onBlur }) => {
           <TouchableOpacity disabled={projects.length < 2}>
             <View style={styles.containerProjects}>
               <Text style={styles.textDescription}>
-                Project - {selectedProject.name}
+                {i18n.t('Home.rejected-cras.Project')} - {selectedProject.name}
               </Text>
               <M h1 />
               {projects.length > 1 && (
@@ -377,7 +377,9 @@ const RejectedCRAs = ({ cra, projects, onFocus, onBlur }) => {
             <Text style={styles.containerCalendarTitle}>{currentMonth}</Text>
             <TouchableOpacity onPress={handleViewRejectionMotive}>
               <View style={styles.buttonRejectionMotive}>
-                <Text style={styles.textButtonRejectionMotive}>Rejected</Text>
+                <Text style={styles.textButtonRejectionMotive}>
+                  {i18n.t('Home.rejected-cras.Rejected')}
+                </Text>
               </View>
             </TouchableOpacity>
           </View>
@@ -398,7 +400,7 @@ const RejectedCRAs = ({ cra, projects, onFocus, onBlur }) => {
               }}
             />
             <M h1 />
-            <Text>Working</Text>
+            <Text>{i18n.t('Home.rejected-cras.Rejected')}</Text>
           </View>
           <View style={styles.containerLegend}>
             <View
@@ -409,7 +411,7 @@ const RejectedCRAs = ({ cra, projects, onFocus, onBlur }) => {
               }}
             />
             <M h1 />
-            <Text>Half day</Text>
+            <Text>{i18n.t('Home.rejected-cras.Rejected')}</Text>
           </View>
           <View style={styles.containerLegend}>
             <View
@@ -420,7 +422,7 @@ const RejectedCRAs = ({ cra, projects, onFocus, onBlur }) => {
               }}
             />
             <M h1 />
-            <Text>Remote</Text>
+            <Text>{i18n.t('Home.rejected-cras.Rejected')}</Text>
           </View>
           {/* <View style={styles.containerLegend}>
             <View
@@ -431,7 +433,7 @@ const RejectedCRAs = ({ cra, projects, onFocus, onBlur }) => {
               }}
             />
             <M h1 />
-            <Text>Unavailable</Text>
+            <Text>{i18n.t('Home.rejected-cras.Rejected')}</Text>
           </View> -- TODO: Unavailable */}
           <View style={styles.containerLegend}>
             <View
@@ -442,7 +444,7 @@ const RejectedCRAs = ({ cra, projects, onFocus, onBlur }) => {
               }}
             />
             <M h1 />
-            <Text>Off</Text>
+            <Text>{i18n.t('Home.rejected-cras.Rejected')}</Text>
           </View>
         </View>
         <M v2 />
@@ -451,25 +453,29 @@ const RejectedCRAs = ({ cra, projects, onFocus, onBlur }) => {
             style={styles.buttonSubmit}
             status="primary"
             onPress={handleSubmit}>
-            Submit
+            {i18n.t('Home.no-cra.btn_submit')}
           </Button>
         </View>
       </View>
       <Modal
-        title="Submit days?"
+        title={i18n.t('Home.rejected-cras.Rejected')}
         type="confirm"
         visible={modalVisible}
         onPressNegative={handlePressNegative}
         onPressPositive={handlePressPositive}>
-        <Text>Are you sure to submit {selectedCount} days for this month?</Text>
+        <Text>
+          {i18n.t('Home.rejected-cras.modal.confirmation', {
+            count: selectedCount,
+          })}
+        </Text>
       </Modal>
       <Modal
-        title="Rejected"
+        title={i18n.t('Home.rejected-cras.modal.title')}
         type="confirm"
         visible={modalRejectionMotiveVisible}
         onPressPositive={handleRejectionMotivePositive}>
         <Text>
-          CRA rejected
+          {i18n.t('Home.rejected-cras.modal.info')}
           {getHistoryItem(cra.history, 'rejected') &&
           getHistoryItem(cra.history, 'rejected').at
             ? ` at ${
@@ -493,7 +499,10 @@ const RejectedCRAs = ({ cra, projects, onFocus, onBlur }) => {
         onPressPositive={handlePressHolidayPositive}>
         {holiday && (
           <Text>
-            {holiday.date} is a holiday called "{holiday.name}".
+            {i18n.t('Home.rejected-cras.modalHoliday.confirmation', {
+              date: holiday.date,
+              name: holiday.name,
+            })}
           </Text>
         )}
       </Modal>
@@ -505,14 +514,14 @@ const RejectedCRAs = ({ cra, projects, onFocus, onBlur }) => {
         {weekend && <Text>{weekend.date} is a weekend.</Text>}
       </Modal>
       <Modal
-        title="Help"
+        title={i18n.t('Home.pending-cras.modalHelp.title')}
         type="info"
         visible={modalHelpVisible}
         onPressPositive={() => setModalHelpVisible(false)}>
-        <Text>Fill your working days accordingly.</Text>
-        <Text>Long press on a day to view more options.</Text>
+        <Text>{i18n.t('Home.pending-cras.modalHelp.description-1')}</Text>
+        <Text>{i18n.t('Home.pending-cras.modalHelp.description-2')}</Text>
         <M v2 />
-        <Text>Legend:</Text>
+        <Text>{i18n.t('Home.pending-cras.modalHelp.legend')}</Text>
         <View style={styles.containerLegends}>
           <View style={styles.containerLegend}>
             <View
@@ -523,7 +532,7 @@ const RejectedCRAs = ({ cra, projects, onFocus, onBlur }) => {
               }}
             />
             <M h1 />
-            <Text>Working</Text>
+            <Text>{i18n.t('Home.pending-cras.modalHelp.Working')}</Text>
           </View>
           <View style={styles.containerLegend}>
             <View
@@ -534,7 +543,7 @@ const RejectedCRAs = ({ cra, projects, onFocus, onBlur }) => {
               }}
             />
             <M h1 />
-            <Text>Half day</Text>
+            <Text>{i18n.t('Home.pending-cras.modalHelp.Half day')}</Text>
           </View>
           <View style={styles.containerLegend}>
             <View
@@ -545,7 +554,7 @@ const RejectedCRAs = ({ cra, projects, onFocus, onBlur }) => {
               }}
             />
             <M h1 />
-            <Text>Remote</Text>
+            <Text>{i18n.t('Home.pending-cras.modalHelp.Remote')}</Text>
           </View>
           {/* <View style={styles.containerLegend}>
             <View
@@ -556,7 +565,7 @@ const RejectedCRAs = ({ cra, projects, onFocus, onBlur }) => {
               }}
             />
             <M h1 />
-            <Text>Unavailable</Text>
+            <Text>{i18n.t('Home.pending-cras.modalHelp.Unavailable')}</Text>
           </View> --  TODO: Unavailable */}
           <View style={styles.containerLegend}>
             <View
@@ -567,7 +576,7 @@ const RejectedCRAs = ({ cra, projects, onFocus, onBlur }) => {
               }}
             />
             <M h1 />
-            <Text>Off</Text>
+            <Text>{i18n.t('Home.pending-cras.modalHelp.Off')}</Text>
           </View>
           <View style={styles.containerLegend}>
             <View
@@ -578,7 +587,7 @@ const RejectedCRAs = ({ cra, projects, onFocus, onBlur }) => {
               }}
             />
             <M h1 />
-            <Text>Weekend</Text>
+            <Text>{i18n.t('Home.pending-cras.modalHelp.Weekend')}</Text>
           </View>
           <View style={styles.containerLegend}>
             <View
@@ -589,7 +598,7 @@ const RejectedCRAs = ({ cra, projects, onFocus, onBlur }) => {
               }}
             />
             <M h1 />
-            <Text>Holiday</Text>
+            <Text>{i18n.t('Home.pending-cras.modalHelp.Holiday')}</Text>
           </View>
         </View>
       </Modal>

@@ -1,4 +1,14 @@
 {
+  "Intro": {
+    "next": "Next",
+    "skip": "Skip",
+    "begin": "Begin"
+  },
+  "tab": {
+    "Home": "Home",
+    "Notifications": "Notifications",
+    "Settings": "Settings"
+  },
   "Sign In": {
     "title": "Welcome",
     "subtitle": "Please sign in using your account",
@@ -6,12 +16,317 @@
     "password": "Password",
     "forgot password?": "Forgot password?",
     "btn_sign in": "Sign in",
-    "version:": "Version:"
+    "version:": "Version:",
+    "help": {
+      "title": "Help",
+      "description-1": "Your manager created an account for you. Please check your email to create your new password.",
+      "description-2": "If you find any problem please contact your supervisor.",
+      "btn_ok": "OK"
+    },
+    "Email sent": {
+      "title": "Email sent",
+      "description": "Please check your email to reset your password."
+    }
+  },
+  "Home": {
+    "no-cra": {
+      "Project": "Project",
+      "Working": "Working",
+      "Half day": "Half day",
+      "Remote": "Remote",
+      "Unavailable": "Unavailable",
+      "Off": "Off",
+      "btn_submit": "Submit",
+      "modal": {
+        "title": "Submit days?",
+        "confirmation": "Are you sure to submit %{count} days for this month?"
+      },
+      "modalHoliday": {
+        "title": "Holiday",
+        "confirmation": "%{date} is a holiday called \"%{name}\"."
+      },
+      "modalWeekend": {
+        "title": "Weekend",
+        "confirmation": "%{date} is a weekend."
+      },
+      "modalHelp": {
+        "title": "Help",
+        "description-1": "Fill your working days accordingly.",
+        "description-2": "Long press on a day to view more options.",
+        "legend": "Legend:",
+        "Working": "Working",
+        "Half day": "Half day",
+        "Remote": "Remote",
+        "Unavailable": "Unavailable",
+        "Off": "Off",
+        "Weekend": "Weekend",
+        "Holiday": "Holiday"
+      }
+    },
+    "no-projects": {
+      "description": "Please fill your CRA before the end of the current month.",
+      "text:title": "No projects",
+      "text:info": "You are not assigned to any project at the moment.",
+      "btn_retry": "Try again",
+      "modalHelp": {
+        "title": "Help",
+        "description-1": "Fill your working days accordingly.",
+        "description-2": "Long press on a day to view more options.",
+        "legend": "Legend:",
+        "Working": "Working",
+        "Half day": "Half day",
+        "Remote": "Remote",
+        "Unavailable": "Unavailable",
+        "Off": "Off",
+        "Weekend": "Weekend",
+        "Holiday": "Holiday"
+      }
+    },
+    "no-current-cras": {
+      "description": "NO CURRENT CRAS",
+      "text:title": "No projects",
+      "text:info": "You are not assigned to any project at the moment.",
+      "btn_retry": "Try again",
+      "modalHelp": {
+        "title": "Help",
+        "description-1": "Fill your working days accordingly.",
+        "description-2": "Long press on a day to view more options.",
+        "legend": "Legend:",
+        "Working": "Working",
+        "Half day": "Half day",
+        "Remote": "Remote",
+        "Unavailable": "Unavailable",
+        "Off": "Off",
+        "Weekend": "Weekend",
+        "Holiday": "Holiday"
+      }
+    },
+    "pending-cras": {
+      "Project": "Project",
+      "Working": "Working",
+      "Half day": "Half day",
+      "Remote": "Remote",
+      "Unavailable": "Unavailable",
+      "Off": "Off",
+      "Weekends": "Weekends",
+      "Holiday": "Holiday",
+      "btn_submit": "CRA is pending",
+      "modal": {
+        "title": "Waiting for approval",
+        "info": "CRA submitted",
+        "summary": "Days summary:"
+      },
+      "modalHoliday": {
+        "title": "Holiday",
+        "confirmation": "%{date} is a holiday called \"%{name}\"."
+      },
+      "modalWeekend": {
+        "title": "Weekend",
+        "confirmation": "%{date} is a weekend."
+      },
+      "modalHelp": {
+        "title": "Help",
+        "description-1": "Fill your working days accordingly.",
+        "description-2": "Long press on a day to view more options.",
+        "legend": "Legend:",
+        "Working": "Working",
+        "Half day": "Half day",
+        "Remote": "Remote",
+        "Unavailable": "Unavailable",
+        "Off": "Off",
+        "Weekend": "Weekend",
+        "Holiday": "Holiday"
+      }
+    },
+    "approved-cras": {
+      "Project": "Project",
+      "Working": "Working",
+      "Half day": "Half day",
+      "Remote": "Remote",
+      "Unavailable": "Unavailable",
+      "Off": "Off",
+      "Weekends": "Weekends",
+      "Holiday": "Holiday",
+      "btn_submit": "CRA is pending",
+      "modal": {
+        "title": "Approved",
+        "info": "CRA approved",
+        "summary": "Days summary:"
+      },
+      "modalHoliday": {
+        "title": "Holiday",
+        "confirmation": "%{date} is a holiday called \"%{name}\"."
+      },
+      "modalWeekend": {
+        "title": "Weekend",
+        "confirmation": "%{date} is a weekend."
+      },
+      "modalHelp": {
+        "title": "Help",
+        "description-1": "Fill your working days accordingly.",
+        "description-2": "Long press on a day to view more options.",
+        "legend": "Legend:",
+        "Working": "Working",
+        "Half day": "Half day",
+        "Remote": "Remote",
+        "Unavailable": "Unavailable",
+        "Off": "Off",
+        "Weekend": "Weekend",
+        "Holiday": "Holiday"
+      }
+    },
+    "rejected-cras": {
+      "Project": "Project",
+      "Working": "Working",
+      "Half day": "Half day",
+      "Remote": "Remote",
+      "Unavailable": "Unavailable",
+      "Off": "Off",
+      "Weekends": "Weekends",
+      "Holiday": "Holiday",
+      "btn_submit": "CRA is pending",
+      "modal": {
+        "title": "Rejected",
+        "info": "CRA rejected",
+        "summary": "Days summary:"
+      },
+      "modalHoliday": {
+        "title": "Holiday",
+        "confirmation": "%{date} is a holiday called \"%{name}\"."
+      },
+      "modalWeekend": {
+        "title": "Weekend",
+        "confirmation": "%{date} is a weekend."
+      },
+      "modalHelp": {
+        "title": "Help",
+        "description-1": "Fill your working days accordingly.",
+        "description-2": "Long press on a day to view more options.",
+        "legend": "Legend:",
+        "Working": "Working",
+        "Half day": "Half day",
+        "Remote": "Remote",
+        "Unavailable": "Unavailable",
+        "Off": "Off",
+        "Weekend": "Weekend",
+        "Holiday": "Holiday"
+      }
+    }
+  },
+  "Notifications": {
+    "Notifications": "Notifications",
+    "Alerts": "Alerts",
+    "No notifications": "No notifications",
+    "form": {
+      "title": "New alert",
+      "placeholder": "Type your alert!",
+      "btn_submit": "Submit"
+    }
   },
   "Settings": {
+    "report:mailto": "mailto:%{SUPPORT_EMAIL}?subject=Reporting issue in version (%{APP_VERSION}) &body=Hello, I would like to report an issue in the application.",
     "items": {
       "CRA History:title": "CRA History",
-      "CRA History:description": "View your past CRAs"
+      "CRA History:description": "View your past CRAs",
+      "Reset password:title": "Reset password",
+      "Reset password:description": "Start a reset password challange",
+      "Terms and conditions:title": "Terms and conditions",
+      "Terms and conditions:description": "View the terms and conditions on our website",
+      "Privacy policy:title": "Privacy policy",
+      "Privacy policy:description": "View our privacy and policy on our website",
+      "Help:title": "Help",
+      "Help:description": "View our help on our website",
+      "Report an issue:title": "Report an issue",
+      "Report an issue:description": "Send us an email about an issue in the application",
+      "Sign out:title": "Sign out",
+      "Sign out:description": "Sign out and navigate back to the sign in screen"
+    },
+    "modals": {
+      "update-profile": {
+        "title": "Update profile",
+        "upload-avatar": "Upload avatar picture",
+        "Upload": "Upload",
+        "Reset": "Reset",
+        "First name:label": "First name",
+        "First name:placeholder": "John",
+        "Last name:label": "Last name",
+        "Last name:placeholder": "Doe",
+        "Position:label": "Position",
+        "Position:placeholder": "Web developer",
+        "btn_submit": "Submit"
+      }
+    },
+    "errors": {
+      "Invalid email": "Invalid email",
+      "Missing password": "Missing password",
+      "Wrong password": "Wrong password",
+      "Incorrect email": "Incorrect email",
+      "Error happened": "Error happened"
+    }
+  },
+  "CRA History": {
+    "title": "CRA History",
+    "load-more": "Load more...",
+    "working": "working",
+    "half": "half",
+    "remote": "remote",
+    "off": "off",
+    "Working": "Working",
+    "no-history": "No history",
+    "retry": "Try again",
+    "errors": {
+      "Error happened": "Error happened"
+    }
+  },
+  "CRA Details": {
+    "Project": "Project",
+    "Working": "Working",
+    "Half day": "Half day",
+    "Remote": "Remote",
+    "Unavailable": "Unavailable",
+    "Off": "Off",
+    "Weekends": "Weekends",
+    "Holiday": "Holiday",
+    "btn_submit": "CRA is pending",
+    "modal": {
+      "title": "Waiting for approval",
+      "info": "CRA submitted",
+      "summary": "Days summary:"
+    },
+    "modalHoliday": {
+      "title": "Holiday",
+      "confirmation": "%{date} is a holiday called \"%{name}\"."
+    },
+    "modalWeekend": {
+      "title": "Weekend",
+      "confirmation": "%{date} is a weekend."
+    },
+    "modalHelp": {
+      "title": "Help",
+      "description-1": "Fill your working days accordingly.",
+      "description-2": "Long press on a day to view more options.",
+      "legend": "Legend:",
+      "Working": "Working",
+      "Half day": "Half day",
+      "Remote": "Remote",
+      "Unavailable": "Unavailable",
+      "Off": "Off",
+      "Weekend": "Weekend",
+      "Holiday": "Holiday"
+    },
+    "form": {
+      "Report an issue": "Report an issue",
+      "Type your alert!": "Type your alert!"
+    }
+  },
+  "shared:workdays-collection": {
+    "title": "Describe",
+    "title-all": "Describe all working days",
+    "working-day": "Working day",
+    "days-off": {
+      "zero": "Days off",
+      "one": "Day off",
+      "other": "Days off"
     }
   },
   "shared:workday-items": {
@@ -33,5 +348,16 @@
     "Childcare": "Childcare",
     "Work-related accident-commute": "Work-related accident-commute",
     "Other": "Other"
+  },
+  "shared:reset-password": {
+    "title": "Reset password",
+    "description": "Please provide your email so will send you an email to reset your password.",
+    "email": "Email",
+    "btn_submit": "Submit"
+  },
+  "shared:modals": {
+    "title": "Message",
+    "btn_ok": "OK",
+    "btn_cancel": "Cancel"
   }
 }

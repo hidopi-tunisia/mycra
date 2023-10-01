@@ -1,3 +1,4 @@
+import { NativeModules, Platform } from 'react-native';
 import { I18n } from 'i18n-js';
 import en from './en.json';
 import fr from './fr.json';
@@ -23,8 +24,15 @@ let i18n = new I18n({
   fr,
 });
 
-i18n.defaultLocale = Locales.FR;
-
+const locale =
+  Platform.OS === 'ios'
+    ? NativeModules.SettingsManager.settings.AppleLocale
+    : NativeModules.I18nManager.localeIdentifier;
+let defaultLocale = Locales.FR;
+if (Object.values(Locales).includes(locale.substring(0, 2))) {
+  defaultLocale = locale;
+}
+i18n.defaultLocale = defaultLocale;
 const prepareInternationalization = async () => {
   try {
     const l = await getStoredLocale();

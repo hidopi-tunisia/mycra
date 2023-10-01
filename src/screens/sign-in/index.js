@@ -186,9 +186,7 @@ const SignInScreen = () => {
         {i18n.locale === Locales.FR ? (
           <TouchableOpacity onPress={() => (i18n.locale = Locales.EN)}>
             <View style={styles.containerInternationalization}>
-              <View style={styles.containerFlag}>
-                {renderFlag('en')}
-              </View>
+              <View style={styles.containerFlag}>{renderFlag('en')}</View>
               <M h2 />
               <Text style={styles.textInternationalization}>{Locales.EN}</Text>
             </View>
@@ -196,9 +194,7 @@ const SignInScreen = () => {
         ) : (
           <TouchableOpacity onPress={() => (i18n.locale = Locales.FR)}>
             <View style={styles.containerInternationalization}>
-              <View style={styles.containerFlag}>
-                {renderFlag('fr')}
-              </View>
+              <View style={styles.containerFlag}>{renderFlag('fr')}</View>
               <M h2 />
               <Text style={styles.textInternationalization}>{Locales.FR}</Text>
             </View>
@@ -206,16 +202,13 @@ const SignInScreen = () => {
         )}
       </View>
       <Modal
-        title="Help"
+        title={i18n.t('Sign In.help.title')}
         type="info"
         visible={modalHelpVisible}
         onPressPositive={() => setModalHelpVisible(false)}>
-        <Text>
-          Your manager created an account for you. Please check your email to
-          create your new password.
-        </Text>
+        <Text>{i18n.t('Sign In.help.description-1')}</Text>
         <M v1 />
-        <Text>If you find any problem please contact your manager.</Text>
+        <Text>{i18n.t('Sign In.help.description-2')}</Text>
       </Modal>
       <BottomSheet height={300} onCallbackRef={handleRefBottomSheet}>
         <ResetPasswordForm

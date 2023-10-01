@@ -1,28 +1,20 @@
-import React from 'react';
-import { View, Text, Image, SafeAreaView } from 'react-native';
+import React, { useReducer, useState } from 'react';
+import {
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  SafeAreaView,
+} from 'react-native';
 import AppIntroSlider from 'react-native-app-intro-slider';
 import styles from './index.styles';
 import { M } from '@components';
+import { Locales, i18n } from '@utils/translations';
+import { renderFlag } from '@utils/flags';
+import { APP_VERSION } from '@constants';
+import { getIntroData } from './data';
 
 // Illustrations from https://www.freepik.com/author/stories
-const data = [
-  {
-    title: 'Work you way',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit!',
-    image: require('@assets/images/intro/1.jpg'),
-  },
-  {
-    title: 'Fill calendar',
-    description: 'Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua!',
-    image: require('@assets/images/intro/2.jpg'),
-  },
-  {
-    title: 'Get notified',
-    description: 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-    image: require('@assets/images/intro/3.jpg'),
-  },
-];
-
 const renderItem = ({ item }) => {
   return (
     <View style={styles.root}>
@@ -43,30 +35,56 @@ const renderItem = ({ item }) => {
 };
 const renderNextButton = () => (
   <View style={styles.containerNextButton}>
-    <Text style={styles.textNextButton}>Next</Text>
+    <Text style={styles.textNextButton}>{i18n.t('Intro.next')}</Text>
   </View>
 );
 const renderSkipButton = () => (
   <View style={styles.containerSkipButton}>
-    <Text style={styles.textSkipButton}>Skip</Text>
+    <Text style={styles.textSkipButton}>{i18n.t('Intro.skip')}</Text>
   </View>
 );
 const renderDoneButton = () => (
   <View style={styles.containerDoneButton}>
-    <Text style={styles.textDoneButton}>Begin</Text>
+    <Text style={styles.textDoneButton}>{i18n.t('Intro.begin')}</Text>
   </View>
 );
 const ApplicationIntroScreen = ({ onDone }) => (
-  <AppIntroSlider
-    data={data}
-    activeDotStyle={styles.activeDotStyle}
-    bottomButton
-    showSkipButton
-    renderItem={renderItem}
-    renderSkipButton={renderSkipButton}
-    renderNextButton={renderNextButton}
-    renderDoneButton={renderDoneButton}
-    onDone={onDone}
-  />
+  <View style={styles.root}>
+    <AppIntroSlider
+      data={getIntroData(i18n.locale)}
+      activeDotStyle={styles.activeDotStyle}
+      bottomButton
+      showSkipButton
+      renderItem={renderItem}
+      renderSkipButton={renderSkipButton}
+      renderNextButton={renderNextButton}
+      renderDoneButton={renderDoneButton}
+      onDone={onDone}
+    />
+    <View style={styles.containerVersion}>
+      <Text style={styles.textVersion}>
+        {i18n.t('Sign In.version:')} {APP_VERSION}
+      </Text>
+      <M h3 />
+      {i18n.locale === Locales.FR ? (
+        <TouchableOpacity onPress={() => (i18n.locale = Locales.EN)}>
+          <View style={styles.containerInternationalization}>
+            <View style={styles.containerFlag}>{renderFlag('en')}</View>
+            <M h2 />
+            <Text style={styles.textInternationalization}>{Locales.EN}</Text>
+          </View>
+        </TouchableOpacity>
+      ) : (
+        <TouchableOpacity onPress={() => (i18n.locale = Locales.FR)}>
+          <View style={styles.containerInternationalization}>
+            <View style={styles.containerFlag}>{renderFlag('fr')}</View>
+            <M h2 />
+            <Text style={styles.textInternationalization}>{Locales.FR}</Text>
+          </View>
+        </TouchableOpacity>
+      )}
+    </View>
+    <M v2 />
+  </View>
 );
 export default ApplicationIntroScreen;
