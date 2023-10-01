@@ -223,7 +223,7 @@ const CRAHistoryScreen = ({ navigation }) => {
         )}
         {!loading && !error && history.length === 0 && (
           <View style={styles.cardEmpty}>
-            <Text>{i18n.t('CRA History.Working')}</Text>
+            <Text>{i18n.t('CRA History.no-history')}</Text>
           </View>
         )}
         {loading && (
