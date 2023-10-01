@@ -312,6 +312,10 @@
       "Off": "Congé",
       "Weekend": "Week-end",
       "Holiday": "Jour férié"
+    },
+    "form": {
+      "Report an issue": "Signalez un problème",
+      "Type your alert!": "Décrivez votre alerte !"
     }
   },
   "shared:workdays-collection": {

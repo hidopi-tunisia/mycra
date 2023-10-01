@@ -313,6 +313,10 @@
       "Off": "Off",
       "Weekend": "Weekend",
       "Holiday": "Holiday"
+    },
+    "form": {
+      "Report an issue": "Report an issue",
+      "Type your alert!": "Type your alert!"
     }
   },
   "shared:workdays-collection": {

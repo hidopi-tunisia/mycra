@@ -5,6 +5,7 @@ import styles from './index.styles';
 import { M } from '@components';
 import Colors from '@constants/colors';
 import { s } from 'react-native-size-matters';
+import { i18n } from '@utils/translations';
 
 const CRAHistoryDetailsForm = ({ onSubmit, onPressClose }) => {
   const [text, setText] = useState('');
@@ -19,7 +20,7 @@ const CRAHistoryDetailsForm = ({ onSubmit, onPressClose }) => {
     <View style={styles.container}>
       <View style={styles.containerTitle}>
         <Text style={styles.title}>
-          Report an issue
+          {i18n.t("CRA Details.form.Report an issue")}
         </Text>
         <TouchableOpacity onPress={onPressClose}>
           <Icon
@@ -33,7 +34,7 @@ const CRAHistoryDetailsForm = ({ onSubmit, onPressClose }) => {
       <M v1 />
       <TextInput
         style={styles.input}
-        placeholder="Type your alert!"
+        placeholder={i18n.t("CRA Details.form.Type your alert!")}
         placeholderTextColor={Colors.GRAY_PRIMARY}
         value={text}
         multiline
