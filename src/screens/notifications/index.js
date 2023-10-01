@@ -50,20 +50,18 @@ const NotificationsScreen = ({ notifications }) => {
           <View style={styles.containerButtonsTop}>
             <TouchableOpacity style={styles.buttonTop}>
               <Text style={styles.textButtonTop}>
-                {' '}
                 {i18n.t('Notifications.Alerts')}
               </Text>
             </TouchableOpacity>
             <View style={styles.verticalDivider} />
             <TouchableOpacity style={styles.buttonTop}>
               <Text style={styles.textButtonTop}>
-                {' '}
                 {i18n.t('Notifications.Notifications')}
               </Text>
             </TouchableOpacity>
           </View>
         </View>
-        <View style={styles.bottom}>
+        <View style={styles.middle}>
           {notifications.length > 0 ? (
             <FlatList
               style={styles.card}
@@ -95,6 +93,7 @@ const NotificationsScreen = ({ notifications }) => {
             </View>
           )}
         </View>
+        <View style={styles.bottom}></View>
         <Fab onPress={handlePressFab} />
         <BottomSheet height={360} onCallbackRef={handleRefBottomSheet}>
           <AlertForm onPressClose={handlePressClose} onSubmit={handleSubmit} />
