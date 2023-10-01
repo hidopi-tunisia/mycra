@@ -91,6 +91,7 @@ const styles = ScaledSheet.create({
     alignItems: 'center',
   },
   containerCalendarTitle: {
+    textTransform: 'capitalize',
     color: Colors.BLUE_DARK_PRIMARY,
     fontSize: '18@s',
     fontWeight: '900',

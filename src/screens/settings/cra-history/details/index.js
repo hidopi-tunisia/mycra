@@ -15,6 +15,7 @@ import {
 } from 'react-native';
 import SystemNavigationBar from 'react-native-system-navigation-bar';
 import styles from './index.styles';
+import { i18n } from '@utils/translations';
 
 const CRAHistoryDetailsScreen = ({ navigation, onFocus, onBlur }) => {
   const {
