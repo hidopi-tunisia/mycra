@@ -1,5 +1,8 @@
 import Colors from '@constants/colors';
 import { ScaledSheet } from 'react-native-size-matters';
+import { Dimensions } from 'react-native';
+
+const { height } = Dimensions.get('window');
 
 const styles = ScaledSheet.create({
   root: {
@@ -9,13 +12,14 @@ const styles = ScaledSheet.create({
   },
   top: {
     backgroundColor: Colors.GREEN_DARK_PRIMARY,
-    height: '40%',
+    height: height / 2 - 182,
     borderBottomLeftRadius: '48@s',
     borderBottomRightRadius: '48@s',
-    justifyContent: 'center',
+    justifyContent: 'flex-end',
     alignItems: 'center',
   },
   containerDescription: {
+    bottom: '68@vs',
     width: '80%',
     alignSelf: 'center',
   },
@@ -59,7 +63,7 @@ const styles = ScaledSheet.create({
   },
   containerProjects: {
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   textDescription: {
     color: Colors.WHITE,
@@ -74,11 +78,13 @@ const styles = ScaledSheet.create({
   },
   middle: {
     backgroundColor: Colors.WHITE,
-    height: '60%',
+    height: 460,
     borderRadius: '48@msr',
     alignSelf: 'center',
     width: '90%',
-    bottom: '48@vs',
+    position: 'absolute',
+    top: height / 2 - 230,
+    bottom: '48@msr',
   },
   containerCalendar: {
     backgroundColor: 'transparent',
@@ -91,7 +97,7 @@ const styles = ScaledSheet.create({
     alignItems: 'center',
   },
   containerCalendarTitle: {
-textTransform: "capitalize",
+    textTransform: 'capitalize',
     color: Colors.BLUE_DARK_PRIMARY,
     fontSize: '18@s',
     fontWeight: '900',

@@ -1,7 +1,9 @@
 import Colors from '@constants/colors';
 import { ScaledSheet } from 'react-native-size-matters';
 import { Dimensions } from 'react-native';
+
 const { height } = Dimensions.get('window');
+
 const styles = ScaledSheet.create({
   root: {
     flex: 1,
@@ -17,7 +19,7 @@ const styles = ScaledSheet.create({
     alignItems: 'center',
   },
   containerDescription: {
-    bottom: "68@vs",
+    bottom: '68@vs',
     width: '80%',
     alignSelf: 'center',
   },
@@ -93,11 +95,11 @@ const styles = ScaledSheet.create({
     alignItems: 'center',
   },
   containerCalendarTitle: {
-textTransform: "capitalize",
+    textTransform: 'capitalize',
     color: Colors.BLUE_DARK_PRIMARY,
     fontSize: '18@s',
     fontWeight: '900',
-    textTransform: "capitalize"
+    textTransform: 'capitalize',
   },
   calendarDayWorking: {
     container: {
