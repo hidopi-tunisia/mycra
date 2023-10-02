@@ -29,8 +29,8 @@ const styles = ScaledSheet.create({
     fontWeight: '600',
   },
   buttonSubmit: {
-    height: "40@vs",
-    borderRadius: "22@msr",
+    height: "48@vs",
+    borderRadius: "28@msr",
   },
   containerError: {
     backgroundColor: `${Colors.RED_DARK_PRIMARY}11`,

@@ -1,7 +1,5 @@
-import { Dimensions } from 'react-native';
 import Colors from '@constants/colors';
 import { ScaledSheet } from 'react-native-size-matters';
-const { height } = Dimensions.get('window');
 
 const styles = ScaledSheet.create({
   root: {
@@ -9,7 +7,7 @@ const styles = ScaledSheet.create({
     backgroundColor: Colors.BLUE_PRIMARY,
   },
   top: {
-    borderRadius: "32@msr",
+    borderRadius: '32@msr',
     borderTopLeftRadius: 0,
     borderTopRightRadius: 0,
     backgroundColor: Colors.BLUE_DARK_PRIMARY,
@@ -19,30 +17,36 @@ const styles = ScaledSheet.create({
   },
   verticalDivider: {
     width: 1,
-    height: "16@vs",
+    height: '16@vs',
     backgroundColor: Colors.GRAY_LIGHT_PRIMARY,
   },
-  bottom: {
-    borderRadius: "24@msr",
-    padding: "8@msr",
+  middle: {
+    borderRadius: '24@msr',
+    padding: '8@msr',
     justifyContent: 'center',
-    height: height * (1 - 0.15) - 32,
-    bottom: "32@vs",
+    flex: 1,
+    bottom: "32@msr"
+  },
+  bottom: {
+    borderRadius: '24@msr',
+    padding: '8@msr',
+    justifyContent: 'center',
+    height: '40@msr',
   },
   card: {
     backgroundColor: Colors.WHITE,
-    borderRadius: "24@msr",
-    padding: "18@msr",
-    paddingBottom: "72@@msr",
+    borderRadius: '24@msr',
+    padding: '18@msr',
+    paddingBottom: '72@@msr',
   },
   textTitle: {
-    fontSize: "28@msr",
+    fontSize: '28@msr',
     fontWeight: '900',
     color: Colors.WHITE,
     alignSelf: 'center',
   },
   containerButtonsTop: {
-    height: "36@vs",
+    height: '36@vs',
     justifyContent: 'space-around',
     flexDirection: 'row',
     alignItems: 'center',
@@ -65,9 +69,9 @@ const styles = ScaledSheet.create({
     backgroundColor: Colors.WHITE,
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: "24@msr",
-    padding: "20@msr",
-    paddingBottom: "72@msr",
+    borderRadius: '24@msr',
+    padding: '20@msr',
+    paddingBottom: '72@msr',
   },
 });
 

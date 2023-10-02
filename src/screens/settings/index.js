@@ -231,7 +231,7 @@ const SettingsScreen = () => {
           </View>
         )}
       </View>
-      <View style={styles.bottom}>
+      <View style={styles.middle}>
         <ScrollView showsVerticalScrollIndicator={false} style={styles.card}>
           <SettingsItem
             title={i18n.t('Settings.items.CRA History:title')}
@@ -277,7 +277,7 @@ const SettingsScreen = () => {
             icon="log-out-outline"
             onPress={handleSignOut}
           />
-          <M h4 />
+          <M v1 />
           <View style={styles.containerVersion}>
             <Text style={styles.textVersion}>
               {i18n.t('Sign In.version:')} {APP_VERSION}
@@ -305,9 +305,10 @@ const SettingsScreen = () => {
               </TouchableOpacity>
             )}
           </View>
+        <M v4 />
         </ScrollView>
       </View>
-      <M v4 />
+      <View style={styles.bottom} />
       <Modal
         title={i18n.t('Settings.modal.title')}
         type="confirm"
@@ -317,7 +318,7 @@ const SettingsScreen = () => {
         <Text>{i18n.t('Settings.modal.description')}</Text>
       </Modal>
       <BottomSheet
-        height={vs(360)}
+        height={vs(420)}
         onCallbackRef={handleRefUpdateProfileBottomSheet}>
         <UpdateProfileForm
           loading={loadingUpdateProfile}
@@ -330,12 +331,12 @@ const SettingsScreen = () => {
         />
       </BottomSheet>
       <BottomSheet
-        height={vs(240)}
+        height={vs(280)}
         onCallbackRef={handleRefResetPasswordBottomSheet}>
         <ResetPasswordForm
           loading={loadingResetPassword}
           error={errorResetPassword}
-          onPressClose={handlePressCloseUpdateProfile}
+          onPressClose={handlePressCloseResetPassword}
           onSubmit={handleSubmitResetPassword}
         />
       </BottomSheet>

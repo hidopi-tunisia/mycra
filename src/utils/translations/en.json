@@ -177,6 +177,7 @@
     },
     "rejected-cras": {
       "Project": "Project",
+      "Rejected": "Rejected",
       "Working": "Working",
       "Half day": "Half day",
       "Remote": "Remote",
@@ -279,6 +280,7 @@
     }
   },
   "CRA Details": {
+    "title": "History",
     "Project": "Project",
     "Working": "Working",
     "Half day": "Half day",

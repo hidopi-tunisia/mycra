@@ -459,6 +459,7 @@ const NoCRAs = ({ projects, onFocus, onBlur }) => {
           </Button>
         </View>
       </View>
+      <View style={styles.bottom} />
       <Modal
         title={i18n.t('Home.no-cra.modal.title')}
         type="confirm"

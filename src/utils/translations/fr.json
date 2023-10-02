@@ -35,7 +35,7 @@
       "Half day": "Demi-journée",
       "Remote": "À distance",
       "Unavailable": "Indisponible",
-      "Off": "Congé",
+      "Off": "Absent",
       "btn_submit": "Soumettre",
       "modal": {
         "title": "Soumettre les jours ?",
@@ -58,7 +58,7 @@
         "Half day": "Demi-journée",
         "Remote": "À distance",
         "Unavailable": "Indisponible",
-        "Off": "Congé",
+        "Off": "Absent",
         "Weekend": "Week-end",
         "Holiday": "Jour férié"
       }
@@ -77,7 +77,7 @@
         "Half day": "Demi-journée",
         "Remote": "À distance",
         "Unavailable": "Indisponible",
-        "Off": "Congé",
+        "Off": "Absent",
         "Weekend": "Week-end",
         "Holiday": "Jour férié"
       }
@@ -96,7 +96,7 @@
         "Half day": "Demi-journée",
         "Remote": "À distance",
         "Unavailable": "Indisponible",
-        "Off": "Congé",
+        "Off": "Absent",
         "Weekend": "Week-end",
         "Holiday": "Jour férié"
       }
@@ -107,7 +107,7 @@
       "Half day": "Demi-journée",
       "Remote": "À distance",
       "Unavailable": "Indisponible",
-      "Off": "Congé",
+      "Off": "Absent",
       "Weekends": "Week-ends",
       "Holiday": "Jour férié",
       "btn_submit": "CRA en attente",
@@ -133,7 +133,7 @@
         "Half day": "Demi-journée",
         "Remote": "À distance",
         "Unavailable": "Indisponible",
-        "Off": "Congé",
+        "Off": "Absent",
         "Weekend": "Week-end",
         "Holiday": "Jour férié"
       }
@@ -144,7 +144,7 @@
       "Half day": "Demi-journée",
       "Remote": "À distance",
       "Unavailable": "Indisponible",
-      "Off": "Congé",
+      "Off": "Absent",
       "Weekends": "Week-ends",
       "Holiday": "Jour férié",
       "btn_submit": "CRA en attente",
@@ -170,18 +170,19 @@
         "Half day": "Demi-journée",
         "Remote": "À distance",
         "Unavailable": "Indisponible",
-        "Off": "Congé",
+        "Off": "Absent",
         "Weekend": "Week-end",
         "Holiday": "Jour férié"
       }
     },
     "rejected-cras": {
       "Project": "Projet",
+      "Rejected": "Rejected",
       "Working": "Travail",
       "Half day": "Demi-journée",
       "Remote": "À distance",
       "Unavailable": "Indisponible",
-      "Off": "Congé",
+      "Off": "Absent",
       "Weekends": "Week-ends",
       "Holiday": "Jour férié",
       "btn_submit": "CRA en attente",
@@ -207,7 +208,7 @@
         "Half day": "Demi-journée",
         "Remote": "À distance",
         "Unavailable": "Indisponible",
-        "Off": "Congé",
+        "Off": "Absent",
         "Weekend": "Week-end",
         "Holiday": "Jour férié"
       }
@@ -270,7 +271,7 @@
     "working": "travail",
     "half": "demi",
     "remote": "à distance",
-    "off": "congé",
+    "off": "Absent",
     "no-history": "Pas d'historique",
     "retry": "Réessayer",
     "errors": {
@@ -278,12 +279,13 @@
     }
   },
   "CRA Details": {
+    "title": "Historique",
     "Project": "Projet",
     "Working": "Travail",
     "Half day": "Demi-journée",
     "Remote": "À distance",
     "Unavailable": "Indisponible",
-    "Off": "Congé",
+    "Off": "Absent",
     "Weekends": "Week-ends",
     "Holiday": "Jour férié",
     "btn_submit": "CRA en attente",
@@ -309,7 +311,7 @@
       "Half day": "Demi-journée",
       "Remote": "À distance",
       "Unavailable": "Indisponible",
-      "Off": "Congé",
+      "Off": "Absent",
       "Weekend": "Week-end",
       "Holiday": "Jour férié"
     },

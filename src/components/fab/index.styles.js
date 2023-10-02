@@ -7,7 +7,7 @@ const styles = ScaledSheet.create({
     width: "48@s",
     height: "48@s",
     position: 'absolute',
-    bottom: "80@vs",
+    bottom: "86@vs",
     right: "40@s",
     justifyContent: 'center',
     alignItems: 'center',

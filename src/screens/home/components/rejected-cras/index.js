@@ -20,6 +20,7 @@ import { s } from 'react-native-size-matters';
 import SystemNavigationBar from 'react-native-system-navigation-bar';
 import styles from './index.styles';
 import { getHistoryItem } from '@screens/home/composables';
+import { i18n } from '@utils/translations';
 
 const RejectedCRAs = ({ cra, projects, onFocus, onBlur }) => {
   const [loadingFetch, setLoadingFetch] = useState(false);
@@ -400,7 +401,7 @@ const RejectedCRAs = ({ cra, projects, onFocus, onBlur }) => {
               }}
             />
             <M h1 />
-            <Text>{i18n.t('Home.rejected-cras.Rejected')}</Text>
+            <Text>{i18n.t('Home.rejected-cras.Working')}</Text>
           </View>
           <View style={styles.containerLegend}>
             <View
@@ -411,7 +412,7 @@ const RejectedCRAs = ({ cra, projects, onFocus, onBlur }) => {
               }}
             />
             <M h1 />
-            <Text>{i18n.t('Home.rejected-cras.Rejected')}</Text>
+            <Text>{i18n.t('Home.rejected-cras.Half day')}</Text>
           </View>
           <View style={styles.containerLegend}>
             <View
@@ -422,7 +423,7 @@ const RejectedCRAs = ({ cra, projects, onFocus, onBlur }) => {
               }}
             />
             <M h1 />
-            <Text>{i18n.t('Home.rejected-cras.Rejected')}</Text>
+            <Text>{i18n.t('Home.rejected-cras.Remote')}</Text>
           </View>
           {/* <View style={styles.containerLegend}>
             <View
@@ -433,7 +434,7 @@ const RejectedCRAs = ({ cra, projects, onFocus, onBlur }) => {
               }}
             />
             <M h1 />
-            <Text>{i18n.t('Home.rejected-cras.Rejected')}</Text>
+            <Text>{i18n.t('Home.rejected-cras.Unavailable')}</Text>
           </View> -- TODO: Unavailable */}
           <View style={styles.containerLegend}>
             <View
@@ -444,7 +445,7 @@ const RejectedCRAs = ({ cra, projects, onFocus, onBlur }) => {
               }}
             />
             <M h1 />
-            <Text>{i18n.t('Home.rejected-cras.Rejected')}</Text>
+            <Text>{i18n.t('Home.rejected-cras.Off')}</Text>
           </View>
         </View>
         <M v2 />
@@ -453,7 +454,7 @@ const RejectedCRAs = ({ cra, projects, onFocus, onBlur }) => {
             style={styles.buttonSubmit}
             status="primary"
             onPress={handleSubmit}>
-            {i18n.t('Home.no-cra.btn_submit')}
+            {i18n.t('Home.rejected-cras.btn_submit')}
           </Button>
         </View>
       </View>

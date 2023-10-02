@@ -69,8 +69,8 @@ const styles = ScaledSheet.create({
     fontSize: "12@msr",
   },
   buttonSignIn: {
-    height: "38@vs",
-    borderRadius: "24@msr",
+    height: "48@vs",
+    borderRadius: "28@msr",
   },
   containerError: {
     backgroundColor: `${Colors.RED_DARK_PRIMARY}11`,

@@ -27,7 +27,7 @@ const CRAHistoryScreen = ({ navigation }) => {
       setLoading(false);
     } catch (error) {
       setLoading(false);
-      setError(i18n.t("CRA History.errors.Error happened"));
+      setError(i18n.t('CRA History.errors.Error happened'));
       console.info(error, error?.response?.data);
     }
   };
@@ -50,7 +50,7 @@ const CRAHistoryScreen = ({ navigation }) => {
       } catch (error) {
         setLoadingMore(false);
         console.info(error);
-        setErrorLoadingMore(i18n.t("CRA History.errors.Error happened"));
+        setErrorLoadingMore(i18n.t('CRA History.errors.Error happened'));
       }
     };
     fn();
@@ -99,7 +99,7 @@ const CRAHistoryScreen = ({ navigation }) => {
         </View>
         <M v2 />
       </View>
-      <View style={styles.bottom}>
+      <View style={styles.middle}>
         {!loading && !error && history.length > 0 && (
           <FlatList
             style={styles.card}
@@ -180,7 +180,9 @@ const CRAHistoryScreen = ({ navigation }) => {
                           }}
                         />
                         <M h1 />
-                        <Text>{item.half.length} {i18n.t('CRA History.half')}</Text>
+                        <Text>
+                          {item.half.length} {i18n.t('CRA History.half')}
+                        </Text>
                       </View>
                       <M h2 />
                     </>
@@ -196,7 +198,9 @@ const CRAHistoryScreen = ({ navigation }) => {
                           }}
                         />
                         <M h1 />
-                        <Text>{item.remote.length} {i18n.t('CRA History.remote')}</Text>
+                        <Text>
+                          {item.remote.length} {i18n.t('CRA History.remote')}
+                        </Text>
                       </View>
                       <M h2 />
                     </>
@@ -212,7 +216,9 @@ const CRAHistoryScreen = ({ navigation }) => {
                           }}
                         />
                         <M h1 />
-                        <Text>{item.off.length} {i18n.t('CRA History.off')}</Text>
+                        <Text>
+                          {item.off.length} {i18n.t('CRA History.off')}
+                        </Text>
                       </View>
                     </>
                   )}
@@ -238,11 +244,14 @@ const CRAHistoryScreen = ({ navigation }) => {
             </View>
             <M v1 />
             <TouchableOpacity onPress={handePressRetry}>
-              <Text style={styles.textRetry}>{i18n.t('CRA History.retry')}</Text>
+              <Text style={styles.textRetry}>
+                {i18n.t('CRA History.retry')}
+              </Text>
             </TouchableOpacity>
           </View>
         )}
       </View>
+      <View style={styles.bottom} />
     </Layout>
   );
 };

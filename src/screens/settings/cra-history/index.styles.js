@@ -1,14 +1,14 @@
-import { StyleSheet, Dimensions } from 'react-native';
+import { Dimensions } from 'react-native';
 import Colors from '@constants/colors';
-const { height } = Dimensions.get('window');
+import { ScaledSheet } from 'react-native-size-matters';
 
-const styles = StyleSheet.create({
+const styles = ScaledSheet.create({
   root: {
     flex: 1,
     backgroundColor: Colors.BLUE_PRIMARY,
   },
   top: {
-    borderRadius: 32,
+    borderRadius: '32@msr',
     borderTopLeftRadius: 0,
     borderTopRightRadius: 0,
     backgroundColor: Colors.BLUE_DARK_PRIMARY,
@@ -17,21 +17,27 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
   verticalDivider: {
-    width: 1,
-    height: 16,
+    width: "1@msr",
+    height: "16@msr",
     backgroundColor: Colors.GRAY_LIGHT_PRIMARY,
   },
-  bottom: {
-    borderRadius: 24,
-    padding: 8,
+  middle: {
+    borderRadius: '24@msr',
+    padding: '8@msr',
     justifyContent: 'center',
-    height: height * (1 - 0.15) - 32,
+    flex: 1,
+  },
+  bottom: {
+    borderRadius: '24@msr',
+    padding: '8@msr',
+    justifyContent: 'center',
+    height: '72@msr',
   },
   card: {
     backgroundColor: Colors.WHITE,
-    borderRadius: 24,
-    padding: 20,
-    paddingBottom: 72,
+    borderRadius: '22@msr',
+    padding: '19@msr',
+    paddingBottom: '68@msr',
   },
   containerHeader: {
     width: '90%',
@@ -43,20 +49,20 @@ const styles = StyleSheet.create({
   containerBack: {
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 20,
-    width: 40,
-    height: 40,
+    borderRadius: '20@msr',
+    width: '36@msr',
+    height: '40@msr',
     position: 'absolute',
     left: 0,
   },
   textHeader: {
-    fontSize: 32,
+    fontSize: '24@msr',
     fontWeight: '900',
     color: Colors.WHITE,
     alignSelf: 'center',
   },
   containerButtonsTop: {
-    height: 48,
+    height: '48@msr',
     justifyContent: 'space-around',
     flexDirection: 'row',
     alignItems: 'center',
@@ -83,34 +89,34 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   shapeLegend: {
-    width: 16,
-    height: 16,
-    borderRadius: 8,
-    borderWidth: 2,
+    width: '16@msr',
+    height: '16@msr',
+    borderRadius: '8@msr',
+    borderWidth: '2@msr',
   },
   cardEmpty: {
     flex: 1,
     backgroundColor: Colors.WHITE,
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 24,
-    padding: 20,
+    borderRadius: '24@msr',
+    padding: '20@msr',
   },
   containerLoadMore: {
-    height: 48,
+    height: '48@msr',
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 48,
-    flexDirection: "row"
+    marginBottom: '48@msr',
+    flexDirection: 'row',
   },
   textLoadMore: {
     color: Colors.GRAY_PRIMARY,
   },
   containerError: {
     backgroundColor: `${Colors.RED_DARK_PRIMARY}11`,
-    padding: 8,
-    paddingHorizontal: 16,
-    borderRadius: 16,
+    padding: '8@msr',
+    paddingHorizontal: '16@msr',
+    borderRadius: '16@msr',
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -118,7 +124,7 @@ const styles = StyleSheet.create({
     color: Colors.RED_DARK_PRIMARY,
   },
   textRetry: {
-    padding: 8,
+    padding: '8@msr',
     color: Colors.BLUE_DARK_PRIMARY,
   },
 });

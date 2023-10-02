@@ -1,13 +1,13 @@
 import Colors from '@constants/colors';
-import { StyleSheet } from 'react-native';
+import { ScaledSheet } from 'react-native-size-matters';
 
-const styles = StyleSheet.create({
+const styles = ScaledSheet.create({
   root: {
     flexDirection: 'row',
     backgroundColor: Colors.WHITE,
-    height: 56,
-    borderRadius: 36,
-    bottom: 8,
+    height: "52@msr",
+    borderRadius: "36@msr",
+    bottom: "8@msr",
     justifyContent: 'center',
     alignItems: 'center',
     position: 'absolute',
