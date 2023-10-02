@@ -11,7 +11,7 @@ import { i18n } from '@utils/translations';
 const NotificationsScreen = ({ notifications }) => {
   const [refBottomSheet, setRefBottomSheet] = useState(null);
   const handleSubmit = payload => {
-    alert(JSON.stringify(payload, null, 2));
+    // alert(JSON.stringify(payload, null, 2));
   };
   const handleRefBottomSheet = ref => {
     setRefBottomSheet(ref);
@@ -25,6 +25,12 @@ const NotificationsScreen = ({ notifications }) => {
   handlePressItem = async i => {
     const item = await getItem();
     const ns = JSON.parse(item);
+    let action;
+    if (JSON.parse(ns[i].data.action).type) {
+      action = JSON.parse(ns[i].data.action);
+    }
+    if (action.type === 'cra-rejected') {
+    }
     delete ns[i];
     setItem(JSON.stringify(ns));
   };
@@ -39,6 +45,7 @@ const NotificationsScreen = ({ notifications }) => {
       setItem(JSON.stringify(ns));
     });
   };
+  p(notifications);
   const viewabilityConfigCallbackPairs = useRef([{ onViewableItemsChanged }]);
   return (
     <>

@@ -206,7 +206,7 @@ const ApprovedCRAs = ({ cra, projects, onFocus, onBlur }) => {
               }}
             />
             <M h1 />
-            <Text>{i18n.t('Home.approved-cras.Working')}</Text>
+            <Text>{i18n.t('Home.approved-cras.Half day')}</Text>
           </View>
           <View style={styles.containerLegend}>
             <View
@@ -217,7 +217,7 @@ const ApprovedCRAs = ({ cra, projects, onFocus, onBlur }) => {
               }}
             />
             <M h1 />
-            <Text>{i18n.t('Home.approved-cras.Working')}</Text>
+            <Text>{i18n.t('Home.approved-cras.Remote')}</Text>
           </View>
           {/* <View style={styles.containerLegend}>
             <View
@@ -239,7 +239,7 @@ const ApprovedCRAs = ({ cra, projects, onFocus, onBlur }) => {
               }}
             />
             <M h1 />
-            <Text>{i18n.t('Home.approved-cras.Working')}</Text>
+            <Text>{i18n.t('Home.approved-cras.Off')}</Text>
           </View>
         </View>
         <M v2 />

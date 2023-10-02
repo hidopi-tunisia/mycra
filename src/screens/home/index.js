@@ -63,6 +63,7 @@ const HomeScreen = ({ onFocus, onBlur }) => {
         setDisplayNoProjects(true);
       }
     } catch (error) {
+      console.log(error);
       setLoadingTryAgain(false);
       setLoading(false);
       if (error?.response?.data?.name === 'NoCurrentProjects') {
