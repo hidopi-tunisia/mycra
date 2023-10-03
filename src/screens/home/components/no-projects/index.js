@@ -9,7 +9,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import SystemNavigationBar from 'react-native-system-navigation-bar';
 import { i18n } from '@utils/translations';
 
-const NoProjects = ({ loading, onFocus, onBlur, onPress }) => {
+const NoProjects = ({ loading, onFocus, onBlur, onPress, onRefresh }) => {
   useFocusEffect(
     useCallback(() => {
       StatusBar.setBackgroundColor(Colors.GRAY_DARK_PRIMARY);
@@ -28,7 +28,18 @@ const NoProjects = ({ loading, onFocus, onBlur, onPress }) => {
       <View style={styles.top}>
         <View style={styles.containerDescription}>
           <View style={styles.containerHeading}>
-            <Text style={styles.textHeading}>My CRA</Text>
+            <View style={styles.containerHeading}>
+              <Text style={styles.textHeading}>My CRA</Text>
+              <M h2 />
+              <TouchableOpacity onPress={onRefresh}>
+                <Icon
+                  fill={Colors.WHITE}
+                  name="refresh-outline"
+                  width={24}
+                  height={24}
+                />
+              </TouchableOpacity>
+            </View>
             <TouchableOpacity onPress={() => setModalHelpVisible(true)}>
               <Icon
                 fill={Colors.WHITE}
@@ -39,7 +50,9 @@ const NoProjects = ({ loading, onFocus, onBlur, onPress }) => {
             </TouchableOpacity>
           </View>
           <M v1 />
-          <Text style={styles.textDescription}>{i18n.t("Home.no-projects.description")}</Text>
+          <Text style={styles.textDescription}>
+            {i18n.t('Home.no-projects.description')}
+          </Text>
           {/* <Text style={styles.textWarning}>
             The month is already prefilled.
           </Text> */}
@@ -54,10 +67,12 @@ const NoProjects = ({ loading, onFocus, onBlur, onPress }) => {
         </View>
         <M v4 />
         <View style={styles.containerTexts}>
-          <Text style={styles.textTitle}>{i18n.t("Home.no-projects.text:title")}</Text>
+          <Text style={styles.textTitle}>
+            {i18n.t('Home.no-projects.text:title')}
+          </Text>
           <M v2 />
           <Text style={styles.textInfo}>
-          {i18n.t("Home.no-projects.text:info")}
+            {i18n.t('Home.no-projects.text:info')}
           </Text>
         </View>
         <M v4 />
@@ -68,7 +83,7 @@ const NoProjects = ({ loading, onFocus, onBlur, onPress }) => {
             </Button>
           ) : (
             <Button style={styles.button} status="basic" onPress={onPress}>
-              {i18n.t("Home.no-projects.btn_retry")}
+              {i18n.t('Home.no-projects.btn_retry')}
             </Button>
           )}
         </View>

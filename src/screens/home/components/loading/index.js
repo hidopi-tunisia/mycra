@@ -34,14 +34,14 @@ const HomeLoading = ({ onFocus, onBlur }) => {
               height={24}
               width={s(100)}
               left={20}
-              marginBottom={s(10)}></SkeletonPlaceholder.Item>
+              marginBottom={s(16)} />
             <SkeletonPlaceholder.Item
               borderRadius={24}
               flexDirection="row"
               alignItems="center"
               left={20}
               height={18}
-              width={s(200)}></SkeletonPlaceholder.Item>
+              width={s(200)} />
           </SkeletonPlaceholder>
         </View>
       </View>
@@ -53,7 +53,7 @@ const HomeLoading = ({ onFocus, onBlur }) => {
             alignItems="center"
             alignSelf="center"
             height={height * 0.6 - 24}
-            width={width * 0.9}></SkeletonPlaceholder.Item>
+            width={width * 0.9} />
         </SkeletonPlaceholder>
       </View>
     </View>

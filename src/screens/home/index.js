@@ -27,10 +27,10 @@ const HomeScreen = ({ onFocus, onBlur }) => {
       setLoading(true);
       setLoadingTryAgain(true);
       setDisplayNoProjects(false);
-      setDisplayApprovedCRA(false)
-      setDisplayRejectedCRA(false)
-      setDisplayPendingCRA(false)
-      setDisplayNoCRA(false)
+      setDisplayApprovedCRA(false);
+      setDisplayRejectedCRA(false);
+      setDisplayPendingCRA(false);
+      setDisplayNoCRA(false);
       const ps = await getProjects();
       setProjects(ps);
       if (ps.length > 0) {
@@ -78,6 +78,9 @@ const HomeScreen = ({ onFocus, onBlur }) => {
   const handleTryAgain = () => {
     fn();
   };
+  const handleRefresh = () => {
+    fn();
+  };
   useEffect(() => {
     PermissionsAndroid.request(
       PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS,
@@ -85,7 +88,7 @@ const HomeScreen = ({ onFocus, onBlur }) => {
   }, []);
   return (
     <>
-      {loading && !loadingTryAgain ? (
+      {loading ? (
         <HomeLoading onFocus={onFocus} onBlur={onBlur} />
       ) : (
         <>
@@ -95,6 +98,7 @@ const HomeScreen = ({ onFocus, onBlur }) => {
               projects={projects}
               onFocus={onFocus}
               onBlur={onBlur}
+              onRefresh={handleRefresh}
             />
           )}
           {displayApprovedCRA && cra && (
@@ -103,6 +107,7 @@ const HomeScreen = ({ onFocus, onBlur }) => {
               projects={projects}
               onFocus={onFocus}
               onBlur={onBlur}
+              onRefresh={handleRefresh}
             />
           )}
           {displayPendingCRA && cra && (
@@ -111,6 +116,7 @@ const HomeScreen = ({ onFocus, onBlur }) => {
               projects={projects}
               onFocus={onFocus}
               onBlur={onBlur}
+              onRefresh={handleRefresh}
             />
           )}
           {displayNoCRA && (
@@ -122,6 +128,7 @@ const HomeScreen = ({ onFocus, onBlur }) => {
               onFocus={onFocus}
               onBlur={onBlur}
               onPress={handleTryAgain}
+              onRefresh={handleRefresh}
             />
           )}
         </>
