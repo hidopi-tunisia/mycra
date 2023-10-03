@@ -2,7 +2,7 @@ import { BottomSheet, M, NotificationsItem } from '@components';
 import AlertForm from '@components/alert-form';
 import Fab from '@components/fab';
 import { getItem, setItem } from '@domain/storage';
-import { Layout, Text } from '@ui-kitten/components';
+import { Layout, Spinner, Text } from '@ui-kitten/components';
 import { useEffect, useRef, useState } from 'react';
 import { FlatList, TouchableOpacity, View } from 'react-native';
 import styles from './index.styles';
@@ -32,6 +32,7 @@ const NotificationsScreen = ({ notifications }) => {
         setLoading(true);
         const { data } = await getAlerts({ populate: 'supervisor' });
         setAlerts(data);
+        setLoading(false);
       } catch (error) {
         setLoading(false);
         console.info(error);
@@ -43,8 +44,9 @@ const NotificationsScreen = ({ notifications }) => {
     const fn = async () => {
       try {
         setLoadingCreate(true);
-        const { data } = await createAlert(payload);
-        setAlerts([data, ...alerts]);
+        await createAlert(payload);
+        const { data } = await getAlerts({ populate: 'supervisor' });
+        setAlerts(data);
         refBottomSheet.close();
         setModalVisible(true);
         setLoadingCreate(false);
@@ -145,34 +147,42 @@ const NotificationsScreen = ({ notifications }) => {
         <View style={styles.middle}>
           {tab === Tabs.ALERTS ? (
             <>
-              {alerts.length > 0 ? (
-                <FlatList
-                  style={styles.card}
-                  showsVerticalScrollIndicator={false}
-                  ItemSeparatorComponent={<M v1 />}
-                  data={alerts}
-                  ListHeaderComponent={<M v4 />}
-                  ListFooterComponent={<M v10 />}
-                  renderItem={({ item }) => (
-                    <AlertItem
-                      title={`${item?.supervisor?.firstName} ${item?.supervisor?.lastName}`}
-                      subtitle={new Date(item?.createdAt)
-                        .toISOString()
-                        .substring(0, 16)
-                        .replaceAll('T', ' at ')}
-                      satisfaction={item?.satisfaction}
-                      content={item?.content}
-                      onPress={() => handlePressAlertItem(item._id)}
-                    />
-                  )}
-                  // viewabilityConfigCallbackPairs={
-                  //   viewabilityConfigCallbackPairs.current
-                  // }
-                />
-              ) : (
+              {loading ? (
                 <View style={styles.cardEmpty}>
-                  <Text>{i18n.t('Notifications.No alerts')}</Text>
+                  <Spinner status="basic" size="small" />
                 </View>
+              ) : (
+                <>
+                  {alerts.length > 0 ? (
+                    <FlatList
+                      style={styles.card}
+                      showsVerticalScrollIndicator={false}
+                      ItemSeparatorComponent={<M v1 />}
+                      data={alerts}
+                      ListHeaderComponent={<M v4 />}
+                      ListFooterComponent={<M v10 />}
+                      renderItem={({ item }) => (
+                        <AlertItem
+                          title={`${item?.supervisor?.firstName} ${item?.supervisor?.lastName}`}
+                          subtitle={new Date(item?.createdAt)
+                            .toISOString()
+                            .substring(0, 16)
+                            .replaceAll('T', ' at ')}
+                          satisfaction={item?.satisfaction}
+                          content={item?.content}
+                          onPress={() => handlePressAlertItem(item._id)}
+                        />
+                      )}
+                      // viewabilityConfigCallbackPairs={
+                      //   viewabilityConfigCallbackPairs.current
+                      // }
+                    />
+                  ) : (
+                    <View style={styles.cardEmpty}>
+                      <Text>{i18n.t('Notifications.No alerts')}</Text>
+                    </View>
+                  )}
+                </>
               )}
             </>
           ) : (
@@ -221,7 +231,7 @@ const NotificationsScreen = ({ notifications }) => {
           />
         </BottomSheet>
         <BottomSheet
-          height={480}
+          height={360}
           closeOnDragDown={false}
           onCallbackRef={handleRefDetailsBottomSheet}>
           <AlertDetails

@@ -47,7 +47,7 @@ const AlertDetails = ({ alert, onPressClose }) => (
             .toISOString()
             .substring(0, 16)
             .replaceAll('T', ' at ')}
-          satisfaction={1}
+          satisfaction={alert.satisfaction}
         />
         <ScrollView style={styles.containerContent}>
           <Text>{alert.content}</Text>
