@@ -217,11 +217,16 @@
   "Notifications": {
     "Notifications": "Notifications",
     "Alerts": "Alertes",
+    "No alerts": "Aucune alerte",
     "No notifications": "Aucune notification",
     "form": {
       "title": "Nouvelle alerte",
       "placeholder": "Tapez votre alerte !",
       "btn_submit": "Soumettre"
+    },
+    "modal": {
+      "title": "Alert envoyé",
+      "info": "L'alerte à été transmit avec succès"
     }
   },
   "Settings": {

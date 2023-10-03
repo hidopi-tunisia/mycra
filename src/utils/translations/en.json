@@ -217,11 +217,16 @@
   "Notifications": {
     "Notifications": "Notifications",
     "Alerts": "Alerts",
+    "No alerts": "No alerts",
     "No notifications": "No notifications",
     "form": {
       "title": "New alert",
       "placeholder": "Type your alert!",
       "btn_submit": "Submit"
+    },
+    "modal": {
+      "title": "Alert submitted",
+      "info": "The alert is submitted successfully"
     }
   },
   "Settings": {
