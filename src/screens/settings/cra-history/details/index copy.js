@@ -1,7 +1,7 @@
 import { Calendar, M, WorkdaysTypes } from '@components';
 import Modal from '@components/modals';
 import Colors from '@constants/colors';
-import { getCRA } from '@domain/cras';
+import { getCRA } from '@domain/cra';
 import { useFocusEffect, useRoute } from '@react-navigation/native';
 import { getHistoryItem } from '@screens/home/composables';
 import { Button, Icon, Layout, Spinner, Text } from '@ui-kitten/components';
