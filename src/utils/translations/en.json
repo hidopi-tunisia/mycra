@@ -248,6 +248,10 @@
       "Sign out:description": "Sign out and navigate back to the sign in screen"
     },
     "modals": {
+      "sign-out": {
+        "title": "Sign out",
+        "description": "Are you sure to sign out?"
+      },
       "update-profile": {
         "title": "Update profile",
         "upload-avatar": "Upload avatar picture",

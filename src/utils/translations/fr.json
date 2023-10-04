@@ -248,6 +248,10 @@
       "Sign out:description": "Déconnectez-vous et revenez à l'écran de connexion"
     },
     "modals": {
+      "sign-out": {
+        "title": "Se déconnecter",
+        "description": "Êtes-vous sûr de vouloir se déconnecter ?"
+      },
       "update-profile": {
         "title": "Mettre à jour le profil",
         "upload-avatar": "Télécharger une photo d'avatar",

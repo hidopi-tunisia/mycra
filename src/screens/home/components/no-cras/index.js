@@ -214,6 +214,7 @@ const NoCRAs = ({ projects, onFocus, onBlur, onRefresh }) => {
           // unavailable, -- TODO: Unavailable
         };
         await createCRA(selectedProject._id, payload);
+        onRefresh();
         setLoadingSubmit(false);
         setModalVisible(false);
       } catch (error) {
@@ -463,10 +464,16 @@ const NoCRAs = ({ projects, onFocus, onBlur, onRefresh }) => {
         <M v2 />
         <View style={styles.containerButton}>
           <Button
+            disabled={loadingSubmit}
             style={styles.buttonSubmit}
             status="primary"
             onPress={handleSubmit}>
             {i18n.t('Home.no-cra.btn_submit')}
+            {true ? (
+              <Spinner status="basic" size="small" />
+            ) : (
+              i18n.t('shared:reset-password.btn_submit')
+            )}
           </Button>
         </View>
       </View>

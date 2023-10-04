@@ -310,12 +310,12 @@ const SettingsScreen = () => {
       </View>
       <View style={styles.bottom} />
       <Modal
-        title={i18n.t('Settings.modal.title')}
+        title={i18n.t('Settings.modals.sign-out.title')}
         type="confirm"
         visible={modalVisible}
         onPressNegative={handlePressNegative}
         onPressPositive={handlePressPositive}>
-        <Text>{i18n.t('Settings.modal.description')}</Text>
+        <Text>{i18n.t('Settings.modals.sign-out.description')}</Text>
       </Modal>
       <BottomSheet
         height={vs(420)}
