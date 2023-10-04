@@ -23,7 +23,7 @@ const styles = ScaledSheet.create({
     alignItems: 'center',
   },
   badge: {
-    backgroundColor: 'red',
+    backgroundColor: Colors.RED_DARK_PRIMARY,
     padding: 4,
     paddingHorizontal: 8,
     borderRadius: 12,

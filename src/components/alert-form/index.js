@@ -7,13 +7,12 @@ import Colors from '@constants/colors';
 import { s } from 'react-native-size-matters';
 import { i18n } from '@utils/translations';
 
-const AlertForm = ({ onSubmit, onPressClose }) => {
-  const [text, setText] = useState('');
+const AlertForm = ({ loading, onSubmit, onPressClose }) => {
+  const [content, setContent] = useState('');
   const [satisfaction, setSatisfaction] = useState(null);
-  const [loading, setLoading] = useState(false);
   const handlePressSubmit = () => {
     const payload = {
-      text,
+      content,
     };
     if (satisfaction) {
       payload['satisfaction'] = satisfaction;
@@ -41,9 +40,9 @@ const AlertForm = ({ onSubmit, onPressClose }) => {
         style={styles.input}
         placeholder={i18n.t('Notifications.form.placeholder')}
         placeholderTextColor={Colors.GRAY_PRIMARY}
-        value={text}
+        value={content}
         multiline
-        onChangeText={nextValue => setText(nextValue)}
+        onChangeText={nextValue => setContent(nextValue)}
       />
       <M v2 />
       <View style={styles.containerImages}>
@@ -97,7 +96,7 @@ const AlertForm = ({ onSubmit, onPressClose }) => {
       <Button
         style={styles.buttonSubmit}
         status="primary"
-        disabled={loading || !text}
+        disabled={loading || !content}
         onPress={handlePressSubmit}>
         {loading ? (
           <Spinner status="basic" size="small" />

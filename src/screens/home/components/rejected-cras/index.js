@@ -7,7 +7,7 @@ import Colors from '@constants/colors';
 import { updateCRA } from '@domain/me';
 import { getHolidays, getWeekends } from '@domain/miscs';
 import { useFocusEffect } from '@react-navigation/native';
-import { Button, Icon, Layout, Text } from '@ui-kitten/components';
+import { Button, Icon, Layout, Spinner, Text } from '@ui-kitten/components';
 import moment from 'moment';
 import { useCallback, useEffect, useState } from 'react';
 import {
@@ -22,7 +22,7 @@ import styles from './index.styles';
 import { getHistoryItem } from '@screens/home/composables';
 import { i18n } from '@utils/translations';
 
-const RejectedCRAs = ({ cra, projects, onFocus, onBlur }) => {
+const RejectedCRAs = ({ cra, projects, onFocus, onBlur, onRefresh }) => {
   const [loadingFetch, setLoadingFetch] = useState(false);
   const [errorFetch, setErrorFetch] = useState(null);
   const [loadingSubmit, setLoadingSubmit] = useState(false);
@@ -163,7 +163,7 @@ const RejectedCRAs = ({ cra, projects, onFocus, onBlur }) => {
   const handlePressPositive = () => {
     const fn = async () => {
       try {
-        setLoadingSubmit(false);
+        setLoadingSubmit(true);
         setErrorSubmit(null);
         const arr = Object.keys(markedDates).map(k => {
           if (markedDates[k].type === WorkdaysTypes.WORKING) {
@@ -343,7 +343,18 @@ const RejectedCRAs = ({ cra, projects, onFocus, onBlur }) => {
       <View style={styles.top}>
         <View style={styles.containerDescription}>
           <View style={styles.containerHeading}>
-            <Text style={styles.textHeading}>My CRA</Text>
+            <View style={styles.containerHeading}>
+              <Text style={styles.textHeading}>My CRA</Text>
+              <M h2 />
+              <TouchableOpacity onPress={onRefresh}>
+                <Icon
+                  fill={Colors.WHITE}
+                  name="refresh-outline"
+                  width={24}
+                  height={24}
+                />
+              </TouchableOpacity>
+            </View>
             <TouchableOpacity onPress={() => setModalHelpVisible(true)}>
               <Icon
                 fill={Colors.WHITE}
@@ -454,12 +465,16 @@ const RejectedCRAs = ({ cra, projects, onFocus, onBlur }) => {
             style={styles.buttonSubmit}
             status="primary"
             onPress={handleSubmit}>
-            {i18n.t('Home.rejected-cras.btn_submit')}
+            {loadingSubmit ? (
+              <Spinner status="basic" size="small" />
+            ) : (
+              i18n.t('Home.rejected-cras.btn_submit')
+            )}
           </Button>
         </View>
       </View>
       <Modal
-        title={i18n.t('Home.rejected-cras.Rejected')}
+        title={i18n.t('Home.rejected-cras.modal.title')}
         type="confirm"
         visible={modalVisible}
         onPressNegative={handlePressNegative}
@@ -471,12 +486,12 @@ const RejectedCRAs = ({ cra, projects, onFocus, onBlur }) => {
         </Text>
       </Modal>
       <Modal
-        title={i18n.t('Home.rejected-cras.modal.title')}
+        title={i18n.t('Home.rejected-cras.modalMotive.title')}
         type="confirm"
         visible={modalRejectionMotiveVisible}
         onPressPositive={handleRejectionMotivePositive}>
         <Text>
-          {i18n.t('Home.rejected-cras.modal.info')}
+          {i18n.t('Home.rejected-cras.modalMotive.info')}
           {getHistoryItem(cra.history, 'rejected') &&
           getHistoryItem(cra.history, 'rejected').at
             ? ` at ${
@@ -489,7 +504,8 @@ const RejectedCRAs = ({ cra, projects, onFocus, onBlur }) => {
           getHistoryItem(cra.history, 'rejected').by &&
           getHistoryItem(cra.history, 'rejected').by.motive && (
             <Text>
-              Reason: {getHistoryItem(cra.history, 'rejected').by.motive}
+              {i18n.t('Home.rejected-cras.modalMotive.Reason:')}
+              {getHistoryItem(cra.history, 'rejected').by.motive}
             </Text>
           )}
       </Modal>

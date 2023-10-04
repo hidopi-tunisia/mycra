@@ -17,7 +17,7 @@ import styles from './index.styles';
 import { getHistoryItem } from '@screens/home/composables';
 import { i18n } from '@utils/translations';
 
-const PendingCRAs = ({ cra, projects, onFocus, onBlur }) => {
+const PendingCRAs = ({ cra, projects, onFocus, onBlur, onRefresh }) => {
   const [loadingFetch, setLoadingFetch] = useState(false);
   const [errorFetch, setErrorFetch] = useState(null);
   const [loadingSubmit, setLoadingSubmit] = useState(false);
@@ -148,7 +148,18 @@ const PendingCRAs = ({ cra, projects, onFocus, onBlur }) => {
       <View style={styles.top}>
         <View style={styles.containerDescription}>
           <View style={styles.containerHeading}>
-            <Text style={styles.textHeading}>My CRA</Text>
+            <View style={styles.containerHeading}>
+              <Text style={styles.textHeading}>My CRA</Text>
+              <M h2 />
+              <TouchableOpacity onPress={onRefresh}>
+                <Icon
+                  fill={Colors.WHITE}
+                  name="refresh-outline"
+                  width={24}
+                  height={24}
+                />
+              </TouchableOpacity>
+            </View>
             <TouchableOpacity onPress={() => setModalHelpVisible(true)}>
               <Icon
                 fill={Colors.WHITE}
@@ -248,7 +259,7 @@ const PendingCRAs = ({ cra, projects, onFocus, onBlur }) => {
             style={styles.buttonSubmit}
             status="control"
             onPress={handleSubmit}>
-            {i18n.t('Home.pending-cras.Off')}
+            {i18n.t('Home.pending-cras.btn_submit')}
           </Button>
         </View>
       </View>

@@ -18,7 +18,7 @@ import styles from './index.styles';
 import { getHistoryItem } from '@screens/home/composables';
 import { i18n } from '@utils/translations';
 
-const ApprovedCRAs = ({ cra, projects, onFocus, onBlur }) => {
+const ApprovedCRAs = ({ cra, projects, onFocus, onBlur, onRefresh }) => {
   const [loadingFetch, setLoadingFetch] = useState(false);
   const [errorFetch, setErrorFetch] = useState(null);
   const [loadingSubmit, setLoadingSubmit] = useState(false);
@@ -148,7 +148,18 @@ const ApprovedCRAs = ({ cra, projects, onFocus, onBlur }) => {
       <View style={styles.top}>
         <View style={styles.containerDescription}>
           <View style={styles.containerHeading}>
-            <Text style={styles.textHeading}>My CRA</Text>
+            <View style={styles.containerHeading}>
+              <Text style={styles.textHeading}>My CRA</Text>
+              <M h2 />
+              <TouchableOpacity onPress={onRefresh}>
+                <Icon
+                  fill={Colors.WHITE}
+                  name="refresh-outline"
+                  width={24}
+                  height={24}
+                />
+              </TouchableOpacity>
+            </View>
             <TouchableOpacity onPress={() => setModalHelpVisible(true)}>
               <Icon
                 fill={Colors.WHITE}
@@ -162,7 +173,7 @@ const ApprovedCRAs = ({ cra, projects, onFocus, onBlur }) => {
           <TouchableOpacity disabled={projects.length < 2}>
             <View style={styles.containerProjects}>
               <Text style={styles.textDescription}>
-                {i18n.t('Home.approved-cras.Working')} - {selectedProject.name}
+                {i18n.t('Home.approved-cras.Project')} - {selectedProject.name}
               </Text>
               <M h1 />
               {projects.length > 1 && (
@@ -206,7 +217,7 @@ const ApprovedCRAs = ({ cra, projects, onFocus, onBlur }) => {
               }}
             />
             <M h1 />
-            <Text>{i18n.t('Home.approved-cras.Working')}</Text>
+            <Text>{i18n.t('Home.approved-cras.Half day')}</Text>
           </View>
           <View style={styles.containerLegend}>
             <View
@@ -217,7 +228,7 @@ const ApprovedCRAs = ({ cra, projects, onFocus, onBlur }) => {
               }}
             />
             <M h1 />
-            <Text>{i18n.t('Home.approved-cras.Working')}</Text>
+            <Text>{i18n.t('Home.approved-cras.Remote')}</Text>
           </View>
           {/* <View style={styles.containerLegend}>
             <View
@@ -239,7 +250,7 @@ const ApprovedCRAs = ({ cra, projects, onFocus, onBlur }) => {
               }}
             />
             <M h1 />
-            <Text>{i18n.t('Home.approved-cras.Working')}</Text>
+            <Text>{i18n.t('Home.approved-cras.Off')}</Text>
           </View>
         </View>
         <M v2 />
@@ -258,7 +269,7 @@ const ApprovedCRAs = ({ cra, projects, onFocus, onBlur }) => {
         visible={modalVisible}
         onPressPositive={handlePressPositive}>
         <Text>
-          {i18n.t('Home.approved-cras.modalHoliday.info')}
+          {i18n.t('Home.approved-cras.modal.info')}
           {getHistoryItem(cra.history, 'approved') &&
           getHistoryItem(cra.history, 'approved').at
             ? ` at ${getHistoryItem(cra.history, 'approved').at.substring(

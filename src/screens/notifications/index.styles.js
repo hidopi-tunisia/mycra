@@ -25,7 +25,7 @@ const styles = ScaledSheet.create({
     padding: '8@msr',
     justifyContent: 'center',
     flex: 1,
-    bottom: "32@msr"
+    bottom: '32@msr',
   },
   bottom: {
     borderRadius: '24@msr',
@@ -64,6 +64,16 @@ const styles = ScaledSheet.create({
   textButtonTop: {
     color: Colors.WHITE,
   },
+  textButtonTopSelected: {
+    color: Colors.WHITE,
+    fontWeight: '900',
+    fontSize: 16,
+  },
+  line: {
+    height: 1,
+    width: '16@vs',
+    backgroundColor: Colors.GRAY_LIGHT_PRIMARY,
+  },
   cardEmpty: {
     flex: 1,
     backgroundColor: Colors.WHITE,
@@ -72,6 +82,23 @@ const styles = ScaledSheet.create({
     borderRadius: '24@msr',
     padding: '20@msr',
     paddingBottom: '72@msr',
+  },
+  containerNotifications: {
+    flexDirection: 'row',
+  },
+  badge: {
+    backgroundColor: Colors.RED_DARK_PRIMARY,
+    padding: 4,
+    paddingHorizontal: 8,
+    borderRadius: 12,
+    justifyContent: 'center',
+    alignItems: 'center',
+    textAlign: 'center',
+    textAlignVertical: 'center',
+  },
+  textBadge: {
+    fontWeight: '900',
+    color: Colors.WHITE,
   },
 });
 

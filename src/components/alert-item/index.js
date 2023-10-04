@@ -1,4 +1,4 @@
-import { View } from 'react-native';
+import { Image, View } from 'react-native';
 import { Card, Text, Icon } from '@ui-kitten/components';
 import styles from './index.styles';
 import { s } from 'react-native-size-matters';
@@ -37,54 +37,50 @@ const renderColor = type => {
   }
 };
 
-const Header = ({ title, subtitle, type }) => (
+const Header = ({ title, subtitle, satisfaction }) => (
   <View style={styles.containerHeader}>
     <View style={styles.containerHeaderTitles}>
       <View style={styles.containerHeaderTitlesTitle}>
         <Text category="h6">{title}</Text>
       </View>
-      <Text
-        category="s1"
-        style={{ ...styles.textSubtitle, color: renderColor(type) }}>
+      <Text category="s1" style={styles.textSubtitle}>
         {subtitle}
       </Text>
     </View>
     <View style={styles.containerHeaderIcon}>
-      <View
-        style={{
-          ...styles.containerHeaderIconHolder,
-          backgroundColor: renderColor(type),
-        }}>
-        <Icon
-          width={s(18)}
-          height={s(18)}
-          name={renderIcon(type)}
-          fill="white"
-        />
+      <View style={styles.containerHeaderIconHolder}>
+        {satisfaction === 1 && (
+          <Image
+            style={styles.image}
+            source={require('@assets/images/alert-form/1-selected.jpg')}
+          />
+        )}
+        {satisfaction === 2 && (
+          <Image
+            style={styles.image}
+            source={require('@assets/images/alert-form/2-selected.jpg')}
+          />
+        )}
+        {satisfaction === 3 && (
+          <Image
+            style={styles.image}
+            source={require('@assets/images/alert-form/3-selected.jpg')}
+          />
+        )}
       </View>
     </View>
   </View>
 );
-const CRAHistoryItem = ({
-  title,
-  subtitle,
-  type,
-  content = 'No content',
-  isUnseen,
-  onPress,
-}) => (
+const AlertItem = ({ title, subtitle, satisfaction, content, onPress }) => (
   <Card
     style={styles.card}
     header={() => (
-      <Header
-        title={title}
-        subtitle={subtitle}
-        type={type}
-        isUnseen={isUnseen}
-      />
+      <Header title={title} subtitle={subtitle} satisfaction={satisfaction} />
     )}
     onPress={onPress}>
-    {content && <Text style={styles.content}>{content}</Text>}
+    <Text numberOfLines={2} ellipsizeMode="tail">
+      {content}
+    </Text>
   </Card>
 );
-export default CRAHistoryItem;
+export default AlertItem;

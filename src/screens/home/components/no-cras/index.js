@@ -11,7 +11,7 @@ import Colors from '@constants/colors';
 import { createCRA } from '@domain/me';
 import { getHolidays, getWeekends } from '@domain/miscs';
 import { useFocusEffect } from '@react-navigation/native';
-import { Button, Icon, Layout, Text } from '@ui-kitten/components';
+import { Button, Icon, Layout, Spinner, Text } from '@ui-kitten/components';
 import moment from 'moment';
 import { useCallback, useEffect, useState } from 'react';
 import {
@@ -25,7 +25,7 @@ import SystemNavigationBar from 'react-native-system-navigation-bar';
 import styles from './index.styles';
 import { i18n } from '@utils/translations';
 
-const NoCRAs = ({ projects, onFocus, onBlur }) => {
+const NoCRAs = ({ projects, onFocus, onBlur, onRefresh }) => {
   const [loadingFetch, setLoadingFetch] = useState(false);
   const [errorFetch, setErrorFetch] = useState(null);
   const [loadingSubmit, setLoadingSubmit] = useState(false);
@@ -165,8 +165,9 @@ const NoCRAs = ({ projects, onFocus, onBlur }) => {
   const handlePressPositive = () => {
     const fn = async () => {
       try {
-        setLoadingSubmit(false);
+        setLoadingSubmit(true);
         setErrorSubmit(null);
+        setModalVisible(false)
         const arr = Object.keys(markedDates).map(k => {
           if (markedDates[k].type === WorkdaysTypes.WORKING) {
             return {
@@ -214,6 +215,7 @@ const NoCRAs = ({ projects, onFocus, onBlur }) => {
           // unavailable, -- TODO: Unavailable
         };
         await createCRA(selectedProject._id, payload);
+        onRefresh();
         setLoadingSubmit(false);
         setModalVisible(false);
       } catch (error) {
@@ -343,7 +345,18 @@ const NoCRAs = ({ projects, onFocus, onBlur }) => {
       <View style={styles.top}>
         <View style={styles.containerDescription}>
           <View style={styles.containerHeading}>
-            <Text style={styles.textHeading}>My CRA</Text>
+            <View style={styles.containerHeading}>
+              <Text style={styles.textHeading}>My CRA</Text>
+              <M h2 />
+              <TouchableOpacity onPress={onRefresh}>
+                <Icon
+                  fill={Colors.WHITE}
+                  name="refresh-outline"
+                  width={24}
+                  height={24}
+                />
+              </TouchableOpacity>
+            </View>
             <TouchableOpacity onPress={() => setModalHelpVisible(true)}>
               <Icon
                 fill={Colors.WHITE}
@@ -452,10 +465,15 @@ const NoCRAs = ({ projects, onFocus, onBlur }) => {
         <M v2 />
         <View style={styles.containerButton}>
           <Button
+            disabled={loadingSubmit}
             style={styles.buttonSubmit}
             status="primary"
             onPress={handleSubmit}>
-            {i18n.t('Home.no-cra.btn_submit')}
+            {loadingSubmit ? (
+              <Spinner status="basic" size="small" />
+            ) : (
+              i18n.t('shared:reset-password.btn_submit')
+            )}
           </Button>
         </View>
       </View>

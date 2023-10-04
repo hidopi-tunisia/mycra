@@ -147,7 +147,7 @@
       "Off": "Off",
       "Weekends": "Weekends",
       "Holiday": "Holiday",
-      "btn_submit": "CRA is pending",
+      "btn_submit": "CRA approved",
       "modal": {
         "title": "Approved",
         "info": "CRA approved",
@@ -185,11 +185,15 @@
       "Off": "Off",
       "Weekends": "Weekends",
       "Holiday": "Holiday",
-      "btn_submit": "CRA is pending",
+      "btn_submit": "Submit",
       "modal": {
+        "title": "Submit days?",
+        "confirmation": "Are you sure to submit %{count} days for this month?"
+      },
+      "modalMotive": {
         "title": "Rejected",
-        "info": "CRA rejected",
-        "summary": "Days summary:"
+        "info": "CRA rejected \"%{count}\"",
+        "Reason:": "Reason:"
       },
       "modalHoliday": {
         "title": "Holiday",
@@ -217,11 +221,16 @@
   "Notifications": {
     "Notifications": "Notifications",
     "Alerts": "Alerts",
+    "No alerts": "No alerts",
     "No notifications": "No notifications",
     "form": {
       "title": "New alert",
       "placeholder": "Type your alert!",
       "btn_submit": "Submit"
+    },
+    "modal": {
+      "title": "Alert submitted",
+      "info": "The alert is submitted successfully"
     }
   },
   "Settings": {
@@ -243,6 +252,10 @@
       "Sign out:description": "Sign out and navigate back to the sign in screen"
     },
     "modals": {
+      "sign-out": {
+        "title": "Sign out",
+        "description": "Are you sure to sign out?"
+      },
       "update-profile": {
         "title": "Update profile",
         "upload-avatar": "Upload avatar picture",
@@ -335,7 +348,7 @@
     "working": "Working",
     "half": "Half-day",
     "remote": "Remote",
-    "PL": "PL",
+    "Paid leave": "PL",
     "Absence": "Absence",
     "Sick leave": "Sick leave",
     "Authorized unpaid leave": "Authorized unpaid leave",

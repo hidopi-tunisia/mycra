@@ -28,7 +28,7 @@
   "off": [
     {
       "text": "Paid leave",
-      "value": "PL",
+      "value": "Paid leave",
       "type": "off",
       "backgroundColor": "transparent",
       "borderColor": "#F44336",
