@@ -301,10 +301,16 @@
     "Off": "Absent",
     "Weekends": "Week-ends",
     "Holiday": "Jour férié",
-    "btn_submit": "CRA en attente",
+    "btn_submit:pending": "CRA en attente",
+    "btn_submit:rejected": "CRA rejeté",
+    "btn_submit:approved": "CRA approuvé",
     "modal": {
-      "title": "En attente d'approbation",
-      "info": "CRA soumis",
+      "title:pending": "CRA envoyé",
+      "title:rejected": "CRA rejeté",
+      "title:approved": "CRA approuvé",
+      "info:pending": "CRA envoyé",
+      "info:rejected": "CRA rejeté",
+      "info:approved": "CRA approuvé",
       "summary": "Résumé des jours :"
     },
     "modalHoliday": {

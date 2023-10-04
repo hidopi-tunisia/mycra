@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { View, TextInput, TouchableOpacity, Image } from 'react-native';
+import { View, TextInput, TouchableOpacity } from 'react-native';
 import { Button, Spinner, Text, Icon } from '@ui-kitten/components';
 import styles from './index.styles';
 import { M } from '@components';
@@ -20,7 +20,7 @@ const CRAHistoryDetailsForm = ({ onSubmit, onPressClose }) => {
     <View style={styles.container}>
       <View style={styles.containerTitle}>
         <Text style={styles.title}>
-          {i18n.t("CRA Details.form.Report an issue")}
+          {i18n.t('CRA Details.form.Report an issue')}
         </Text>
         <TouchableOpacity onPress={onPressClose}>
           <Icon
@@ -34,7 +34,7 @@ const CRAHistoryDetailsForm = ({ onSubmit, onPressClose }) => {
       <M v1 />
       <TextInput
         style={styles.input}
-        placeholder={i18n.t("CRA Details.form.Type your alert!")}
+        placeholder={i18n.t('CRA Details.form.Type your alert!')}
         placeholderTextColor={Colors.GRAY_PRIMARY}
         value={text}
         multiline
