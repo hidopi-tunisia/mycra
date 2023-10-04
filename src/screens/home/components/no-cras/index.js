@@ -167,6 +167,7 @@ const NoCRAs = ({ projects, onFocus, onBlur, onRefresh }) => {
       try {
         setLoadingSubmit(true);
         setErrorSubmit(null);
+        setModalVisible(false)
         const arr = Object.keys(markedDates).map(k => {
           if (markedDates[k].type === WorkdaysTypes.WORKING) {
             return {

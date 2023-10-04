@@ -173,7 +173,7 @@ const ApprovedCRAs = ({ cra, projects, onFocus, onBlur, onRefresh }) => {
           <TouchableOpacity disabled={projects.length < 2}>
             <View style={styles.containerProjects}>
               <Text style={styles.textDescription}>
-                {i18n.t('Home.approved-cras.Working')} - {selectedProject.name}
+                {i18n.t('Home.approved-cras.Project')} - {selectedProject.name}
               </Text>
               <M h1 />
               {projects.length > 1 && (
@@ -269,7 +269,7 @@ const ApprovedCRAs = ({ cra, projects, onFocus, onBlur, onRefresh }) => {
         visible={modalVisible}
         onPressPositive={handlePressPositive}>
         <Text>
-          {i18n.t('Home.approved-cras.modalHoliday.info')}
+          {i18n.t('Home.approved-cras.modal.info')}
           {getHistoryItem(cra.history, 'approved') &&
           getHistoryItem(cra.history, 'approved').at
             ? ` at ${getHistoryItem(cra.history, 'approved').at.substring(

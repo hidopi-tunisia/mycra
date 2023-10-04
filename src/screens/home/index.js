@@ -120,7 +120,12 @@ const HomeScreen = ({ onFocus, onBlur }) => {
             />
           )}
           {displayNoCRA && (
-            <NoCRAs projects={projects} onFocus={onFocus} onBlur={onBlur} />
+            <NoCRAs
+              projects={projects}
+              onFocus={onFocus}
+              onBlur={onBlur}
+              onRefresh={handleRefresh}
+            />
           )}
           {displayNoProjects && (
             <NoProjects

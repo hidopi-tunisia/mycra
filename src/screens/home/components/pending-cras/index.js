@@ -259,7 +259,7 @@ const PendingCRAs = ({ cra, projects, onFocus, onBlur, onRefresh }) => {
             style={styles.buttonSubmit}
             status="control"
             onPress={handleSubmit}>
-            {i18n.t('Home.pending-cras.Off')}
+            {i18n.t('Home.pending-cras.btn_submit')}
           </Button>
         </View>
       </View>

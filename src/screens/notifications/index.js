@@ -131,15 +131,27 @@ const NotificationsScreen = ({ notifications }) => {
             <TouchableOpacity
               style={styles.buttonTop}
               onPress={() => handlePressSelectTab(Tabs.NOTIFICATIONS)}>
-              <Text
-                style={{
-                  ...styles.textButtonTop,
-                  ...(tab === Tabs.NOTIFICATIONS
-                    ? styles.textButtonTopSelected
-                    : {}),
-                }}>
-                {i18n.t('Notifications.Notifications')}
-              </Text>
+              <View style={styles.containerNotifications}>
+                <Text
+                  style={{
+                    ...styles.textButtonTop,
+                    ...(tab === Tabs.NOTIFICATIONS
+                      ? styles.textButtonTopSelected
+                      : {}),
+                  }}>
+                  {i18n.t('Notifications.Notifications')}
+                </Text>
+                {notifications.length > 0 && (
+                  <>
+                    <M h2 />
+                    <View style={styles.badge}>
+                      <Text style={styles.textBadge}>
+                        {notifications.length}
+                      </Text>
+                    </View>
+                  </>
+                )}
+              </View>
               {tab === Tabs.NOTIFICATIONS && <View style={styles.line} />}
             </TouchableOpacity>
           </View>

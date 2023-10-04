@@ -147,7 +147,7 @@
       "Off": "Off",
       "Weekends": "Weekends",
       "Holiday": "Holiday",
-      "btn_submit": "CRA is pending",
+      "btn_submit": "CRA approved",
       "modal": {
         "title": "Approved",
         "info": "CRA approved",
@@ -185,11 +185,15 @@
       "Off": "Off",
       "Weekends": "Weekends",
       "Holiday": "Holiday",
-      "btn_submit": "CRA is pending",
+      "btn_submit": "Submit",
       "modal": {
+        "title": "Submit days?",
+        "confirmation": "Are you sure to submit %{count} days for this month?"
+      },
+      "modalMotive": {
         "title": "Rejected",
-        "info": "CRA rejected",
-        "summary": "Days summary:"
+        "info": "CRA rejected \"%{count}\"",
+        "Reason:": "Reason:"
       },
       "modalHoliday": {
         "title": "Holiday",

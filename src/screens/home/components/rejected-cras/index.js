@@ -474,7 +474,7 @@ const RejectedCRAs = ({ cra, projects, onFocus, onBlur, onRefresh }) => {
         </View>
       </View>
       <Modal
-        title={i18n.t('Home.rejected-cras.Rejected')}
+        title={i18n.t('Home.rejected-cras.modal.title')}
         type="confirm"
         visible={modalVisible}
         onPressNegative={handlePressNegative}
@@ -486,12 +486,12 @@ const RejectedCRAs = ({ cra, projects, onFocus, onBlur, onRefresh }) => {
         </Text>
       </Modal>
       <Modal
-        title={i18n.t('Home.rejected-cras.modal.title')}
+        title={i18n.t('Home.rejected-cras.modalMotive.title')}
         type="confirm"
         visible={modalRejectionMotiveVisible}
         onPressPositive={handleRejectionMotivePositive}>
         <Text>
-          {i18n.t('Home.rejected-cras.modal.info')}
+          {i18n.t('Home.rejected-cras.modalMotive.info')}
           {getHistoryItem(cra.history, 'rejected') &&
           getHistoryItem(cra.history, 'rejected').at
             ? ` at ${
@@ -504,7 +504,8 @@ const RejectedCRAs = ({ cra, projects, onFocus, onBlur, onRefresh }) => {
           getHistoryItem(cra.history, 'rejected').by &&
           getHistoryItem(cra.history, 'rejected').by.motive && (
             <Text>
-              Reason: {getHistoryItem(cra.history, 'rejected').by.motive}
+              {i18n.t('Home.rejected-cras.modalMotive.Reason:')}
+              {getHistoryItem(cra.history, 'rejected').by.motive}
             </Text>
           )}
       </Modal>

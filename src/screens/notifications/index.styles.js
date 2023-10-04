@@ -83,6 +83,23 @@ const styles = ScaledSheet.create({
     padding: '20@msr',
     paddingBottom: '72@msr',
   },
+  containerNotifications: {
+    flexDirection: 'row',
+  },
+  badge: {
+    backgroundColor: Colors.RED_DARK_PRIMARY,
+    padding: 4,
+    paddingHorizontal: 8,
+    borderRadius: 12,
+    justifyContent: 'center',
+    alignItems: 'center',
+    textAlign: 'center',
+    textAlignVertical: 'center',
+  },
+  textBadge: {
+    fontWeight: '900',
+    color: Colors.WHITE,
+  },
 });
 
 export default styles;

@@ -147,7 +147,7 @@
       "Off": "Absent",
       "Weekends": "Week-ends",
       "Holiday": "Jour férié",
-      "btn_submit": "CRA en attente",
+      "btn_submit": "CRA apprové",
       "modal": {
         "title": "Approuvé",
         "info": "CRA approuvé",
@@ -185,11 +185,15 @@
       "Off": "Absent",
       "Weekends": "Week-ends",
       "Holiday": "Jour férié",
-      "btn_submit": "CRA en attente",
+      "btn_submit": "Soumettre",
       "modal": {
-        "title": "Rejeté",
-        "info": "CRA rejeté",
-        "summary": "Résumé des jours :"
+        "title": "Soumettre les jours ?",
+        "confirmation": "Êtes-vous sûr de soumettre %{count} jours pour ce mois-ci ?"
+      },
+      "modalMotive": {
+        "title": "Rejected",
+        "info": "CRA rejected \"%{count}\"",
+        "Reason:": "Reason:"
       },
       "modalHoliday": {
         "title": "Jour férié",
