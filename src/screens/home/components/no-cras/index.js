@@ -11,7 +11,7 @@ import Colors from '@constants/colors';
 import { createCRA } from '@domain/me';
 import { getHolidays, getWeekends } from '@domain/miscs';
 import { useFocusEffect } from '@react-navigation/native';
-import { Button, Icon, Layout, Text } from '@ui-kitten/components';
+import { Button, Icon, Layout, Spinner, Text } from '@ui-kitten/components';
 import moment from 'moment';
 import { useCallback, useEffect, useState } from 'react';
 import {
@@ -165,7 +165,7 @@ const NoCRAs = ({ projects, onFocus, onBlur, onRefresh }) => {
   const handlePressPositive = () => {
     const fn = async () => {
       try {
-        setLoadingSubmit(false);
+        setLoadingSubmit(true);
         setErrorSubmit(null);
         const arr = Object.keys(markedDates).map(k => {
           if (markedDates[k].type === WorkdaysTypes.WORKING) {
@@ -468,8 +468,7 @@ const NoCRAs = ({ projects, onFocus, onBlur, onRefresh }) => {
             style={styles.buttonSubmit}
             status="primary"
             onPress={handleSubmit}>
-            {i18n.t('Home.no-cra.btn_submit')}
-            {true ? (
+            {loadingSubmit ? (
               <Spinner status="basic" size="small" />
             ) : (
               i18n.t('shared:reset-password.btn_submit')

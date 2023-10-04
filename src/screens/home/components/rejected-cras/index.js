@@ -7,7 +7,7 @@ import Colors from '@constants/colors';
 import { updateCRA } from '@domain/me';
 import { getHolidays, getWeekends } from '@domain/miscs';
 import { useFocusEffect } from '@react-navigation/native';
-import { Button, Icon, Layout, Text } from '@ui-kitten/components';
+import { Button, Icon, Layout, Spinner, Text } from '@ui-kitten/components';
 import moment from 'moment';
 import { useCallback, useEffect, useState } from 'react';
 import {
@@ -163,7 +163,7 @@ const RejectedCRAs = ({ cra, projects, onFocus, onBlur, onRefresh }) => {
   const handlePressPositive = () => {
     const fn = async () => {
       try {
-        setLoadingSubmit(false);
+        setLoadingSubmit(true);
         setErrorSubmit(null);
         const arr = Object.keys(markedDates).map(k => {
           if (markedDates[k].type === WorkdaysTypes.WORKING) {
@@ -465,7 +465,11 @@ const RejectedCRAs = ({ cra, projects, onFocus, onBlur, onRefresh }) => {
             style={styles.buttonSubmit}
             status="primary"
             onPress={handleSubmit}>
-            {i18n.t('Home.rejected-cras.btn_submit')}
+            {loadingSubmit ? (
+              <Spinner status="basic" size="small" />
+            ) : (
+              i18n.t('Home.rejected-cras.btn_submit')
+            )}
           </Button>
         </View>
       </View>
