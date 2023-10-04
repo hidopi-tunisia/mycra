@@ -302,10 +302,16 @@
     "Off": "Off",
     "Weekends": "Weekends",
     "Holiday": "Holiday",
-    "btn_submit": "CRA is pending",
+    "btn_submit:pending": "CRA is pending",
+    "btn_submit:rejected": "CRA is rejected",
+    "btn_submit:approved": "CRA is approved",
     "modal": {
-      "title": "Waiting for approval",
-      "info": "CRA submitted",
+      "title:pending": "Submitted",
+      "title:rejected": "Rejected",
+      "title:approved": "Approved",
+      "info:pending": "CRA submitted",
+      "info:rejected": "CRA rejected",
+      "info:approved": "CRA approved",
       "summary": "Days summary:"
     },
     "modalHoliday": {

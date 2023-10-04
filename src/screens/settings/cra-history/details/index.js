@@ -191,7 +191,7 @@ const CRAHistoryDetailsScreen = ({ navigation, onFocus, onBlur }) => {
                 </Text>
               </View>
             </TouchableOpacity>
-            <TouchableOpacity onPress={handlePressBack}>
+            <TouchableOpacity onPress={() => setModalHelpVisible(true)}>
               <Icon
                 fill={Colors.WHITE}
                 name="question-mark-circle-outline"
@@ -232,7 +232,7 @@ const CRAHistoryDetailsScreen = ({ navigation, onFocus, onBlur }) => {
               }}
             />
             <M h1 />
-            <Text>{i18n.t('Home.pending-cras.Working')}</Text>
+            <Text>{i18n.t('CRA Details.Working')}</Text>
           </View>
           <View style={styles.containerLegend}>
             <View
@@ -243,7 +243,7 @@ const CRAHistoryDetailsScreen = ({ navigation, onFocus, onBlur }) => {
               }}
             />
             <M h1 />
-            <Text>{i18n.t('Home.pending-cras.Half day')}</Text>
+            <Text>{i18n.t('CRA Details.Half day')}</Text>
           </View>
           <View style={styles.containerLegend}>
             <View
@@ -254,7 +254,7 @@ const CRAHistoryDetailsScreen = ({ navigation, onFocus, onBlur }) => {
               }}
             />
             <M h1 />
-            <Text>{i18n.t('Home.pending-cras.Remote')}</Text>
+            <Text>{i18n.t('CRA Details.Remote')}</Text>
           </View>
           {/* <View style={styles.containerLegend}>
         <View
@@ -265,7 +265,7 @@ const CRAHistoryDetailsScreen = ({ navigation, onFocus, onBlur }) => {
           }}
         />
         <M h1 />
-        <Text>{i18n.t('Home.pending-cras.Unavailable')}</Text>
+        <Text>{i18n.t('CRA Details.Unavailable')}</Text>
       </View> -- TODO: Unavailable */}
           <View style={styles.containerLegend}>
             <View
@@ -276,7 +276,7 @@ const CRAHistoryDetailsScreen = ({ navigation, onFocus, onBlur }) => {
               }}
             />
             <M h1 />
-            <Text>{i18n.t('Home.pending-cras.Off')}</Text>
+            <Text>{i18n.t('CRA Details.Off')}</Text>
           </View>
         </View>
         <M v2 />
@@ -285,24 +285,24 @@ const CRAHistoryDetailsScreen = ({ navigation, onFocus, onBlur }) => {
             style={styles.buttonSubmit}
             status="control"
             onPress={handleSubmit}>
-            {cra.status}
+            {i18n.t('CRA Details.modal.info:' + cra.status)}
           </Button>
         </View>
       </View>
       <Modal
-        title={getModalTitle(cra.status)}
+        title={i18n.t('CRA Details.modal.info:' + cra.status)}
         type="confirm"
         visible={modalVisible}
         onPressPositive={handlePressPositive}>
         {cra.status === 'pending' && (
           <Text>
-            {i18n.t('Home.pending-cras.modal.info:submitted')}
+            {i18n.t('CRA Details.modal.info:pending')}
             {getHistoryItem(cra.history, 'submitted') &&
             getHistoryItem(cra.history, 'submitted').at
-              ? ` at ${getHistoryItem(cra.history, 'submitted').at.substring(
+              ? ` : ${getHistoryItem(cra.history, 'submitted').at.substring(
                   0,
                   10,
-                )} ${getHistoryItem(cra.history, 'submitted').at.substring(
+                )}, ${getHistoryItem(cra.history, 'submitted').at.substring(
                   11,
                   16,
                 )}`
@@ -311,13 +311,13 @@ const CRAHistoryDetailsScreen = ({ navigation, onFocus, onBlur }) => {
         )}
         {cra.status === 'rejected' && (
           <Text>
-            {i18n.t('Home.pending-cras.modal.info:rejected')}
+            {i18n.t('CRA Details.modal.info:rejected')}
             {getHistoryItem(cra.history, 'rejected') &&
             getHistoryItem(cra.history, 'rejected').at
-              ? ` at ${getHistoryItem(cra.history, 'rejected').at.substring(
+              ? ` : ${getHistoryItem(cra.history, 'rejected').at.substring(
                   0,
                   10,
-                )} ${getHistoryItem(cra.history, 'rejected').at.substring(
+                )}, ${getHistoryItem(cra.history, 'rejected').at.substring(
                   11,
                   16,
                 )}`
@@ -326,13 +326,13 @@ const CRAHistoryDetailsScreen = ({ navigation, onFocus, onBlur }) => {
         )}
         {cra.status === 'approved' && (
           <Text>
-            {i18n.t('Home.pending-cras.modal.info:approved')}
+            {i18n.t('CRA Details.modal.info:approved')}
             {getHistoryItem(cra.history, 'approved') &&
             getHistoryItem(cra.history, 'approved').at
-              ? ` at ${getHistoryItem(cra.history, 'approved').at.substring(
+              ? ` : ${getHistoryItem(cra.history, 'approved').at.substring(
                   0,
                   10,
-                )} ${getHistoryItem(cra.history, 'approved').at.substring(
+                )}, ${getHistoryItem(cra.history, 'approved').at.substring(
                   11,
                   16,
                 )}`
