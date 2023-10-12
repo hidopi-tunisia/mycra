@@ -28,6 +28,8 @@ Let Metro Bundler run in its _own_ terminal. Open a _new_ terminal from the _roo
 
 ### For Android
 
+chmod 755 android/gradlew
+
 ```bash
 # using npm
 npm run android
