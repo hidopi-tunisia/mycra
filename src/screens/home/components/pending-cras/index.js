@@ -7,6 +7,7 @@ import moment from 'moment';
 import { useCallback, useEffect, useState } from 'react';
 import {
   PermissionsAndroid,
+  Platform,
   StatusBar,
   TouchableOpacity,
   View,
@@ -35,11 +36,15 @@ const PendingCRAs = ({ cra, projects, onFocus, onBlur, onRefresh }) => {
 
   useFocusEffect(
     useCallback(() => {
-      StatusBar.setBackgroundColor(Colors.PURPLE_DARK_PRIMARY);
+      if (Platform.OS === 'android') {
+        StatusBar.setBackgroundColor(Colors.PURPLE_DARK_PRIMARY);
+      }
       SystemNavigationBar.setNavigationColor(Colors.PURPLE_PRIMARY, 'light');
       onFocus(Colors.PURPLE_DARK_PRIMARY);
       return () => {
-        StatusBar.setBackgroundColor(Colors.BLUE_DARK_PRIMARY);
+        if (Platform.OS === 'android') {
+          StatusBar.setBackgroundColor(Colors.BLUE_DARK_PRIMARY);
+        }
         SystemNavigationBar.setNavigationColor(Colors.BLUE_PRIMARY, 'light');
         onBlur(Colors.BLUE_PRIMARY);
       };
@@ -110,9 +115,11 @@ const PendingCRAs = ({ cra, projects, onFocus, onBlur, onRefresh }) => {
     setSelectedCount(selectedDates.length);
   }, [markedDates]);
   useEffect(() => {
-    PermissionsAndroid.request(
-      PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS,
-    );
+    if (Platform.OS === 'android') {
+      PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS,
+      );
+    }
   }, []);
 
   const handleSelected = day => {

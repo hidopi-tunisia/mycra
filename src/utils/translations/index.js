@@ -29,7 +29,12 @@ const locale =
     ? NativeModules.SettingsManager.settings.AppleLocale
     : NativeModules.I18nManager.localeIdentifier;
 let defaultLocale = Locales.FR;
-if (Object.values(Locales).includes(locale.substring(0, 2))) {
+if (
+  locale &&
+  typeof locale === 'string' &&
+  locale.length > 0 &&
+  Object.values(Locales).includes(locale.substring(0, 2))
+) {
   defaultLocale = locale;
 }
 i18n.defaultLocale = defaultLocale;

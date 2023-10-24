@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react';
-import { View, TouchableOpacity, Image, StatusBar } from 'react-native';
+import { View, TouchableOpacity, Image, StatusBar, Platform } from 'react-native';
 import { Button, Icon, Layout, Spinner, Text } from '@ui-kitten/components';
 import Modal from '@components/modals';
 import styles from './index.styles';
@@ -12,11 +12,15 @@ import { i18n } from '@utils/translations';
 const NoProjects = ({ loading, onFocus, onBlur, onPress, onRefresh }) => {
   useFocusEffect(
     useCallback(() => {
-      StatusBar.setBackgroundColor(Colors.GRAY_DARK_PRIMARY);
+      if (Platform.OS === 'android') {
+        StatusBar.setBackgroundColor(Colors.GRAY_DARK_PRIMARY);
+      }
       SystemNavigationBar.setNavigationColor(Colors.GRAY_PRIMARY, 'light');
       onFocus(Colors.GRAY_PRIMARY);
       return () => {
-        StatusBar.setBackgroundColor(Colors.BLUE_DARK_PRIMARY);
+        if (Platform.OS === 'android') {
+          StatusBar.setBackgroundColor(Colors.BLUE_DARK_PRIMARY);
+        }
         SystemNavigationBar.setNavigationColor(Colors.BLUE_PRIMARY, 'light');
         onBlur(Colors.BLUE_PRIMARY);
       };
