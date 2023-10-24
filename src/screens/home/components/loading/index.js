@@ -1,7 +1,7 @@
 import Colors from '@constants/colors';
 import { useFocusEffect } from '@react-navigation/native';
 import { useCallback } from 'react';
-import { Dimensions, StatusBar, View } from 'react-native';
+import { Dimensions, Platform, StatusBar, View } from 'react-native';
 import { s } from 'react-native-size-matters';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 import SystemNavigationBar from 'react-native-system-navigation-bar';
@@ -12,11 +12,15 @@ const { width, height } = Dimensions.get('window');
 const HomeLoading = ({ onFocus, onBlur }) => {
   useFocusEffect(
     useCallback(() => {
-      StatusBar.setBackgroundColor(Colors.GRAY_DARK_PRIMARY);
+      if (Platform.OS === 'android') {
+        StatusBar.setBackgroundColor(Colors.GRAY_DARK_PRIMARY);
+      }
       SystemNavigationBar.setNavigationColor(Colors.GRAY_PRIMARY, 'light');
       onFocus(Colors.GRAY_PRIMARY);
       return () => {
-        StatusBar.setBackgroundColor(Colors.BLUE_DARK_PRIMARY);
+        if (Platform.OS === 'android') {
+          StatusBar.setBackgroundColor(Colors.BLUE_DARK_PRIMARY);
+        }
         SystemNavigationBar.setNavigationColor(Colors.BLUE_PRIMARY, 'light');
         onBlur(Colors.BLUE_PRIMARY);
       };
@@ -34,14 +38,16 @@ const HomeLoading = ({ onFocus, onBlur }) => {
               height={24}
               width={s(100)}
               left={20}
-              marginBottom={s(16)} />
+              marginBottom={s(16)}
+            />
             <SkeletonPlaceholder.Item
               borderRadius={24}
               flexDirection="row"
               alignItems="center"
               left={20}
               height={18}
-              width={s(200)} />
+              width={s(200)}
+            />
           </SkeletonPlaceholder>
         </View>
       </View>
@@ -53,7 +59,8 @@ const HomeLoading = ({ onFocus, onBlur }) => {
             alignItems="center"
             alignSelf="center"
             height={height * 0.6 - 24}
-            width={width * 0.9} />
+            width={width * 0.9}
+          />
         </SkeletonPlaceholder>
       </View>
     </View>

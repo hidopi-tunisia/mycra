@@ -43,6 +43,7 @@
 		960DEB19F7CF685349180E99 /* Pods-mycra-mycraTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mycra-mycraTests.debug.xcconfig"; path = "Target Support Files/Pods-mycra-mycraTests/Pods-mycra-mycraTests.debug.xcconfig"; sourceTree = "<group>"; };
 		A945BB28DEED4D85A5E965B5 /* Pods-mycra.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mycra.debug.xcconfig"; path = "Target Support Files/Pods-mycra/Pods-mycra.debug.xcconfig"; sourceTree = "<group>"; };
 		CE45B798A7205EB818392A97 /* Pods_mycra_mycraTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_mycra_mycraTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D2437A192ADF161A0049B670 /* mycra.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = mycra.entitlements; path = mycra/mycra.entitlements; sourceTree = "<group>"; };
 		D2DBB4012AD87222003DB829 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		F1239ED25BC8C149C28F9055 /* Pods-mycra-mycraTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mycra-mycraTests.release.xcconfig"; path = "Target Support Files/Pods-mycra-mycraTests/Pods-mycra-mycraTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -88,6 +89,7 @@
 		13B07FAE1A68108700A75B9A /* mycra */ = {
 			isa = PBXGroup;
 			children = (
+				D2437A192ADF161A0049B670 /* mycra.entitlements */,
 				D2DBB4012AD87222003DB829 /* GoogleService-Info.plist */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.mm */,
@@ -503,6 +505,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = mycra/mycra.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = XBF72V436A;
 				ENABLE_BITCODE = NO;
@@ -534,6 +537,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = mycra/mycra.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = XBF72V436A;
 				INFOPLIST_FILE = mycra/Info.plist;

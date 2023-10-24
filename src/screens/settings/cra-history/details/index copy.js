@@ -9,6 +9,7 @@ import moment from 'moment';
 import { useCallback, useEffect, useState } from 'react';
 import {
   PermissionsAndroid,
+  Platform,
   StatusBar,
   TouchableOpacity,
   View,
@@ -128,9 +129,11 @@ const CRAHistoryDetailsScreen = ({ navigation, onFocus, onBlur }) => {
     setSelectedCount(selectedDates.length);
   }, [markedDates]);
   useEffect(() => {
-    PermissionsAndroid.request(
-      PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS,
-    );
+    if (Platform.OS === 'android') {
+      PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS,
+      );
+    }
   }, []);
 
   const handleSelected = day => {

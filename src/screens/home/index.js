@@ -1,6 +1,6 @@
 import { getCurrentCRAs } from '@domain/me';
 import { useEffect, useState } from 'react';
-import { PermissionsAndroid } from 'react-native';
+import { PermissionsAndroid, Platform } from 'react-native';
 import ApprovedCRAs from './components/approved-cras';
 import HomeLoading from './components/loading';
 import NoCRAs from './components/no-cras';
@@ -82,9 +82,11 @@ const HomeScreen = ({ onFocus, onBlur }) => {
     fn();
   };
   useEffect(() => {
-    PermissionsAndroid.request(
-      PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS,
-    );
+    if (Platform.OS === 'android') {
+      PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS,
+      );
+    }
   }, []);
   return (
     <>
