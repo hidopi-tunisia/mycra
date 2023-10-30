@@ -219,6 +219,7 @@ const RejectedCRAs = ({ cra, projects, onFocus, onBlur, onRefresh }) => {
           // unavailable, -- TODO: Unavailable
         };
         await updateCRA(cra._id, payload);
+        onRefresh();
         setLoadingSubmit(false);
         setModalVisible(false);
       } catch (error) {

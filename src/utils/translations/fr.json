@@ -177,7 +177,7 @@
     },
     "rejected-cras": {
       "Project": "Projet",
-      "Rejected": "Rejected",
+      "Rejected": "Rejeté",
       "Working": "Travail",
       "Half day": "Demi-journée",
       "Remote": "À distance",
@@ -191,8 +191,8 @@
         "confirmation": "Êtes-vous sûr de soumettre %{count} jours pour ce mois-ci ?"
       },
       "modalMotive": {
-        "title": "Rejected",
-        "info": "CRA rejected \"%{count}\"",
+        "title": "Rejeté",
+        "info": "CRA rejeté",
         "Reason:": "Reason:"
       },
       "modalHoliday": {
