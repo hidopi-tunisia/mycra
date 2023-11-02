@@ -13,6 +13,7 @@ export const APP_VERSION = '1.0.0';
 
 export const Topics = {
   CONSULTANTS: "consultants",
+  SUPERVISORS: "supervisors",
   CONSULTANTS_ALL: "consultants_all"
 };
 export const INTRO_DONE = 'intro_done';

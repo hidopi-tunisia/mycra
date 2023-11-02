@@ -26,7 +26,25 @@ const subscribeToConsultantTopic = async () => {
     const u = await currentUser();
     if (u !== null && u.uid) {
       await subscribeToTopic(`${Topics.CONSULTANTS}~${u.uid}`);
-      subscribeToTopic(`${Topics.CONSULTANTS_ALL}`)
+      const { data } = await getProfile({ populate: '' });
+      const { supervisor } = data;
+      subscribeToTopic(`${Topics.SUPERVISORS}~${supervisor}_consultants`);
+    }
+  } catch (error) {
+    console.info(error);
+  }
+};
+
+const subscribeToCurrentMonthCRATopic = async () => {
+  try {
+    const u = await currentUser();
+    if (u !== null && u.uid) {
+      const { data } = await getProfile({ populate: '' });
+      const { supervisor } = data;
+      const year = new Date().getFullYear();
+      const month = new Date().getMonth();
+      const date = `${year}_${month}`;
+      subscribeToTopic(`${Topics.SUPERVISORS}~${supervisor}_cras_${date}`);
     }
   } catch (error) {
     console.info(error);
@@ -40,4 +58,4 @@ const getHistoryItem = (history, a) => {
   );
   return sorted[0]?.meta;
 };
-export { getProjects, subscribeToConsultantTopic, getHistoryItem };
+export { getProjects, subscribeToConsultantTopic, getHistoryItem, subscribeToCurrentMonthCRATopic };

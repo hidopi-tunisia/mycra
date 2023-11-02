@@ -25,6 +25,7 @@ import { s } from 'react-native-size-matters';
 import SystemNavigationBar from 'react-native-system-navigation-bar';
 import styles from './index.styles';
 import { i18n } from '@utils/translations';
+import { subscribeToCurrentMonthCRATopic } from '@screens/home/composables';
 
 const NoCRAs = ({ projects, onFocus, onBlur, onRefresh }) => {
   const [loadingFetch, setLoadingFetch] = useState(false);
@@ -225,6 +226,7 @@ const NoCRAs = ({ projects, onFocus, onBlur, onRefresh }) => {
         onRefresh();
         setLoadingSubmit(false);
         setModalVisible(false);
+        subscribeToCurrentMonthCRATopic()
       } catch (error) {
         setLoadingSubmit(false);
         setErrorSubmit(error);
