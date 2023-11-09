@@ -1,6 +1,6 @@
 To connect on "localhost" type the command 
 "adb reverse tcp:SERVER_PORT tcp:SERVER_PORT"
-`adb reverse tcp:30000 tcp:30000`
+`adb reverse tcp:30001 tcp:30001`
 
 This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
 
